@@ -1,0 +1,56 @@
+"use client";
+
+import * as React from "react";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface CheckboxProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  label: React.ReactNode;
+}
+
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ className, label, id, checked, defaultChecked, onChange, ...props }, ref) => {
+    const checkboxId = id ?? React.useId();
+    const [isChecked, setIsChecked] = React.useState(defaultChecked ?? false);
+    const resolvedChecked = checked ?? isChecked;
+
+    return (
+      <label
+        htmlFor={checkboxId}
+        className={cn(
+          "flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-[var(--text-secondary)]",
+          className,
+        )}
+      >
+        <span
+          className={cn(
+            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
+            resolvedChecked
+              ? "border-[var(--brand-600)] bg-[var(--brand-600)]"
+              : "border-[var(--border-strong)] bg-[var(--surface-0)]",
+          )}
+        >
+          {resolvedChecked && <Check className="h-3 w-3 text-white" />}
+        </span>
+        <input
+          type="checkbox"
+          id={checkboxId}
+          ref={ref}
+          className="sr-only"
+          checked={checked}
+          defaultChecked={defaultChecked}
+          onChange={(e) => {
+            setIsChecked(e.target.checked);
+            onChange?.(e);
+          }}
+          {...props}
+        />
+        <span>{label}</span>
+      </label>
+    );
+  },
+);
+Checkbox.displayName = "Checkbox";
+
+export { Checkbox };

@@ -2,15 +2,12 @@ import { SectionShell } from "@/components/ui/section-shell";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 const UPCOMING_SECTIONS = [
-  { id: "avto-podbor", title: "Онлайн-автоподбор банка", anchor: "#avto-podbor" },
-  { id: "sertifikaty", title: "Сертификаты и Дипломы", anchor: "#sertifikaty" },
-  { id: "ourTeam", title: "Наша команда", anchor: "#ourTeam" },
-  { id: "otzyvy", title: "Отзывы и благодарности", anchor: "#otzyvy" },
-  { id: "price", title: "Почему у нас бесплатно?", anchor: "#price" },
-  { id: "kalkulyator", title: "Онлайн-калькулятор", anchor: "#kalkulyator" },
+  { id: "otzyvy", title: "Отзывы и благодарности" },
+  { id: "price", title: "Почему у нас бесплатно?" },
+  { id: "kalkulyator", title: "Онлайн-калькулятор Независимой Банковской Гарантии" },
 ] as const;
 
-/** Temporary placeholders marking IA sections pending full implementation */
+/** Temporary placeholders for sections pending full implementation */
 export function RoadmapSkeletonSections() {
   return (
     <>

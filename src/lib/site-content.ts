@@ -314,3 +314,29 @@ export const YANDEX_MAP = {
   apiKey: "52c58a1c-d593-4777-8cd6-faa4ca7ad4fd",
   coords: [55.7417, 37.6234] as [number, number],
 } as const;
+
+export const CERTIFICATES = [
+  { bank: "СберБанк", thumb: "/prof-p/cert2.png", full: "/prof-p/cert-2.jpg" },
+  { bank: "Альфа-Банк", thumb: "/prof-p/cert-alfa-mini.jpg", full: "/prof-p/cert-alfa.jpg" },
+  { bank: "Модульбанк", thumb: "/prof-p/cert7.png", full: "/prof-p/cert-7.jpg" },
+  { bank: "Металлинвестбанк", thumb: "/prof-p/cert3.png", full: "/prof-p/cert-3.jpg" },
+  { bank: "Локобанк", thumb: "/prof-p/cert6.png", full: "/prof-p/cert-6.jpg" },
+  { bank: "Кубань Кредит", thumb: "/prof-p/certkk.jpg", full: "/prof-p/cert-kk.jpg" },
+  { bank: "Держава", thumb: "/prof-p/cert9.png", full: "/prof-p/cert-9.jpg" },
+  { bank: "Банк СОЮЗ", thumb: "/prof-p/cert-souz-mini.jpg", full: "/prof-p/cert-souz.jpg" },
+  { bank: "Зенит", thumb: "/prof-p/cert8.png", full: "/prof-p/cert-8.jpg" },
+  { bank: "Совкомбанк", thumb: "/prof-p/sovkom.jpg", full: "/prof-p/sovkom.jpg" },
+  { bank: "Cовкомбанк", thumb: "/prof-p/blag-sovkom-mini.jpg", full: "/prof-p/blag-sovkom.png" },
+  { bank: "Альфа-Банк", thumb: "/prof-p/blag-alfa-mini.jpg", full: "/prof-p/blag-alfa.png" },
+  { bank: "Абсолют Банк", thumb: "/prof-p/1-abs.png", full: "/prof-p/1-abs-full.png" },
+  { bank: "Банк-Союз", thumb: "/prof-p/blag-souz-mini.jpg", full: "/prof-p/blag-souz.png" },
+  { bank: "Тендертех", thumb: "/prof-p/blag-tenderteh-mini.jpg", full: "/prof-p/blag-tenderteh.png" },
+  { bank: "Альфа-банк", thumb: "/prof-p/1-alfa.png", full: "/prof-p/1-alfa-full.png" },
+  { bank: "Совкомбанк", thumb: "/prof-p/blag-sovkom2-mini.jpg", full: "/prof-p/blag-sovkom2.png" },
+] as const;
+
+export const AUTO_SELECT_DISCLAIMER =
+  "Согласуем для Вас нашу цену в любом из этих банков. Оплата напрямую в банк. Наша комиссия 0%. Вы нам ничего не платите." as const;
+
+export const CONSENT_TEXT =
+  "Оставляя отметку, я даю согласие на обработку моих персональных данных на условиях Политики конфиденциальности сайта." as const;
