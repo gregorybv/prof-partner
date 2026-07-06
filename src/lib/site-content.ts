@@ -340,3 +340,88 @@ export const AUTO_SELECT_DISCLAIMER =
 
 export const CONSENT_TEXT =
   "Оставляя отметку, я даю согласие на обработку моих персональных данных на условиях Политики конфиденциальности сайта." as const;
+
+export const TENDER_SUPPORT = {
+  title: "Тендерное сопровождение под ключ",
+  subtitle: "Все виды работ по тендерному сопровождению",
+  description:
+    "Тендер - это не только банковская гарантия, тендер это - правильный анализ документации, регистрация на электронных торговых площадках, настройка рабочего места, формирование пакета документов для подачи заявки, оспаривание решений, а также подача жалоб в ФАС.",
+  description2:
+    "Наши тендерные специалисты готовы предоставить Вам полный комплекс услуг от подачи заявки до электронного актирования! Наш юрист поможет Вам в проверке договора и урегулировании претензий от Заказчика!",
+  cta: "Мы возьмем на себя всю эту работу,\na Вам останется только исполнить контракт!",
+} as const;
+
+export const TENDER_PLATFORMS = [
+  { name: "Сбербанк-АСТ", image: "/prof-p/1_tender.png" },
+  { name: "РТС-Тендер", image: "/prof-p/2_tender.png" },
+  { name: "Росэлторг", image: "/prof-p/3_tender.png" },
+  { name: "Фабрикант", image: "/prof-p/4_tender.png" },
+  { name: "Заказ РФ", image: "/prof-p/5_tender.png" },
+  { name: "РАД", image: "/prof-p/6_tender.png" },
+  { name: "ТЭК-Торг", image: "/prof-p/7_tender.png" },
+] as const;
+
+export const TESTIMONIALS = [
+  { thumb: "/prof-p/small/review2.png", full: "/prof-p/alfaspa-med.png", alt: "review" },
+  { thumb: "/prof-p/small/review1.png", full: "/prof-p/review1.png", alt: "review" },
+  { thumb: "/prof-p/small/review3.png", full: "/prof-p/bestway.png", alt: "review" },
+  { thumb: "/prof-p/small/review4.png", full: "/prof-p/review3.png", alt: "review" },
+  { thumb: "/prof-p/small/review5.png", full: "/prof-p/zip.png", alt: "review" },
+  { thumb: "/prof-p/small/review2.png", full: "/prof-p/review4.png", alt: "review" },
+  { thumb: "/prof-p/small/review1.png", full: "/prof-p/amber-medical.png", alt: "review" },
+  { thumb: "/prof-p/small/review3.png", full: "/prof-p/review5.png", alt: "review" },
+  { thumb: "/prof-p/small/review4.png", full: "/prof-p/am-lift.png", alt: "review" },
+  { thumb: "/prof-p/small/review5.png", full: "/prof-p/aspramed.png", alt: "review" },
+  { thumb: "/prof-p/small/review2.png", full: "/prof-p/building-constuction.png", alt: "review" },
+  { thumb: "/prof-p/small/review1.png", full: "/prof-p/complect-work.png", alt: "review" },
+  { thumb: "/prof-p/small/review3.png", full: "/prof-p/fasadstroy.png", alt: "review" },
+  { thumb: "/prof-p/small/review4.png", full: "/prof-p/IP-Arazumyan.png", alt: "review" },
+  { thumb: "/prof-p/small/review5.png", full: "/prof-p/IP-Melnikov.png", alt: "review" },
+  { thumb: "/prof-p/small/review2.png", full: "/prof-p/Keks.png", alt: "review" },
+  { thumb: "/prof-p/small/review1.png", full: "/prof-p/luch.png", alt: "review" },
+  { thumb: "/prof-p/small/review3.png", full: "/prof-p/Monolith.png", alt: "review" },
+  { thumb: "/prof-p/small/review4.png", full: "/prof-p/next.png", alt: "review" },
+  { thumb: "/prof-p/small/review5.png", full: "/prof-p/rion.png", alt: "review" },
+  { thumb: "/prof-p/small/review2.png", full: "/prof-p/review2.png", alt: "review" },
+] as const;
+
+export const WHY_FREE_WITH_US = [
+  { amount: "100 000 ₽", label: "Цена гарантии по тарифу банка" },
+  { amount: "75 000 ₽", label: "Мы согласовываем для Вас нашу цену" },
+  { amount: "75 000 ₽", label: "Вы платите новую цену банку напрямую" },
+  { amount: "25 000 ₽", label: "Вы сэкономили благодаря нам" },
+  { amount: "3 000 ₽", label: "Агентских заплатит нам банк-партнёр" },
+] as const;
+
+export const WHY_FREE_WITHOUT_US = [
+  { amount: "100 000 ₽", label: "Цена гарантии по тарифу банка" },
+  { amount: "100 000 ₽", label: "Цена банка после автоматического одобрения" },
+  { amount: "100 000 ₽", label: "Вы оплачиваете гарантию без возможности изменить стоимость" },
+  { amount: "0 ₽", label: "Вы сэкономили, оформив напрямую" },
+  { amount: "0 ₽", label: "Агентских заплатит нам банк-партнёр" },
+] as const;
+
+export const WHY_FREE_SUMMARY = {
+  withUs: [
+    "Вы заплатили банку: 75 000 ₽",
+    "Вы сэкономили: 25 000 ₽",
+    "Банк заплатил нам: 3 000 ₽",
+    "Банк заработал: 72 000 ₽",
+  ],
+  withoutUs: [
+    "Вы заплатили банку: 100 000 ₽",
+    "Вы сэкономили: 0 ₽",
+    "Банк заплатил нам: 0 ₽",
+    "Банк заработал: 100 000 ₽",
+  ],
+  footnote:
+    "При Вашем прямом обращении в банки, все расчёты производятся автоматически в рамках экспресс-гарантий и скидка в таком случае не предусмотрена. После 50-250 млн (зависит от тарифов банков), при индивидуальном рассмотрении они возможны. Но как правило небольшие и при выполнении списка условий по другим продуктам банка.",
+  example:
+    "На примере гарантии, стоимость которой 100 000 рублей (комиссия банка за выдачу гарантии)",
+} as const;
+
+export const PROCESS_FOOTNOTE =
+  "Время на каждом этапе рассчитано с учётом применения нашей скоринговой системы, а также программной интеграции с банками-партнёрами для получения быстрого одобрения и оформления гарантий." as const;
+
+export const PROCESS_GUARANTEE_NOTE =
+  "Выдадим гарантию за 45 минут при соблюдении всех условий и требований." as const;
