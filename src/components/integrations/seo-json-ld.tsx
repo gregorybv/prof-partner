@@ -1,0 +1,12 @@
+import { getOrganizationJsonLd } from "@/lib/seo";
+
+export function SeoJsonLd() {
+  const data = getOrganizationJsonLd();
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}

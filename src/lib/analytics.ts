@@ -1,0 +1,52 @@
+export const YANDEX_METRIKA_ID = 66006553;
+
+export const METRIKA_GOALS = {
+  EMAIL_PANEL: "EMAIL-PANEL",
+  EMAIL_CONTACTS: "EMAIL-KONTAKTY",
+  PHONE_TOLL_FREE: "TELEFON-BESPLATNYY-PANEL",
+  PHONE_MOSCOW: "TELEFON-MOSCOVSKIY-PANEL",
+  YANDEX_REVIEWS: "KNOPKA-OTZYVY-NA-YANDEX-KARTAH",
+  YANDEX_RATE: "KNOPKA-OCENIT-MESTO-NA-YANDEX-KARTAH",
+  INFO_MODAL: "INFORMACIYA",
+  CALCULATOR: "KALKULYATOR",
+  CALCULATOR_BTN: "KNOPKA-KALKULYATOR",
+  CALCULATOR_LIMIT: "KALKULYATOR-LIMIT",
+  AUTO_SELECT: "AVTOPODBOR",
+  AUTO_SELECT_BTN: "KNOPKA-AVTOPODBOR",
+  FORM_CALCULATOR: "FORMA-KALKULYATOR",
+  FORM_AUTO: "FORMA-AVTOPODBORA",
+  FORM_PRICE: "FORMA-CENA",
+  FORM_COMPANY: "FORMA-COMPANIYA",
+  FORM_CALCULATION: "FORMA-RASCHYOT",
+  FORM_URGENT: "FORMA-SROCHNO",
+  FORM_TARIFF: "FORMA-TARIF",
+  FORM_TIME: "FORMA-VREMYA",
+  ANTIBOT: "FORMA-ANTIPARSING",
+  ANTIBOT_CANCEL: "FORMA-ANTIPARSING-OTMENA",
+  ANTIBOT_EMAIL: "FORMA-ANTIPARSING-ZAPROS-POCHTA",
+  ANTIBOT_SMS: "FORMA-ANTIPARSING-ZAPROS-SMS",
+  WHATSAPP: "WHATSAPP",
+  TELEGRAM: "TELEGRAM",
+  VIBER: "VIBER",
+} as const;
+
+export type MetrikaGoal = (typeof METRIKA_GOALS)[keyof typeof METRIKA_GOALS];
+
+export function reachGoal(goal: MetrikaGoal, params?: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+
+  const ym = window.ym;
+  if (!ym) return;
+
+  if (params) {
+    ym(YANDEX_METRIKA_ID, "reachGoal", goal, params);
+    return;
+  }
+
+  ym(YANDEX_METRIKA_ID, "reachGoal", goal);
+}
+
+export function setMetrikaParams(params: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+  window.ym?.(YANDEX_METRIKA_ID, "params", params);
+}

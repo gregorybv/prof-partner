@@ -1,0 +1,98 @@
+import type { Metadata } from "next";
+import { COMPANY, SITE_URL } from "./site-content";
+
+export const SITE_METADATA: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: "Профессиональный Партнёр: независимая банковская гарантия",
+  description:
+    "Независимая банковская гарантия от компании «Профессиональный Партнёр»",
+  keywords: [
+    "банковская гарантия",
+    "независимая гарантия",
+    "44-ФЗ",
+    "223-ФЗ",
+    "тендерное сопровождение",
+    COMPANY.name,
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    locale: "ru_RU",
+    url: SITE_URL,
+    type: "website",
+    title:
+      "Независимая банковская гарантия от компании «Профессиональный Партнёр»",
+    description:
+      "Независимая банковская гарантия от компании «Профессиональный Партнёр»",
+    images: [
+      {
+        url: `${SITE_URL}/img/logo_main.png`,
+        width: 1200,
+        height: 630,
+        alt: COMPANY.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Независимая банковская гарантия от компании «Профессиональный Партнёр»",
+    description:
+      "Независимая банковская гарантия от компании «Профессиональный Партнёр»",
+    images: [`${SITE_URL}/img/logo_main.png`],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon/apple-icon-180x180.png", sizes: "180x180" },
+    ],
+    other: [
+      {
+        rel: "manifest",
+        url: "/favicon/manifest.json",
+      },
+    ],
+  },
+  other: {
+    "msapplication-TileColor": "#ffffff",
+    "theme-color": "#ffffff",
+  },
+};
+
+export function getOrganizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    name: COMPANY.legalName,
+    alternateName: COMPANY.name,
+    url: SITE_URL,
+    logo: `${SITE_URL}/img/logo.png`,
+    email: COMPANY.email,
+    telephone: COMPANY.phoneTollFree,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Малая Ордынка 12, строение 3, офис 5",
+      addressLocality: "Москва",
+      postalCode: "119017",
+      addressCountry: "RU",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "252",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "19:00",
+      },
+    ],
+  };
+}
