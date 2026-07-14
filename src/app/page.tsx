@@ -12,8 +12,12 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { CallbackCtaSection } from "@/components/sections/callback-cta-section";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { WhyFreeSection } from "@/components/sections/why-free-section";
+import { CalculatorSection } from "@/components/sections/calculator-section";
+import { ComplexCasesSection } from "@/components/sections/complex-cases-section";
+import { AdvantagesSection } from "@/components/sections/advantages-section";
+import { RegionsSection } from "@/components/sections/regions-section";
+import { ClientsTrustSection } from "@/components/sections/clients-trust-section";
 import { ContactsFooterSection } from "@/components/sections/contacts-footer-section";
-import { RoadmapSkeletonSections } from "@/components/sections/roadmap-skeleton-sections";
 
 export default function HomePage() {
   return (
@@ -34,7 +38,11 @@ export default function HomePage() {
         <PricingSection />
         <WhyFreeSection />
         <CallbackCtaSection formName="РАСЧЕТ" muted={false} />
-        <RoadmapSkeletonSections />
+        <CalculatorSection />
+        <ComplexCasesSection />
+        <AdvantagesSection />
+        <RegionsSection />
+        <ClientsTrustSection />
         <CallbackCtaSection formName="КОМПАНИЯ" />
         <ContactsFooterSection />
       </main>

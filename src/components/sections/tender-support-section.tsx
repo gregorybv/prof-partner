@@ -55,7 +55,7 @@ export function TenderSupportSection() {
             {TENDER_PLATFORMS.map((platform) => (
               <div
                 key={platform.name}
-                className="flex h-16 w-28 items-center justify-center grayscale transition-all hover:grayscale-0"
+                className="flex h-16 w-28 items-center justify-center"
               >
                 <Image
                   src={platform.image}

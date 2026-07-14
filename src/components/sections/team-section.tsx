@@ -1,47 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Reveal } from "@/components/animations/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
 import { TEAM_MEMBERS, TEAM_STATS } from "@/lib/site-content";
-import { cn } from "@/lib/utils";
 
 export function TeamSection() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: true,
-    slidesToScroll: 1,
-  });
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
-
   const { ref: statsRef, inView: statsInView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCanPrev(emblaApi.canScrollPrev());
-    setCanNext(emblaApi.canScrollNext());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
 
   const featured = TEAM_MEMBERS[0];
   const rest = TEAM_MEMBERS.slice(1);
@@ -54,78 +25,69 @@ export function TeamSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start">
-            <div className="flex shrink-0 flex-col items-center text-center">
-              <div className="relative h-44 w-44 overflow-hidden rounded-full border-4 border-[var(--surface-0)] shadow-[var(--shadow-card)] ring-2 ring-[var(--brand-200)]">
-                <Image
-                  src={featured.image}
-                  alt={featured.name}
-                  fill
-                  className="object-cover"
-                  sizes="176px"
-                  priority
-                />
+          <div className="relative flex flex-col gap-8">
+            <div className="relative overflow-hidden rounded-[2.25rem] border border-[rgba(186,145,62,0.28)] bg-[linear-gradient(135deg,rgba(4,22,37,0.98),rgba(9,53,84,0.95)_52%,rgba(250,252,255,0.98)_160%)] px-6 pb-10 pt-8 shadow-[0_30px_80px_rgba(4,22,37,0.26)] md:px-8 lg:px-10 lg:pb-12">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_18%_24%,rgba(212,175,86,0.18),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(48,159,222,0.18),transparent_28%)]" />
+              <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+                <span className="inline-flex rounded-full border border-[rgba(255,255,255,0.22)] bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/88 backdrop-blur">
+                  Руководитель компании
+                </span>
+                <div className="relative mt-6 h-52 w-52 overflow-hidden rounded-[2.25rem] border border-white/18 bg-[linear-gradient(180deg,rgba(255,255,255,0.2),rgba(255,255,255,0.08))] shadow-[0_24px_60px_rgba(4,22,37,0.4)] ring-4 ring-[rgba(255,255,255,0.08)] md:h-64 md:w-64">
+                  <div className="absolute inset-3 rounded-[1.75rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.02))]" />
+                  <Image
+                    src={featured.image}
+                    alt={featured.name}
+                    fill
+                    className="object-contain p-3"
+                    sizes="(min-width: 768px) 256px, 208px"
+                    priority
+                  />
+                </div>
+                <p className="mt-6 text-[1.9rem] font-semibold tracking-[-0.02em] text-white md:text-[2.25rem]">
+                  {featured.name}
+                </p>
+                <p className="mt-2 text-base text-white/74 md:text-lg">
+                  {featured.role}
+                </p>
+                <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/78 md:text-base">
+                  Возглавляет команду специалистов, которые сопровождают клиента на всех этапах оформления банковских гарантий и помогают быстро доводить сделки до результата.
+                </p>
               </div>
-              <p className="mt-4 font-semibold text-[var(--text-primary)]">
-                {featured.name}
-              </p>
-              <p className="mt-1 max-w-[200px] text-sm text-[var(--text-secondary)]">
-                {featured.role}
-              </p>
             </div>
 
-            <div className="w-full min-w-0 flex-1">
-              <div className="mb-4 flex items-center justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => emblaApi?.scrollPrev()}
-                  disabled={!canPrev}
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-default)] transition-colors",
-                    canPrev
-                      ? "hover:bg-[var(--surface-2)]"
-                      : "cursor-not-allowed opacity-40",
-                  )}
-                  aria-label="Предыдущий"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => emblaApi?.scrollNext()}
-                  disabled={!canNext}
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-default)] transition-colors",
-                    canNext
-                      ? "hover:bg-[var(--surface-2)]"
-                      : "cursor-not-allowed opacity-40",
-                  )}
-                  aria-label="Следующий"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+            <div className="relative -mt-4 overflow-hidden rounded-[2rem] border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(135deg,rgba(244,248,252,0.98)_0%,rgba(250,252,255,0.99)_42%,rgba(238,246,252,0.98)_100%)] p-5 shadow-[0_24px_60px_rgba(9,34,53,0.12)] md:p-6 lg:px-7">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(10,107,156,0.14),transparent_42%),radial-gradient(circle_at_right,rgba(59,111,212,0.08),transparent_32%)]" />
+              <div className="relative mb-5">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand-800)]">
+                    Ключевые специалисты
+                  </p>
+                  <p className="mt-2 max-w-[560px] text-sm text-[var(--text-secondary)] md:text-base">
+                  Наша команда работает так, чтобы вы получили лучшие условия финансирования без лишних сложностей. От первого обращения до одобрения и оформления сделки — мы сопровождаем каждый этап.</p>
+                </div>
               </div>
 
-              <div className="overflow-hidden" ref={emblaRef}>
-                <div className="flex gap-4">
-                  {rest.map((member) => (
+              <div className="team-marquee relative overflow-hidden rounded-[1.75rem]">
+                <div className="team-marquee-track flex w-max gap-4">
+                  {[...rest, ...rest].map((member, index) => (
                     <div
-                      key={member.name}
-                      className="min-w-0 flex-[0_0_75%] rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-5 shadow-[var(--shadow-xs)] sm:flex-[0_0_45%] lg:flex-[0_0_32%]"
+                      key={`${member.name}-${index}`}
+                      aria-hidden={index >= rest.length}
+                      className="group flex min-h-[16.5rem] w-[78vw] shrink-0 flex-col rounded-[1.75rem] border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,253,0.98))] p-5 shadow-[0_14px_24px_rgba(9,34,53,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_32px_rgba(9,34,53,0.1)] sm:w-[46vw] sm:max-w-[26rem] lg:w-[32vw] lg:max-w-[24rem]"
                     >
-                      <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full">
+                      <div className="relative mx-auto h-32 w-32 shrink-0 overflow-hidden rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(14,86,134,0.14),rgba(255,255,255,0.98))] ring-1 ring-[rgba(12,56,89,0.1)] transition-transform duration-300 group-hover:scale-[1.04]">
                         <Image
                           src={member.image}
                           alt={member.name}
                           fill
-                          className="object-cover"
-                          sizes="96px"
+                          className="object-contain p-0.5"
+                          sizes="128px"
                         />
                       </div>
-                      <p className="mt-3 text-center font-medium text-[var(--text-primary)]">
+                      <p className="mt-4 text-center font-semibold text-[var(--text-primary)]">
                         {member.name}
                       </p>
-                      <p className="mt-1 text-center text-xs leading-snug text-[var(--text-secondary)]">
+                      <p className="mt-2 text-center text-xs leading-snug text-[var(--text-secondary)]">
                         {member.role}
                       </p>
                     </div>

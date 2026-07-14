@@ -10,7 +10,12 @@ const ICONS = [TrendingDown, Zap, Target] as const;
 
 export function ValueSection() {
   return (
-    <SectionShell muted>
+    <SectionShell
+      background={{
+        src: "/prof-p/background-any-5.jpg",
+        overlay: "medium",
+      }}
+    >
       <div className="flex flex-col gap-[var(--space-section-gap)]">
         <Reveal>
           <SectionHeading
@@ -25,14 +30,16 @@ export function ValueSection() {
             return (
               <Reveal key={prop.title} delay={index * 0.1}>
                 <article className="group relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-8 shadow-[var(--shadow-xs)] transition-all duration-[var(--duration-slow)] hover:-translate-y-1 hover:shadow-[var(--shadow-card)]">
-                  <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[var(--accent-500)]/5 transition-transform duration-[var(--duration-slow)] group-hover:scale-150" />
+                  <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[var(--cta-300)]/10 transition-transform duration-[var(--duration-slow)] group-hover:scale-150" />
                   <div className="relative flex flex-col gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--brand-600)] to-[var(--brand-700)] text-white shadow-[var(--shadow-sm)]">
-                      <Icon className="h-6 w-6" />
+                    <div className="flex items-center gap-4">
+                      <div className="bg-cta-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <h3 className="font-display text-2xl text-[var(--brand-600)]">
+                        {prop.title}
+                      </h3>
                     </div>
-                    <h3 className="font-display text-2xl text-[var(--brand-600)]">
-                      {prop.title}
-                    </h3>
                     <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                       {prop.description}
                     </p>

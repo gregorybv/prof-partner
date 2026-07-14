@@ -27,7 +27,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           className={cn(
             "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
             resolvedChecked
-              ? "border-[var(--brand-600)] bg-[var(--brand-600)]"
+              ? "border-[var(--cta-700)] bg-cta-gradient shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
               : "border-[var(--border-strong)] bg-[var(--surface-0)]",
           )}
         >

@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/animations/reveal";
+import { YandexMap } from "@/components/integrations/yandex-map";
 import { SectionShell } from "@/components/ui/section-shell";
 import { COMPANY, LEGAL_LINKS } from "@/lib/site-content";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
@@ -8,7 +9,7 @@ import { formatPhoneHref } from "@/lib/utils";
 
 export function ContactsFooterSection() {
   return (
-    <SectionShell id="footer" muted className="border-t border-[var(--border-subtle)]">
+    <SectionShell id="footer" muted className="border-t border-[var(--border-subtle)] pb-24 md:pb-[var(--space-section-y)]">
       <Reveal>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
@@ -16,6 +17,10 @@ export function ContactsFooterSection() {
               Контактная информация
             </h2>
             <div className="mt-6 space-y-4 text-sm text-[var(--text-secondary)]">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Тверь</p>
+                <p className="mt-1 text-xs uppercase tracking-wide text-[var(--text-muted)]">Москва</p>
+              </div>
               <div>
                 <h3 className="font-semibold text-[var(--text-primary)]">
                   {COMPANY.legalName}
@@ -37,33 +42,39 @@ export function ContactsFooterSection() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6 shadow-[var(--shadow-sm)]">
-            <div className="space-y-4">
-              <div>
-                <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-                  Телефоны
-                </p>
-                <a
-                  href={formatPhoneHref(COMPANY.phoneTollFree)}
-                  onClick={() => reachGoal(METRIKA_GOALS.PHONE_TOLL_FREE)}
-                  className="mt-1 block text-lg font-semibold text-[var(--text-primary)] hover:text-[var(--accent-500)]"
-                >
-                  {COMPANY.phoneTollFree}
-                </a>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
-                  Эл. Почта
-                </p>
-                <a
-                  href={`mailto:${COMPANY.email}`}
-                  onClick={() => reachGoal(METRIKA_GOALS.EMAIL_CONTACTS)}
-                  className="mt-1 block font-medium text-[var(--accent-500)] hover:underline"
-                >
-                  {COMPANY.email}
-                </a>
+          <div className="flex flex-col gap-6">
+            <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6 shadow-[var(--shadow-sm)]">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Телефоны</p>
+                  <a
+                    href={formatPhoneHref(COMPANY.phoneTollFree)}
+                    onClick={() => reachGoal(METRIKA_GOALS.PHONE_TOLL_FREE)}
+                    className="mt-1 block text-lg font-semibold text-[var(--text-primary)] hover:text-[var(--accent-500)]"
+                  >
+                    {COMPANY.phoneTollFree}
+                  </a>
+                  <a
+                    href={formatPhoneHref(COMPANY.phoneMoscow)}
+                    onClick={() => reachGoal(METRIKA_GOALS.PHONE_MOSCOW)}
+                    className="mt-1 block text-sm text-[var(--text-secondary)] hover:text-[var(--accent-500)]"
+                  >
+                    {COMPANY.phoneMoscow}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Эл. Почта</p>
+                  <a
+                    href={`mailto:${COMPANY.email}`}
+                    onClick={() => reachGoal(METRIKA_GOALS.EMAIL_CONTACTS)}
+                    className="mt-1 block font-medium text-[var(--accent-500)] hover:underline"
+                  >
+                    {COMPANY.email}
+                  </a>
+                </div>
               </div>
             </div>
+            <YandexMap />
           </div>
         </div>
 

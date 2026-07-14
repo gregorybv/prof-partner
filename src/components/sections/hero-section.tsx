@@ -7,8 +7,10 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Star } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
+import { MagneticWrap } from "@/components/animations/magnetic-wrap";
 import { Button } from "@/components/ui/button";
 import { SiteContainer } from "@/components/ui/site-container";
+import { CertsHeaderVisual } from "@/components/sections/certs-header-visual";
 import { HERO_FEATURES, HERO_STATS, YANDEX_REVIEWS } from "@/lib/site-content";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
 
@@ -36,14 +38,14 @@ export function HeroSection() {
     >
       <div className="pointer-events-none absolute inset-0">
         <Image
-          src="/prof-p/hero-bg.jpg"
+          src="/prof-p/background-first-screen.jpg"
           alt=""
           fill
           priority
-          className="object-cover opacity-20"
+          className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-1)] via-[var(--surface-1)]/90 to-[var(--surface-1)]" />
+        <div className="absolute inset-0 bg-[rgba(223,231,242,0.7)]" />
         <motion.div
           style={{ x: orbX, y: orbY }}
           className="absolute -top-24 right-[10%] h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(59,111,212,0.18)_0%,transparent_70%)] blur-3xl"
@@ -64,7 +66,7 @@ export function HeroSection() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <h1 className="font-display text-[var(--text-6xl)] leading-[var(--leading-tight)] text-[var(--text-primary)]">
+              <h1 className="font-display text-[clamp(1.95rem,4.8vw,3.4rem)] leading-[1.1] font-extrabold uppercase tracking-[0.012em] text-[var(--brand-900)]">
                 Независимая (банковская) гарантия
               </h1>
             </Reveal>
@@ -100,37 +102,46 @@ export function HeroSection() {
             </Reveal>
 
             <Reveal delay={0.4} className="flex flex-wrap gap-3">
-              <a
-                href="#kalkulyator"
-                onClick={() => reachGoal(METRIKA_GOALS.CALCULATOR_BTN)}
-                className="inline-flex"
-              >
-                <Button size="lg" type="button">
-                  Калькулятор гарантии
-                </Button>
-              </a>
-              <a
-                href="#avto-podbor"
-                onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
-                className="inline-flex"
-              >
-                <Button variant="secondary" size="lg" type="button">
-                  Автоподбор банка
-                </Button>
-              </a>
+              <MagneticWrap>
+                <a
+                  href="#kalkulyator"
+                  onClick={() => reachGoal(METRIKA_GOALS.CALCULATOR_BTN)}
+                  className="inline-flex"
+                >
+                  <Button size="lg" type="button">
+                    Калькулятор гарантии
+                  </Button>
+                </a>
+              </MagneticWrap>
+              <MagneticWrap>
+                <a
+                  href="#avto-podbor"
+                  onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
+                  className="inline-flex"
+                >
+                  <Button variant="secondary" size="lg" type="button">
+                    Автоподбор банка
+                  </Button>
+                </a>
+              </MagneticWrap>
             </Reveal>
           </div>
 
           <Reveal delay={0.2} direction="left" className="flex flex-col gap-6">
             <div className="glass rounded-3xl p-6 shadow-[var(--shadow-card)]">
-              <Link href="#avto-podbor" className="mb-4 block">
+              <Link
+                href="#avto-podbor"
+                onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
+                className="mb-4 inline-flex items-center gap-2 text-base font-semibold uppercase tracking-wide text-[var(--brand-600)] transition-colors hover:text-[var(--accent-500)]"
+              >
                 <Image
                   src="/prof-p/discount_header.png"
-                  alt="АВТОПОДБОР БАНКА"
-                  width={320}
-                  height={80}
-                  className="h-auto w-full max-w-xs"
+                  alt=""
+                  width={30}
+                  height={30}
+                  className="h-[30px] w-[30px] shrink-0"
                 />
+                Автоподбор банка
               </Link>
 
               <div className="flex items-center gap-3">
@@ -160,13 +171,7 @@ export function HeroSection() {
             </div>
 
             <div className="glass rounded-3xl p-6 shadow-[var(--shadow-card)]">
-              <Image
-                src="/prof-p/certs-header.png"
-                alt="certs"
-                width={400}
-                height={120}
-                className="mb-4 h-auto w-full"
-              />
+              <CertsHeaderVisual />
               <p className="text-sm text-[var(--text-secondary)]">
                 Являемся официальными
                 <br />

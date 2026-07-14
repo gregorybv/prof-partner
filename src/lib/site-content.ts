@@ -88,32 +88,32 @@ export const TEAM_MEMBERS = [
   {
     name: "Финогенова Мария",
     role: "Заместитель руководителя подразделения",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_5.png",
   },
   {
     name: "Антонова Ольга",
     role: "Куратор по работе с банками",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_4.png",
   },
   {
     name: "Виноградова Дарья",
     role: "Руководитель направления контрактного кредитования",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_6.png",
   },
   {
     name: "Иванова Екатерина",
     role: "Специалист по работе с ключевыми клиентами",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_2.png",
   },
   {
     name: "Масленникова Виктория",
     role: "Специалист по работе с ключевыми клиентами",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_3.png",
   },
   {
     name: "Коробцов Артур",
     role: "Руководитель подразделения",
-    image: "/prof-p/sotrudniki_1.png",
+    image: "/prof-p/sotrudniki_7.png",
   },
 ] as const;
 
@@ -151,13 +151,55 @@ export const SERVICES = [
 ] as const;
 
 export const PROCESS_STEPS = [
-  { step: 1, title: "Анализ Вашей компании", duration: "10 мин" },
-  { step: 2, title: "Подбор банков", duration: "5 мин" },
-  { step: 3, title: "Подача заявки в банк", duration: "20 мин" },
-  { step: 4, title: "Получение одобрения", duration: "30 мин" },
-  { step: 5, title: "Согласование проекта БГ", duration: "55 мин" },
-  { step: 6, title: "Оплата банку напрямую", duration: "30 мин" },
-  { step: 7, title: "Выпуск и получение БГ", duration: "30 мин" },
+  {
+    step: 1,
+    title: "Анализ Вашей компании",
+    titleLines: ["Анализ", "Вашей компании"],
+    durationValue: "10",
+    durationUnit: "мин",
+  },
+  {
+    step: 2,
+    title: "Подбор банков",
+    titleLines: ["Подбор", "банков"],
+    durationValue: "5",
+    durationUnit: "мин",
+  },
+  {
+    step: 3,
+    title: "Подача заявки в банк",
+    titleLines: ["Подача заявки", "в банк"],
+    durationValue: "20",
+    durationUnit: "мин",
+  },
+  {
+    step: 4,
+    title: "Получение одобрения",
+    titleLines: ["Получение", "одобрения"],
+    durationValue: "30",
+    durationUnit: "мин",
+  },
+  {
+    step: 5,
+    title: "Согласование проекта БГ",
+    titleLines: ["Согласование", "проекта БГ"],
+    durationValue: "55",
+    durationUnit: "мин",
+  },
+  {
+    step: 6,
+    title: "Оплата банку напрямую",
+    titleLines: ["Оплата банку", "напрямую"],
+    durationValue: "30",
+    durationUnit: "мин",
+  },
+  {
+    step: 7,
+    title: "Выпуск и получение БГ",
+    titleLines: ["Выпуск", "и получение БГ"],
+    durationValue: "30",
+    durationUnit: "мин",
+  },
 ] as const;
 
 export const ADVANTAGES = [

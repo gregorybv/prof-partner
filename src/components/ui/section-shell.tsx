@@ -1,4 +1,8 @@
 import { cn } from "@/lib/utils";
+import {
+  SectionBackground,
+  type SectionBackgroundProps,
+} from "./section-background";
 import { SiteContainer } from "./site-container";
 
 type SectionShellProps = React.ComponentProps<"section"> & {
@@ -6,6 +10,7 @@ type SectionShellProps = React.ComponentProps<"section"> & {
   containerClassName?: string;
   wide?: boolean;
   muted?: boolean;
+  background?: SectionBackgroundProps;
 };
 
 export function SectionShell({
@@ -14,6 +19,7 @@ export function SectionShell({
   containerClassName,
   wide,
   muted,
+  background,
   children,
   ...props
 }: SectionShellProps) {
@@ -21,13 +27,14 @@ export function SectionShell({
     <section
       id={id}
       className={cn(
-        "py-[var(--space-section-y)]",
-        muted && "bg-[var(--surface-2)]",
+        "relative py-[var(--space-section-y)]",
+        muted && !background && "bg-[var(--surface-2)]",
         className,
       )}
       {...props}
     >
-      <SiteContainer wide={wide} className={containerClassName}>
+      {background && <SectionBackground {...background} />}
+      <SiteContainer wide={wide} className={cn("relative", containerClassName)}>
         {children}
       </SiteContainer>
     </section>

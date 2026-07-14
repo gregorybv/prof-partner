@@ -8,21 +8,52 @@ import { SectionShell } from "@/components/ui/section-shell";
 import { Button } from "@/components/ui/button";
 import { CERTIFICATES } from "@/lib/site-content";
 
-const INITIAL_VISIBLE = 9;
+const INITIAL_VISIBLE = 10;
+
+function preloadImage(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const image = new window.Image();
+    image.onload = () => resolve();
+    image.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+    image.src = src;
+  });
+}
 
 export function CertificatesSection() {
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{
     src: string;
     alt: string;
-    caption: string;
   } | null>(null);
 
   const visibleCerts = CERTIFICATES.slice(0, visibleCount);
   const hasMore = visibleCount < CERTIFICATES.length;
 
+  const handleOpen = async (
+    cert: (typeof CERTIFICATES)[number],
+    index: number,
+  ) => {
+    setLoadingIndex(index);
+    try {
+      await preloadImage(cert.full);
+      setLightbox({ src: cert.full, alt: cert.bank });
+    } catch {
+      setLightbox({ src: cert.full, alt: cert.bank });
+    } finally {
+      setLoadingIndex(null);
+    }
+  };
+
   return (
-    <SectionShell id="sertifikaty">
+    <SectionShell
+      id="sertifikaty"
+      background={{
+        src: "/prof-p/modern-business-building-with-glass-wall-from-empty-floor.jpg",
+        overlay: "medium",
+        position: "bottom",
+      }}
+    >
       <div className="flex flex-col gap-[var(--space-section-gap)]">
         <Reveal>
           <SectionHeading
@@ -31,16 +62,19 @@ export function CertificatesSection() {
           />
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="flex flex-wrap justify-center gap-4">
           {visibleCerts.map((cert, index) => (
-            <Reveal key={`${cert.bank}-${index}`} delay={index * 0.04}>
+            <Reveal
+              key={`${cert.bank}-${index}`}
+              delay={index * 0.04}
+              className="h-full w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)] xl:w-[calc((100%-4rem)/5)]"
+            >
               <CertificateCard
                 bank={cert.bank}
                 thumb={cert.thumb}
                 full={cert.full}
-                onOpen={() =>
-                  setLightbox({ src: cert.full, alt: cert.bank, caption: cert.bank })
-                }
+                loading={loadingIndex === index}
+                onOpen={() => handleOpen(cert, index)}
               />
             </Reveal>
           ))}
@@ -64,7 +98,6 @@ export function CertificatesSection() {
           open
           src={lightbox.src}
           alt={lightbox.alt}
-          caption={lightbox.caption}
           onClose={() => setLightbox(null)}
         />
       )}

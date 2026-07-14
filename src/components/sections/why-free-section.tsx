@@ -39,7 +39,13 @@ function PriceCard({
 
 export function WhyFreeSection() {
   return (
-    <SectionShell id="price" muted>
+    <SectionShell
+      id="price"
+      background={{
+        src: "/prof-p/background_zero.jpg",
+        overlay: "medium",
+      }}
+    >
       <div className="flex flex-col gap-[var(--space-section-gap)]">
         <Reveal>
           <h2 className="text-center font-display text-4xl text-[var(--text-primary)] md:text-5xl">

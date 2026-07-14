@@ -6,12 +6,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
 import { Reveal } from "@/components/animations/reveal";
+import { CommerceAutoModal } from "@/components/modals/commerce-auto-modal";
+import { LegacyResultsTable } from "@/components/forms/legacy-results-table";
+import { MaskedResultsBanner } from "@/components/forms/masked-results-banner";
+import { useModals } from "@/components/modals/modal-provider";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
+import { hasActiveAntibotToken } from "@/lib/cookies";
 import { LEGACY_API, legacyPost } from "@/lib/api";
+import {
+  maskLegacyTableHtml,
+  unmaskLegacyTableHtml,
+  type CalcResultContext,
+} from "@/lib/legacy-table";
 import { cn } from "@/lib/utils";
 
 const autoSelectSchema = z.object({
@@ -45,12 +55,44 @@ type AutoSelectionFormProps = {
   className?: string;
 };
 
+function buildAutoContext(values: AutoSelectValues): CalcResultContext {
+  return {
+    fz: "Госторги",
+    typeBg: "Исполнение",
+    summ: "",
+    startDate: "",
+    endDate: "",
+    inn: values.innAuto,
+    regnum: values.numAuto,
+    flags: {
+      hasAvans: false,
+      netLossLastYear: false,
+      noExperience: false,
+      blockBankAccount: false,
+      arbitration: false,
+      closedTender: false,
+      customerForm: false,
+      courierDelivery: false,
+      installmentPay: true,
+      d1: false,
+      d2: false,
+      d3: false,
+      d4: false,
+    },
+  };
+}
+
 export function AutoSelectionForm({
   formId = "1",
   className,
 }: AutoSelectionFormProps) {
+  const { openAntibot, openCommerce, openLimit } = useModals();
   const [purchaseType, setPurchaseType] = useState<PurchaseType>("gostorgi");
   const [tableHtml, setTableHtml] = useState<string | null>(null);
+  const [rawTableHtml, setRawTableHtml] = useState<string | null>(null);
+  const [isMasked, setIsMasked] = useState(false);
+  const [calcContext, setCalcContext] = useState<CalcResultContext | null>(null);
+  const [autoPayload, setAutoPayload] = useState<Record<string, string>>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPlaceholder, setShowPlaceholder] = useState(true);
@@ -58,26 +100,26 @@ export function AutoSelectionForm({
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<AutoSelectValues>({
     resolver: zodResolver(autoSelectSchema),
     defaultValues: { consent: undefined },
   });
 
-  const onSubmit = async (values: AutoSelectValues) => {
-    if (purchaseType === "commerce") {
-      reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
-      setErrorMessage(
-        "Для коммерческих контрактов откроется расширенная форма — будет подключена на следующем этапе вместе с модальными окнами.",
-      );
-      return;
+  const unmaskResults = () => {
+    if (rawTableHtml) {
+      setTableHtml(unmaskLegacyTableHtml(rawTableHtml));
+      setIsMasked(false);
     }
+  };
 
-    reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
+  const runAutoCalc = async (values: AutoSelectValues) => {
     setIsLoading(true);
     setErrorMessage(null);
     setShowPlaceholder(false);
     setTableHtml(null);
+    setRawTableHtml(null);
 
     const payload = new URLSearchParams({
       innAuto: values.innAuto,
@@ -85,13 +127,37 @@ export function AutoSelectionForm({
       InstallmentPay: "on",
     });
 
+    const payloadRecord: Record<string, string> = {
+      innAuto: values.innAuto,
+      numAuto: values.numAuto,
+      InstallmentPay: "on",
+    };
+
+    const needsAntibot = !hasActiveAntibotToken();
+    if (needsAntibot) {
+      reachGoal(METRIKA_GOALS.ANTIBOT);
+      openAntibot({
+        context: "auto",
+        payload: payloadRecord,
+        onVerified: unmaskResults,
+        onCancel: () => {
+          setTableHtml(null);
+          setRawTableHtml(null);
+          setIsMasked(false);
+          setShowPlaceholder(true);
+        },
+      });
+    }
+
+    setAutoPayload(payloadRecord);
+
     try {
       await legacyPost(LEGACY_API.calcAutoBtn, payload);
 
       const response = await legacyPost(LEGACY_API.calcAuto, payload);
 
       if (response.status === 403) {
-        setErrorMessage("Достигнут суточный лимит использования. Попробуйте позже.");
+        openLimit();
         reachGoal(METRIKA_GOALS.CALCULATOR_LIMIT);
         return;
       }
@@ -106,7 +172,11 @@ export function AutoSelectionForm({
       }
 
       if (result.result) {
-        setTableHtml(result.result);
+        setRawTableHtml(result.result);
+        const displayHtml = needsAntibot ? maskLegacyTableHtml(result.result) : result.result;
+        setTableHtml(displayHtml);
+        setIsMasked(needsAntibot);
+        setCalcContext(buildAutoContext(values));
         reachGoal(METRIKA_GOALS.AUTO_SELECT, {
           avtopodbor: { inn: values.innAuto, rna: values.numAuto },
         });
@@ -118,6 +188,25 @@ export function AutoSelectionForm({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onSubmit = async (values: AutoSelectValues) => {
+    if (purchaseType === "commerce") {
+      reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
+      openCommerce();
+      return;
+    }
+
+    reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
+    await runAutoCalc(values);
+  };
+
+  const onCommerceResult = (html: string, masked: boolean) => {
+    setShowPlaceholder(false);
+    setTableHtml(html);
+    setRawTableHtml(masked ? unmaskLegacyTableHtml(html) : html);
+    setIsMasked(masked);
+    setCalcContext(buildAutoContext(getValues()));
   };
 
   const consentLabel = (
@@ -195,6 +284,8 @@ export function AutoSelectionForm({
         </div>
       </form>
 
+      <CommerceAutoModal onResult={onCommerceResult} />
+
       <Reveal>
         <p className="text-center text-sm leading-relaxed text-[var(--text-secondary)]">
           Согласуем для Вас <strong>нашу цену</strong> в любом из этих банков. Оплата{" "}
@@ -210,7 +301,10 @@ export function AutoSelectionForm({
       )}
 
       {errorMessage && !isLoading && (
-        <p className="rounded-xl border border-[var(--error)]/20 bg-[var(--error)]/5 px-4 py-3 text-sm text-[var(--error)]" role="alert">
+        <p
+          className="rounded-xl border border-[var(--error)]/20 bg-[var(--error)]/5 px-4 py-3 text-sm text-[var(--error)]"
+          role="alert"
+        >
           {errorMessage}
         </p>
       )}
@@ -227,10 +321,25 @@ export function AutoSelectionForm({
         </div>
       )}
 
-      {tableHtml && !isLoading && (
-        <div
-          className="auto-select-table overflow-x-auto rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] shadow-[var(--shadow-sm)] [&_table]:w-full [&_td]:px-3 [&_td]:py-2 [&_th]:px-3 [&_th]:py-2"
-          dangerouslySetInnerHTML={{ __html: tableHtml }}
+      {isMasked && Object.keys(autoPayload).length > 0 && (
+        <MaskedResultsBanner
+          payload={autoPayload}
+          source="auto"
+          onClear={() => {
+            setTableHtml(null);
+            setRawTableHtml(null);
+            setIsMasked(false);
+            setShowPlaceholder(true);
+          }}
+        />
+      )}
+
+      {tableHtml && calcContext && !isLoading && (
+        <LegacyResultsTable
+          html={tableHtml}
+          masked={isMasked}
+          source="auto"
+          context={calcContext}
         />
       )}
     </div>
