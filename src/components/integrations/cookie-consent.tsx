@@ -1,30 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import { LEGAL_LINKS } from "@/lib/site-content";
 
 const STORAGE_KEY = "prof-p-cookie-consent";
 
-export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+function subscribe() {
+  return () => {};
+}
 
-  useEffect(() => {
-    const accepted = localStorage.getItem(STORAGE_KEY);
-    if (!accepted) setVisible(true);
-  }, []);
+function getStoredConsent() {
+  return localStorage.getItem(STORAGE_KEY);
+}
+
+function getServerConsent() {
+  return "ssr";
+}
+
+export function CookieConsent() {
+  const stored = useSyncExternalStore(subscribe, getStoredConsent, getServerConsent);
+  const [dismissed, setDismissed] = useState(false);
 
   const accept = () => {
     localStorage.setItem(STORAGE_KEY, "accepted");
-    setVisible(false);
+    setDismissed(true);
   };
 
   const decline = () => {
     localStorage.setItem(STORAGE_KEY, "declined");
-    setVisible(false);
+    setDismissed(true);
   };
 
-  if (!visible) return null;
+  if (stored === "ssr" || stored !== null || dismissed) return null;
 
   return (
     <div className="fixed bottom-20 left-4 right-4 z-[var(--z-sticky-cta)] mx-auto max-w-xl rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-4 shadow-[var(--shadow-lg)] md:bottom-6 md:left-6 md:right-auto">

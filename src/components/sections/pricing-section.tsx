@@ -5,6 +5,29 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
 import { PRICING_TABLE } from "@/lib/site-content";
 
+function PriceCell({ value }: { value: string }) {
+  const parts = value.split(/(БЕСПЛАТНО)/);
+
+  return (
+    <span className="text-sm leading-relaxed">
+      {parts.map((part, index) =>
+        part === "БЕСПЛАТНО" ? (
+          <strong
+            key={index}
+            className="font-extrabold uppercase tracking-wide text-[var(--cta-700)]"
+          >
+            {part}
+          </strong>
+        ) : (
+          <span key={index} className="font-semibold text-[var(--text-primary)]">
+            {part}
+          </span>
+        ),
+      )}
+    </span>
+  );
+}
+
 export function PricingSection() {
   return (
     <SectionShell>
@@ -39,8 +62,8 @@ export function PricingSection() {
                       <td className="px-5 py-4 leading-relaxed text-[var(--text-secondary)]">
                         {row.service}
                       </td>
-                      <td className="px-5 py-4 font-semibold text-[var(--brand-600)] whitespace-nowrap">
-                        {row.price}
+                      <td className="px-5 py-4 whitespace-nowrap">
+                        <PriceCell value={row.price} />
                       </td>
                     </tr>
                   ))}

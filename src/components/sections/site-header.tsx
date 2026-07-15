@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
+import { useModals } from "@/components/modals/modal-provider";
+import { Button } from "@/components/ui/button";
 import { SiteContainer } from "@/components/ui/site-container";
 import { COMPANY, NAV_ITEMS } from "@/lib/site-content";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
@@ -14,6 +16,7 @@ const SCROLL_ENTER = 80;
 const SCROLL_LEAVE = 20;
 
 export function SiteHeader() {
+  const { openGuarantee } = useModals();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("#header");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -64,8 +67,8 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="hidden border-b border-[var(--border-subtle)] bg-[var(--surface-0)]/80 lg:block">
-        <SiteContainer className="flex items-center justify-between gap-6 py-2 text-xs text-[var(--text-secondary)]">
+      <div className="hidden border-b border-(--border-subtle) bg-(--surface-0)/80 lg:block">
+        <SiteContainer className="flex items-center justify-between gap-6 py-2 text-xs text-(--text-secondary)">
           <p className="max-w-xs leading-snug">
             Нашей компании 20 лет!
             <br />
@@ -75,21 +78,33 @@ export function SiteHeader() {
             <a
               href={`mailto:${COMPANY.email}`}
               onClick={() => reachGoal(METRIKA_GOALS.EMAIL_PANEL)}
-              className="hover:text-[var(--accent-500)] transition-colors"
+              className="hover:text-(--accent-500) transition-colors"
             >
-              <span className="text-[var(--text-muted)]">Электронная почта: </span>
+              <span className="text-(--text-muted)">Электронная почта: </span>
               {COMPANY.email}
             </a>
             <a
               href={formatPhoneHref(COMPANY.phoneTollFree)}
               onClick={() => reachGoal(METRIKA_GOALS.PHONE_TOLL_FREE)}
-              className="hover:text-[var(--accent-500)] transition-colors"
+              className="hover:text-(--accent-500) transition-colors"
             >
-              <span className="text-[var(--text-muted)]">
+              <span className="text-(--text-muted)">
                 Номер для бесплатных звонков:{" "}
               </span>
               {COMPANY.phoneTollFree}
             </a>
+            <Button
+              size="sm"
+              type="button"
+              onClick={() =>
+                openGuarantee({
+                  fz: "",
+                  fzLabel: "ЗАЯВКА НА ВЫПУСК ГАРАНТИИ",
+                })
+              }
+            >
+              Получить лучшие условия
+            </Button>
           </div>
         </SiteContainer>
       </div>
@@ -97,10 +112,10 @@ export function SiteHeader() {
       <header
         id="header"
         className={cn(
-          "sticky top-0 z-[var(--z-header)] border-b transition-[background-color,box-shadow,backdrop-filter] duration-[var(--duration-slow)] ease-[var(--ease-out)]",
+          "sticky top-0 z-(--z-header) border-b transition-[background-color,box-shadow,backdrop-filter] duration-(--duration-slow) ease-out",
           scrolled
-            ? "border-[var(--surface-glass-border)] bg-[var(--surface-glass)] shadow-[var(--shadow-sm)] backdrop-blur-[20px] backdrop-saturate-[180%]"
-            : "border-transparent bg-[var(--surface-0)]",
+            ? "border-(--surface-glass-border) bg-(--surface-glass) shadow-(--shadow-sm) backdrop-blur-[20px] backdrop-saturate-180"
+            : "border-transparent bg-(--surface-0)",
         )}
       >
         <SiteContainer>
@@ -114,7 +129,7 @@ export function SiteHeader() {
                 priority
                 className="h-10 w-auto"
               />
-              <span className="hidden font-medium text-sm leading-tight sm:block max-w-[140px]">
+              <span className="hidden font-medium text-sm leading-tight sm:block max-w-35">
                 {COMPANY.name}
               </span>
             </Link>
@@ -131,7 +146,7 @@ export function SiteHeader() {
                     "shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wide transition-colors",
                     activeSection === item.href
                       ? "cta-surface-static"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-2)]",
+                      : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--surface-2)",
                   )}
                 >
                   {item.label}
@@ -141,7 +156,7 @@ export function SiteHeader() {
 
             <button
               type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border-default)] lg:hidden"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-(--border-default) lg:hidden"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
             >
@@ -154,7 +169,7 @@ export function SiteHeader() {
           <motion.nav
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden border-t border-[var(--border-subtle)] bg-[var(--surface-0)] px-4 py-4"
+            className="lg:hidden border-t border-(--border-subtle) bg-(--surface-0) px-4 py-4"
             aria-label="Мобильная навигация"
           >
             <div className="flex flex-col gap-1">
@@ -167,7 +182,7 @@ export function SiteHeader() {
                     "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
                     activeSection === item.href
                       ? "cta-surface-static"
-                      : "hover:bg-[var(--surface-2)]",
+                      : "hover:bg-(--surface-2)",
                   )}
                 >
                   {item.label}

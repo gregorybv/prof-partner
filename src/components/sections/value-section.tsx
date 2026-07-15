@@ -36,7 +36,7 @@ export function ValueSection() {
                       <div className="bg-cta-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
                         <Icon className="h-6 w-6" />
                       </div>
-                      <h3 className="font-display text-2xl text-[var(--brand-600)]">
+                      <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-[var(--cta-700)]">
                         {prop.title}
                       </h3>
                     </div>

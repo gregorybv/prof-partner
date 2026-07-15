@@ -32,7 +32,7 @@ export function SectionHeading({
         {title}
       </h2>
       {subtitle && (
-        <p className="max-w-2xl text-balance text-[var(--text-lg)] leading-[var(--leading-snug)] text-[var(--text-secondary)]">
+        <p className="max-w-2xl text-balance text-sm font-semibold uppercase tracking-[var(--tracking-wide)] text-[var(--text-secondary)] md:text-base">
           {subtitle}
         </p>
       )}

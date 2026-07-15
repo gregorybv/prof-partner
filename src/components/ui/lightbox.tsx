@@ -27,12 +27,8 @@ type LightboxProps = {
 };
 
 export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    setImageLoaded(false);
-  }, [open, src]);
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const imageLoaded = open && loadedSrc === src;
 
   useEffect(() => {
     if (!open) return;
@@ -101,7 +97,7 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
                   imageLoaded ? "opacity-100" : "opacity-0",
                 )}
                 sizes="(max-width: 1280px) 90vw, 1200px"
-                onLoad={() => setImageLoaded(true)}
+                onLoad={() => setLoadedSrc(src)}
               />
             </div>
             {caption && (

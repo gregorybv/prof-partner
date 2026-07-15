@@ -73,15 +73,8 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
     onResult(masked ? maskLegacyTableHtml(decoded) : decoded, masked);
   };
 
-  const unmaskResults = () => {
-    if (rawHtmlRef.current) {
-      onResult(unmaskLegacyTableHtml(rawHtmlRef.current), false);
-    }
-  };
-
-  const runCalc = async (values: FormValues) => {
-    setIsLoading(true);
-    setError(null);
+  const onSubmit = async (values: FormValues) => {
+    reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
 
     const payload: Record<string, string> = {
       Fz: "Commercial",
@@ -92,6 +85,21 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
       EndDate: values.EndDate,
       InstallmentPay: "on",
     };
+
+    if (!hasActiveAntibotToken()) {
+      openAntibot({
+        context: "commerce",
+        payload,
+        onVerified: () => {
+          if (rawHtmlRef.current) {
+            onResult(unmaskLegacyTableHtml(rawHtmlRef.current), false);
+          }
+        },
+      });
+    }
+
+    setIsLoading(true);
+    setError(null);
 
     try {
       const response = await legacyPost(LEGACY_API.calcVar, payload);
@@ -128,37 +136,18 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
     }
   };
 
-  const onSubmit = async (values: FormValues) => {
-    reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN);
-
-    const payload: Record<string, string> = {
-      Fz: "Commercial",
-      TypeBg: values.TypeBg,
-      Summ: values.Summ.replace(/\s/g, ""),
-      inn: values.inn,
-      StartDate: values.StartDate,
-      EndDate: values.EndDate,
-      InstallmentPay: "on",
-    };
-
-    if (!hasActiveAntibotToken()) {
-      openAntibot({
-        context: "commerce",
-        payload,
-        onVerified: unmaskResults,
-      });
-    }
-
-    await runCalc(values);
-  };
-
   return (
     <Dialog open={commerceOpen} onClose={onClose} title="Онлайн-автоподбор банка" className="max-w-lg">
       <p className="mb-4 text-sm text-[var(--text-secondary)]">
         Заполните пожалуйста поля для запуска подбора.
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form
+        onSubmit={(event) => {
+          void handleSubmit(onSubmit)(event);
+        }}
+        className="flex flex-col gap-4"
+      >
         <div>
           <p className="mb-2 text-sm font-bold">Укажите вид требуемого обеспечения:</p>
           <Controller

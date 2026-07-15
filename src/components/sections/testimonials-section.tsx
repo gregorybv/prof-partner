@@ -38,7 +38,6 @@ export function TestimonialsSection() {
     [Autoplay({ delay: 4000, stopOnInteraction: true })],
   );
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [lightbox, setLightbox] = useState<{
     src: string;
     alt: string;
@@ -59,8 +58,6 @@ export function TestimonialsSection() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     return () => {
@@ -132,7 +129,7 @@ export function TestimonialsSection() {
             </div>
 
             <div className="mt-4 flex justify-center gap-1.5">
-              {scrollSnaps.map((_, index) => (
+              {TESTIMONIALS.map((_, index) => (
                 <button
                   key={index}
                   type="button"

@@ -29,7 +29,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative overflow-hidden pb-[var(--space-section-y)] pt-8"
+      className="relative overflow-hidden pb-(--space-section-y) pt-8"
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
@@ -45,7 +45,7 @@ export function HeroSection() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[rgba(223,231,242,0.7)]" />
+        <div className="absolute inset-0 bg-[rgba(223,231,242,0.72)]" />
         <motion.div
           style={{ x: orbX, y: orbY }}
           className="absolute -top-24 right-[10%] h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(59,111,212,0.18)_0%,transparent_70%)] blur-3xl"
@@ -60,19 +60,19 @@ export function HeroSection() {
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col gap-8">
             <Reveal>
-              <p className="text-sm font-semibold uppercase tracking-[var(--tracking-wider)] text-[var(--accent-500)]">
+              <p className="text-sm font-bold uppercase tracking-wider text-(--cta-700)">
                 СОГЛАСУЕМ В БАНКЕ ЛУЧШИЕ УСЛОВИЯ. РАБОТАЕМ БЕЗ КОМИССИИ.
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <h1 className="font-display text-[clamp(1.95rem,4.8vw,3.4rem)] leading-[1.1] font-extrabold uppercase tracking-[0.012em] text-[var(--brand-900)]">
+              <h1 className="font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.05] font-extrabold uppercase tracking-[0.012em] text-(--brand-900)">
                 Независимая (банковская) гарантия
               </h1>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <p className="max-w-xl text-lg leading-relaxed text-[var(--text-secondary)]">
+              <p className="max-w-xl text-lg leading-relaxed text-(--text-secondary)">
                 Дистанционно оформляем гарантии 24/7.
                 <br />
                 Наши услуги бесплатны. Работаем с 2006 года.
@@ -84,16 +84,16 @@ export function HeroSection() {
                 {HERO_STATS.map((stat, i) => (
                   <div
                     key={stat.label}
-                    className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)]/80 p-4 shadow-[var(--shadow-xs)] backdrop-blur-sm"
+                    className="rounded-2xl border border-white/80 bg-white/90 p-4 shadow-(--shadow-card) backdrop-blur-sm"
                   >
-                    <p className="font-display text-2xl text-[var(--brand-600)] md:text-3xl">
+                    <p className="font-display text-2xl font-extrabold text-(--brand-900) md:text-3xl">
                       {statsInView ? (
                         <CountUp end={stat.value} duration={2} delay={i * 0.15} separator=" " />
                       ) : (
                         "0"
                       )}
                     </p>
-                    <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">
+                    <p className="mt-1 text-xs leading-snug text-(--text-muted)">
                       {stat.label}
                     </p>
                   </div>
@@ -104,23 +104,31 @@ export function HeroSection() {
             <Reveal delay={0.4} className="flex flex-wrap gap-3">
               <MagneticWrap>
                 <a
-                  href="#kalkulyator"
-                  onClick={() => reachGoal(METRIKA_GOALS.CALCULATOR_BTN)}
+                  href="#avto-podbor"
+                  onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
                   className="inline-flex"
                 >
-                  <Button size="lg" type="button">
-                    Калькулятор гарантии
+                  <Button size="lg" type="button" className="min-w-55 uppercase tracking-wide">
+                    <Image
+                      src="/prof-p/discount_header.png"
+                      alt=""
+                      width={22}
+                      height={22}
+                      className="h-5.5 w-5.5 shrink-0"
+                      aria-hidden
+                    />
+                    Автоподбор банка
                   </Button>
                 </a>
               </MagneticWrap>
               <MagneticWrap>
                 <a
-                  href="#avto-podbor"
-                  onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
+                  href="#kalkulyator"
+                  onClick={() => reachGoal(METRIKA_GOALS.CALCULATOR_BTN)}
                   className="inline-flex"
                 >
-                  <Button variant="secondary" size="lg" type="button">
-                    Автоподбор банка
+                  <Button variant="secondary" size="lg" type="button" className="uppercase tracking-wide">
+                    Калькулятор гарантии
                   </Button>
                 </a>
               </MagneticWrap>
@@ -128,33 +136,32 @@ export function HeroSection() {
           </div>
 
           <Reveal delay={0.2} direction="left" className="flex flex-col gap-6">
-            <div className="glass rounded-3xl p-6 shadow-[var(--shadow-card)]">
+            <div className="glass rounded-3xl p-6 shadow-(--shadow-card)">
               <Link
                 href="#avto-podbor"
                 onClick={() => reachGoal(METRIKA_GOALS.AUTO_SELECT_BTN)}
-                className="mb-4 inline-flex items-center gap-2 text-base font-semibold uppercase tracking-wide text-[var(--brand-600)] transition-colors hover:text-[var(--accent-500)]"
+                className="mb-4 inline-flex items-center gap-2 text-base font-bold uppercase tracking-wide text-(--cta-700) transition-colors hover:text-(--cta-500)"
               >
                 <Image
                   src="/prof-p/discount_header.png"
                   alt=""
                   width={30}
                   height={30}
-                  className="h-[30px] w-[30px] shrink-0"
+                  className="h-7.5 w-7.5 shrink-0"
                 />
                 Автоподбор банка
               </Link>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-0.5">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-display text-3xl font-extrabold text-(--brand-900)">
+                  {YANDEX_REVIEWS.rating.toFixed(1)}
+                </span>
+                <div className="flex gap-0.5">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-amber-400 text-amber-400"
-                    />
+                    <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <span className="font-semibold">{YANDEX_REVIEWS.rating}</span>
-                <span className="text-sm text-[var(--text-muted)]">
+                <span className="text-sm text-(--text-muted)">
                   {YANDEX_REVIEWS.reviewsCount} отзывов • {YANDEX_REVIEWS.ratingsCount} оценок
                 </span>
               </div>
@@ -164,22 +171,22 @@ export function HeroSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => reachGoal(METRIKA_GOALS.YANDEX_REVIEWS)}
-                className="mt-3 inline-block text-sm font-medium text-[var(--accent-500)] hover:underline"
+                className="mt-3 inline-block text-sm font-semibold text-(--accent-500) hover:underline"
               >
                 Читать отзывы на Яндекс Картах
               </a>
             </div>
 
-            <div className="glass rounded-3xl p-6 shadow-[var(--shadow-card)]">
+            <div className="glass rounded-3xl p-6 shadow-(--shadow-card)">
               <CertsHeaderVisual />
-              <p className="text-sm text-[var(--text-secondary)]">
+              <p className="text-sm font-medium text-(--text-secondary)">
                 Являемся официальными
                 <br />
                 представителями банков
               </p>
               <a
                 href="#sertifikaty"
-                className="mt-3 inline-block text-sm font-medium text-[var(--accent-500)] hover:underline"
+                className="mt-3 inline-block text-sm font-semibold text-(--accent-500) hover:underline"
               >
                 Смотреть сертификаты
               </a>
@@ -189,15 +196,18 @@ export function HeroSection() {
 
         <Reveal delay={0.5} className="mt-16">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-            {HERO_FEATURES.map((feature) => (
+            {HERO_FEATURES.map((feature, index) => (
               <div
                 key={feature.title}
-                className="group rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-4 transition-all duration-[var(--duration-base)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
+                className="group rounded-2xl border border-white/80 bg-white/90 p-4 shadow-(--shadow-xs) backdrop-blur-sm transition-all duration-(--duration-base) hover:-translate-y-1 hover:shadow-(--shadow-md)"
               >
-                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--brand-600)]">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-(--cta-700)">
+                  0{index + 1}
+                </p>
+                <p className="mt-1 text-xs font-bold uppercase tracking-wide text-(--brand-700)">
                   {feature.title}
                 </p>
-                <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                <p className="mt-1 text-sm text-(--text-secondary)">
                   {feature.description}
                 </p>
               </div>

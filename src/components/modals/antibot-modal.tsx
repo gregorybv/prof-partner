@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { IMaskInput } from "react-imask";
@@ -69,7 +69,6 @@ export function AntibotModal() {
     handleSubmit,
     register,
     reset,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<FormValues>({
@@ -82,7 +81,7 @@ export function AntibotModal() {
     defaultValues: { emailConsent: false },
   });
 
-  const code = watch("code") ?? "";
+  const code = useWatch({ control, name: "code" }) ?? "";
 
   const onClose = () => {
     if (antibotSession?.onCancel) {
@@ -243,6 +242,7 @@ export function AntibotModal() {
                 mask="+{7}(000)000-00-00"
                 value={field.value ?? ""}
                 onAccept={(value) => field.onChange(value)}
+                onChange={() => {}}
                 onBlur={field.onBlur}
                 inputRef={field.ref}
                 disabled={step === "code"}

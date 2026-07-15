@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
@@ -172,7 +172,6 @@ export function CalculatorForm() {
   const {
     register,
     handleSubmit,
-    watch,
     control,
     setValue,
     formState: { errors },
@@ -197,11 +196,10 @@ export function CalculatorForm() {
     },
   });
 
-  const unknownDates = watch("unknownDates");
+  const unknownDates = useWatch({ control, name: "unknownDates" });
 
   useEffect(() => {
     if (!isLoading) return;
-    setProgressStep(1);
     const t1 = window.setTimeout(() => setProgressStep(2), 1200);
     return () => window.clearTimeout(t1);
   }, [isLoading]);
@@ -216,6 +214,7 @@ export function CalculatorForm() {
   const onSubmit = async (values: CalculatorValues) => {
     reachGoal(METRIKA_GOALS.CALCULATOR_BTN);
     setIsLoading(true);
+    setProgressStep(1);
     setError(null);
     setShowPlaceholder(false);
     setTableHtml(null);

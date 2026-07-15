@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 92, 100],
     remotePatterns: [
       { protocol: "https", hostname: "prof-p.ru" },
       { protocol: "https", hostname: "mc.yandex.ru" },
@@ -13,6 +14,10 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
+      {
+        source: "/soglasie-na-obrabotku-personalnyh-dannyh",
+        destination: "/soglasie.pdf",
+      },
       {
         source: "/callback/:path*",
         destination: "https://prof-p.ru/callback/:path*",

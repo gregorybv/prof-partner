@@ -257,7 +257,7 @@ export function AutoSelectionForm({
             onChange={setPurchaseType}
           />
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-end">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-start">
             <Input
               label="ИНН Вашей компании"
               inputMode="numeric"
@@ -272,9 +272,11 @@ export function AutoSelectionForm({
               error={errors.numAuto?.message}
               {...register("numAuto")}
             />
-            <Button type="submit" loading={isLoading} className="w-full lg:w-auto">
-              ПОДОБРАТЬ БАНК
-            </Button>
+            <div className="flex h-12 items-center">
+              <Button type="submit" loading={isLoading} className="w-full lg:w-auto">
+                ПОДОБРАТЬ БАНК
+              </Button>
+            </div>
           </div>
 
           <Checkbox label={consentLabel} {...register("consent")} />

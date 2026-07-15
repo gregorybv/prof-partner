@@ -685,6 +685,42 @@ body {
   display: none;
 }
 
+/* ─── Clients trust section (legacy confidence block) ─── */
+.clients-trust-stat {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 11.75rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+  background-image: url(/prof-p/background-any1.jpg);
+  background-position: right;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.clients-trust-slash::after {
+  content: "/";
+  position: absolute;
+  left: 100%;
+  top: clamp(3.5rem, 10vw, 5.5rem);
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 11.75rem);
+  line-height: 0.95;
+  background-image: url(/prof-p/background-any1.jpg);
+  background-position: right;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .clients-trust-slash::after {
+    display: none;
+  }
+}
+
 /* ─── JivoSite z-index safety ─── */
 jdiv,
 .__jivoMobileButton,

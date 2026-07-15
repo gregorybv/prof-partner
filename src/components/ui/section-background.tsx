@@ -8,6 +8,7 @@ export type SectionBackgroundProps = {
   overlay?: SectionBackgroundOverlay;
   position?: "center" | "bottom";
   size?: "cover" | "contain";
+  sizes?: string;
   className?: string;
   imageClassName?: string;
   priority?: boolean;
@@ -26,6 +27,7 @@ export function SectionBackground({
   overlay = "light",
   position = "center",
   size = "cover",
+  sizes = "100vw",
   className,
   imageClassName,
   priority,
@@ -40,7 +42,7 @@ export function SectionBackground({
         alt=""
         fill
         priority={priority}
-        sizes="100vw"
+        sizes={sizes}
         className={cn(
           size === "cover" ? "object-cover" : "object-contain",
           position === "bottom" ? "object-bottom" : "object-center",

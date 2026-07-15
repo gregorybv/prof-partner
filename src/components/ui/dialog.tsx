@@ -9,11 +9,12 @@ type DialogProps = {
   open: boolean;
   onClose: () => void;
   title?: string;
+  ariaLabel?: string;
   children: React.ReactNode;
   className?: string;
 };
 
-export function Dialog({ open, onClose, title, children, className }: DialogProps) {
+export function Dialog({ open, onClose, title, ariaLabel, children, className }: DialogProps) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -44,6 +45,8 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? "dialog-title" : undefined}
+            aria-label={!title ? ariaLabel : undefined}
+            data-lenis-prevent
             className={cn(
               "relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[var(--surface-0)] p-6 shadow-[var(--shadow-lg)]",
               className,
@@ -53,7 +56,12 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="mb-4 flex items-start justify-between gap-4">
+            <div
+              className={cn(
+                "flex items-start justify-between gap-4",
+                title ? "mb-4" : "absolute right-4 top-4 z-10",
+              )}
+            >
               {title && (
                 <h2 id="dialog-title" className="font-display text-xl text-[var(--text-primary)]">
                   {title}

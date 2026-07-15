@@ -39,7 +39,7 @@ export function GuaranteeTypesSection() {
           {GUARANTEE_TYPES.map((type, index) => (
             <Reveal key={type.id} delay={index * 0.08}>
               <article className="group relative flex min-h-[396px] flex-col bg-[length:100%_100%] bg-[position:center] bg-no-repeat px-[30px] pb-6 pt-10 transition-transform duration-[var(--duration-base)] hover:-translate-y-1 [background-image:url('/prof-p/background-type.png')]">
-                <h3 className="font-display text-2xl text-[var(--text-primary)]">
+                <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-[var(--brand-900)]">
                   {type.title}
                 </h3>
                 <p className="mt-3 text-sm text-[var(--text-primary)]">

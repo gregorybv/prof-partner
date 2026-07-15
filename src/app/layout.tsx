@@ -58,8 +58,8 @@ export default function RootLayout({
           <EmailCalcModal />
           <BankTableRequestModal />
           <SuccessModal />
+          <MobileStickyCta />
         </ModalProvider>
-        <MobileStickyCta />
         <CookieConsent />
         <YandexMetrika />
         <CallTouch />

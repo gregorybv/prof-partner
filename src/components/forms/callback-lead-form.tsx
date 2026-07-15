@@ -65,11 +65,11 @@ export function CallbackLeadForm({
   const consentLabel = (
     <>
       Оставляя отметку, я даю{" "}
-      <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+      <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
         согласие
       </a>{" "}
       на обработку моих персональных данных на условиях{" "}
-      <a href="/pk.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+      <a href="/pk.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
         Политики конфиденциальности
       </a>{" "}
       сайта.
@@ -114,9 +114,9 @@ export function CallbackLeadForm({
 
   if (isSuccess) {
     return (
-      <div className={cn("rounded-2xl border border-[var(--success)]/20 bg-[var(--success)]/5 p-6 text-center", className)}>
-        <p className="font-semibold text-[var(--text-primary)]">ЗАЯВКА НА ЗВОНОК ПОЛУЧЕНА!</p>
-        <p className="mt-2 text-sm text-[var(--text-secondary)]">
+      <div className={cn("rounded-2xl border border-(--success)/20 bg-(--success)/5 p-6 text-center", className)}>
+        <p className="font-semibold text-(--text-primary)">ЗАЯВКА НА ЗВОНОК ПОЛУЧЕНА!</p>
+        <p className="mt-2 text-sm text-(--text-secondary)">
           Скоро с Вами свяжется один из наших специалистов.
         </p>
         <Button type="button" className="mt-4" onClick={() => setIsSuccess(false)}>
@@ -130,37 +130,48 @@ export function CallbackLeadForm({
     <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)} name={formName}>
       <Checkbox label={consentLabel} {...register("consent")} />
       {errors.consent && (
-        <p className="text-xs text-[var(--error)]">{errors.consent.message}</p>
+        <p className="text-xs text-(--error)">{errors.consent.message}</p>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="relative w-full">
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <IMaskInput
-                mask={PHONE_MASK}
-                value={field.value ?? ""}
-                onAccept={(value) => field.onChange(value)}
-                onBlur={field.onBlur}
-                inputRef={field.ref}
-                placeholder=" "
-                className={cn(
-                  "peer h-12 w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-0)] px-4 pt-5 pb-1 text-sm",
-                  "focus:border-[var(--accent-500)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-500)]/20",
-                  errors.phone && "border-[var(--error)]",
-                )}
-              />
-            )}
-          />
-          <label className="pointer-events-none absolute left-4 top-3 text-xs text-[var(--text-muted)]">
-            Телефон
-          </label>
-          {errors.phone && (
-            <p className="mt-1 text-xs text-[var(--error)]">{errors.phone.message}</p>
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <div className="w-full">
+              <div className="relative">
+                <IMaskInput
+                  mask={PHONE_MASK}
+                  value={field.value ?? ""}
+                  onAccept={(value: string) => field.onChange(value)}
+                  onChange={() => {}}
+                  onBlur={field.onBlur}
+                  inputRef={field.ref}
+                  placeholder=" "
+                  className={cn(
+                    "peer h-12 w-full rounded-xl border border-(--border-default) bg-(--surface-0) px-4 pt-5 pb-1 text-sm text-(--text-primary) transition-colors",
+                    "placeholder-transparent focus:border-(--accent-500) focus:outline-none focus:ring-2 focus:ring-(--accent-500)/20",
+                    errors.phone && "border-(--error) focus:border-(--error) focus:ring-(--error)/20",
+                  )}
+                />
+                <label
+                  className={cn(
+                    "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-(--text-muted) transition-all",
+                    "peer-focus:top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-(--accent-500)",
+                    "peer-not-placeholder-shown:top-3 peer-not-placeholder-shown:translate-y-0 peer-not-placeholder-shown:text-xs",
+                  )}
+                >
+                  Телефон
+                </label>
+              </div>
+              {errors.phone && (
+                <p className="mt-1 text-xs text-(--error)" role="alert">
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
           )}
-        </div>
+        />
 
         <Input
           label="Удобное время для звонка"
@@ -170,7 +181,7 @@ export function CallbackLeadForm({
       </div>
 
       {submitError && (
-        <p className="text-sm text-[var(--error)]" role="alert">
+        <p className="text-sm text-(--error)" role="alert">
           {submitError}
         </p>
       )}

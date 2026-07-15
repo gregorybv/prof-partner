@@ -27,8 +27,8 @@ export default function HomePage() {
         <HeroSection />
         <GuaranteeTypesSection />
         <AutoSelectionSection />
-        <ValueSection />
         <CertificatesSection />
+        <ValueSection />
         <TeamSection />
         <ServicesSection />
         <TenderSupportSection />

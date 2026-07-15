@@ -13,7 +13,6 @@ import { useModals } from "@/components/modals/modal-provider";
 import { LEGACY_API, legacyPost } from "@/lib/api";
 import {
   buildSendModalTablePayload,
-  type BankTableRequestData,
 } from "@/lib/legacy-table";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -125,6 +124,7 @@ export function BankTableRequestModal() {
                 mask="+{7}(000)000-00-00"
                 value={field.value ?? ""}
                 onAccept={(value) => field.onChange(value)}
+                onChange={() => {}}
                 onBlur={field.onBlur}
                 inputRef={field.ref}
                 placeholder=" "

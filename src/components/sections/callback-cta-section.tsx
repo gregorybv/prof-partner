@@ -26,10 +26,13 @@ export function CallbackCtaSection({
             src="/prof-p/callback-cta-bg.jpg"
             overlay="brand"
             className="rounded-3xl"
+            sizes="(max-width: 768px) 100vw, 672px"
           />
           <div className="relative">
-            <h3 className="font-display text-2xl md:text-3xl">Нет времени Разбираться?</h3>
-            <p className="mt-2 text-sm uppercase tracking-wide text-white/80">
+            <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide md:text-3xl">
+              Нет времени Разбираться?
+            </h3>
+            <p className="mt-2 text-sm font-bold uppercase tracking-[var(--tracking-wide)] text-[var(--cta-300)]">
               ОБЪЯСНИМ, СОГЛАСУЕМ СКИДКУ И БЫСТРО ОФОРМИМ
             </p>
             <div className="mt-6 rounded-2xl bg-[var(--surface-0)] p-6 text-[var(--text-primary)]">
