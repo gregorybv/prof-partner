@@ -47,7 +47,7 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4"
+          className="fixed inset-0 z-(--z-modal) flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -62,7 +62,7 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
             aria-label="Закрыть"
           />
           <motion.div
-            className="relative z-10 w-fit max-w-[min(90vw,100%)] overflow-hidden rounded-2xl bg-[var(--surface-0)] p-2 shadow-[var(--shadow-lg)]"
+            className="relative z-10 w-fit max-w-[min(90vw,100%)] overflow-hidden rounded-2xl bg-(--surface-0) p-2 shadow-(--shadow-lg)"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -84,7 +84,7 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
             >
               {!imageLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <LoadingSpinner className="h-10 w-10 border-[var(--brand-600)] border-t-transparent" />
+                  <LoadingSpinner className="h-10 w-10 border-(--brand-600) border-t-transparent" />
                 </div>
               )}
               <Image
@@ -101,7 +101,7 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
               />
             </div>
             {caption && (
-              <p className="px-4 py-3 text-center text-sm font-medium text-[var(--text-secondary)]">
+              <p className="px-4 py-3 text-center text-sm font-medium text-(--text-secondary)">
                 {caption}
               </p>
             )}
@@ -135,14 +135,14 @@ export function CertificateCard({
       disabled={loading}
       aria-busy={loading}
       className={cn(
-        "group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] text-left shadow-[var(--shadow-xs)] transition-all duration-[var(--duration-base)]",
-        "hover:-translate-y-1 hover:border-[var(--accent-500)]/30 hover:shadow-[var(--shadow-card)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
+        "group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-0) text-left shadow-(--shadow-xs) transition-all duration-(--duration-base)",
+        "hover:-translate-y-1 hover:border-(--accent-500)/30 hover:shadow-(--shadow-card)",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-90",
         className,
       )}
     >
-      <div className="relative aspect-[3/4] w-full shrink-0 bg-[var(--surface-2)]">
+      <div className="relative aspect-3/4 w-full shrink-0 bg-(--surface-2)">
         <div className="absolute inset-2">
           <Image
             src={thumb}
@@ -162,7 +162,7 @@ export function CertificateCard({
           </div>
         )}
       </div>
-      <div className="flex min-h-10 shrink-0 items-center justify-center border-t border-[var(--border-subtle)] bg-gradient-to-r from-[var(--brand-600)] to-[var(--brand-700)] px-2 py-2">
+      <div className="flex min-h-10 shrink-0 items-center justify-center border-t border-(--border-subtle) bg-linear-to-r from-(--brand-600) to-(--brand-700) px-2 py-2">
         <p className="line-clamp-2 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide text-white sm:text-xs">
           {bank}
         </p>

@@ -16,7 +16,7 @@ export function ValueSection() {
         overlay: "medium",
       }}
     >
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Обращение в банк через нас"
@@ -29,18 +29,18 @@ export function ValueSection() {
             const Icon = ICONS[index] ?? Target;
             return (
               <Reveal key={prop.title} delay={index * 0.1}>
-                <article className="group relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-8 shadow-[var(--shadow-xs)] transition-all duration-[var(--duration-slow)] hover:-translate-y-1 hover:shadow-[var(--shadow-card)]">
-                  <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-[var(--cta-300)]/10 transition-transform duration-[var(--duration-slow)] group-hover:scale-150" />
+                <article className="group relative overflow-hidden rounded-3xl border border-(--border-subtle) bg-(--surface-0) p-8 shadow-(--shadow-xs) transition-all duration-(--duration-slow) hover:-translate-y-1 hover:shadow-(--shadow-card)">
+                  <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-(--cta-300)/10 transition-transform duration-(--duration-slow) group-hover:scale-150" />
                   <div className="relative flex flex-col gap-4">
                     <div className="flex items-center gap-4">
                       <div className="bg-cta-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
                         <Icon className="h-6 w-6" />
                       </div>
-                      <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-[var(--cta-700)]">
+                      <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-(--cta-700)">
                         {prop.title}
                       </h3>
                     </div>
-                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                    <p className="text-sm leading-relaxed text-(--text-secondary)">
                       {prop.description}
                     </p>
                   </div>

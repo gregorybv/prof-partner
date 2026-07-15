@@ -21,7 +21,7 @@ const CERTS = [
 export function CertsHeaderVisual() {
   return (
     <div
-      className="relative mb-4 aspect-[41/20] w-full overflow-hidden rounded-2xl bg-[linear-gradient(180deg,rgba(241,245,250,0.95)_0%,rgba(255,255,255,0.75)_100%)]"
+      className="relative mb-4 aspect-41/20 w-full overflow-hidden rounded-2xl bg-[linear-gradient(180deg,rgba(241,245,250,0.95)_0%,rgba(255,255,255,0.75)_100%)]"
       aria-hidden
     >
       {CERTS.map((cert) => (

@@ -25,7 +25,7 @@ export function SegmentedControl<T extends string>({
   return (
     <div
       className={cn(
-        "inline-flex rounded-xl border border-[var(--border-default)] bg-[var(--surface-2)] p-1",
+        "inline-flex rounded-xl border border-(--border-default) bg-(--surface-2) p-1",
         className,
       )}
       role="tablist"
@@ -39,10 +39,10 @@ export function SegmentedControl<T extends string>({
           name={name}
           onClick={() => onChange(option.value)}
           className={cn(
-            "rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-[var(--duration-base)]",
+            "rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-(--duration-base)",
             value === option.value
-              ? "bg-[var(--surface-0)] text-[var(--text-primary)] shadow-[var(--shadow-xs)]"
-              : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]",
+              ? "bg-(--surface-0) text-(--text-primary) shadow-(--shadow-xs)"
+              : "text-(--text-muted) hover:text-(--text-secondary)",
           )}
         >
           {option.label}

@@ -47,7 +47,7 @@ export function LegacyResultsTable({
     <div
       ref={containerRef}
       className={cn(
-        "calc-results overflow-x-auto rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] shadow-[var(--shadow-sm)]",
+        "calc-results overflow-x-auto rounded-2xl border border-(--border-subtle) bg-(--surface-0) shadow-(--shadow-sm)",
         masked && "is-masked",
         className,
       )}

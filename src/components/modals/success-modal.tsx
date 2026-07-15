@@ -9,7 +9,7 @@ export function SuccessModal() {
 
   return (
     <Dialog open={successOpen} onClose={closeSuccess} title={successTitle}>
-      <p className="text-center text-sm text-[var(--text-secondary)]">{successMessage}</p>
+      <p className="text-center text-sm text-(--text-secondary)">{successMessage}</p>
       <Button type="button" className="mt-6 w-full" onClick={closeSuccess}>
         ПОНЯТНО
       </Button>

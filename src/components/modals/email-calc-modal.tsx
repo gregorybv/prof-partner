@@ -38,11 +38,11 @@ type FollowupValues = z.infer<typeof followupSchema>;
 const consentLabel = (
   <>
     Оставляя отметку, я даю{" "}
-    <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+    <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
       согласие
     </a>{" "}
     на обработку персональных данных на условиях{" "}
-    <a href="/pk.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+    <a href="/pk.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
       Политики конфиденциальности
     </a>{" "}
     сайта.
@@ -61,7 +61,6 @@ export function EmailCalcModal() {
   const [step, setStep] = useState<EmailCalcStep>("request");
   const [queueTime, setQueueTime] = useState<string | null>(null);
   const [queuePosition, setQueuePosition] = useState<string | null>(null);
-  const [savedEmail, setSavedEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const requestForm = useForm<RequestValues>({
@@ -80,7 +79,6 @@ export function EmailCalcModal() {
     setStep("request");
     setQueueTime(null);
     setQueuePosition(null);
-    setSavedEmail("");
     setError(null);
     requestForm.reset();
     followupForm.reset();
@@ -121,7 +119,6 @@ export function EmailCalcModal() {
         return;
       }
 
-      setSavedEmail(values.emailQEmail);
       followupForm.setValue("emailQEmail", values.emailQEmail);
 
       if (result.step === "3") {
@@ -195,7 +192,7 @@ export function EmailCalcModal() {
     >
       {step === "request" && (
         <form onSubmit={requestForm.handleSubmit(onRequestSubmit)} className="flex flex-col gap-4">
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-(--text-secondary)">
             {isCommercial
               ? "Для отправки текущего расчёта на почту, введите адрес электронной почты:"
               : "Отправить результат расчета на почту?"}
@@ -210,7 +207,7 @@ export function EmailCalcModal() {
 
           <Checkbox label={consentLabel} {...requestForm.register("consent")} />
           {requestForm.formState.errors.consent && (
-            <p className="text-xs text-[var(--error)]">
+            <p className="text-xs text-(--error)">
               {requestForm.formState.errors.consent.message}
             </p>
           )}
@@ -219,7 +216,7 @@ export function EmailCalcModal() {
             Получить расчёт
           </Button>
 
-          <p className="text-sm text-[var(--text-muted)]">
+          <p className="text-sm text-(--text-muted)">
             {isCommercial
               ? "Для получения уточненного расчёта под Вашу компанию, введите дополнительно ИНН и предмет контракта:"
               : "Для получения уточненного расчёта под Вашу компанию, введите дополнительно ИНН и РНА:"}
@@ -244,7 +241,7 @@ export function EmailCalcModal() {
             className="mx-auto h-auto w-full max-w-xs opacity-80"
           />
 
-          {error && <p className="text-sm text-[var(--error)]">{error}</p>}
+          {error && <p className="text-sm text-(--error)">{error}</p>}
         </form>
       )}
 
@@ -253,7 +250,7 @@ export function EmailCalcModal() {
           <p className="text-center text-sm font-semibold">
             Ваша заявка на отправку автоматического расчета принята:
           </p>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-(--text-secondary)">
             Чтобы письма с нашего сервера не попадали в спам, наш почтовый сервер отправляет
             результаты калькуляций не чаще одного раза в пять минут.
           </p>
@@ -263,18 +260,18 @@ export function EmailCalcModal() {
               <p className="text-sm">ВАША ПОЗИЦИЯ В ОЧЕРЕДИ: {queuePosition}</p>
             </>
           ) : (
-            <p className="text-sm text-[var(--text-secondary)]">
+            <p className="text-sm text-(--text-secondary)">
               Автоматическая отправка как правило происходит в течение 2–3 часов. Пожалуйста,
               ожидайте письмо.
             </p>
           )}
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-(--text-secondary)">
             {isCommercial
               ? "Для быстрого получения расчета укажите ИНН и предмет контракта — расчёт подготовит менеджер."
               : "Для быстрого получения расчета укажите ИНН и РНА — расчёт подготовит менеджер."}
           </p>
 
-          <input type="hidden" {...followupForm.register("emailQEmail")} value={savedEmail} />
+          <input type="hidden" {...followupForm.register("emailQEmail")} />
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Input label="ИНН Вашей компании" {...followupForm.register("innQEmail")} />
@@ -293,7 +290,7 @@ export function EmailCalcModal() {
             </Button>
           </div>
 
-          {error && <p className="text-sm text-[var(--error)]">{error}</p>}
+          {error && <p className="text-sm text-(--error)">{error}</p>}
         </form>
       )}
 
@@ -302,12 +299,12 @@ export function EmailCalcModal() {
           <p className="text-center text-sm font-semibold">
             Ваша заявка на отправку расчета принята:
           </p>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-(--text-secondary)">
             Так как Вы выбрали уточненный расчет, сообщив нам{" "}
             {isCommercial ? "ИНН и предмет контракта" : "ИНН и РНА"}, расчет подготовит и
             отправит наш менеджер.
           </p>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-(--text-secondary)">
             Пожалуйста ожидайте письмо, оно будет отправлено в самое ближайшее время.
           </p>
           <Button type="button" onClick={onClose}>

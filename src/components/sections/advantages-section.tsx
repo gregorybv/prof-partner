@@ -13,7 +13,7 @@ export function AdvantagesSection() {
         overlay: "medium",
       }}
     >
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading title="Почему выбирают нас?" subtitle="10 наших преимуществ" />
         </Reveal>
@@ -21,14 +21,14 @@ export function AdvantagesSection() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {ADVANTAGES.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.04}>
-              <article className="flex h-full flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-5 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card)]">
-                <span className="font-display text-3xl text-[var(--brand-600)]">
+              <article className="flex h-full flex-col rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-5 transition-all hover:-translate-y-1 hover:shadow-(--shadow-card)">
+                <span className="font-display text-3xl text-(--brand-600)">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-2 text-sm font-semibold text-[var(--text-primary)]">
+                <h3 className="mt-2 text-sm font-semibold text-(--text-primary)">
                   {item.title}
                 </h3>
-                <p className="mt-2 flex-1 text-xs leading-relaxed text-[var(--text-secondary)]">
+                <p className="mt-2 flex-1 text-xs leading-relaxed text-(--text-secondary)">
                   {item.description}
                 </p>
               </article>

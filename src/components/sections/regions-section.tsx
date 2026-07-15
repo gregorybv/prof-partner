@@ -18,7 +18,7 @@ export function RegionsSection() {
         overlay: "light",
       }}
     >
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Работаем со всеми регионами"
@@ -29,17 +29,17 @@ export function RegionsSection() {
         <div ref={ref} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {REGIONS.map((region, index) => (
             <Reveal key={region.city} delay={index * 0.05}>
-              <article className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6 text-center shadow-[var(--shadow-xs)]">
-                <h3 className="font-semibold text-[var(--text-primary)]">{region.city}</h3>
-                <p className="mt-3 text-xs text-[var(--text-muted)]">Выдано более</p>
-                <p className="font-display text-3xl text-[var(--brand-600)]">
+              <article className="rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-6 text-center shadow-(--shadow-xs)">
+                <h3 className="font-semibold text-(--text-primary)">{region.city}</h3>
+                <p className="mt-3 text-xs text-(--text-muted)">Выдано более</p>
+                <p className="font-display text-3xl text-(--brand-600)">
                   {inView ? (
                     <CountUp end={region.count} duration={2} delay={index * 0.1} separator=" " formattingFn={formatNumber} />
                   ) : (
                     "0"
                   )}
                 </p>
-                <p className="text-xs text-[var(--text-muted)]">гарантий</p>
+                <p className="text-xs text-(--text-muted)">гарантий</p>
               </article>
             </Reveal>
           ))}

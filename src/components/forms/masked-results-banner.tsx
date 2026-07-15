@@ -15,12 +15,12 @@ export function MaskedResultsBanner({ payload, source, onClear }: MaskedResultsB
   const { openEmailCalc, openInfo } = useModals();
 
   return (
-    <div className="rounded-2xl border border-[var(--warning)]/30 bg-[var(--warning)]/5 p-4 text-sm text-[var(--text-secondary)]">
+    <div className="rounded-2xl border border-(--warning)/30 bg-(--warning)/5 p-4 text-sm text-(--text-secondary)">
       <p>
         Тарифы банков скрыты до прохождения проверки.{" "}
         <button
           type="button"
-          className="font-medium text-[var(--accent-500)] hover:underline"
+          className="font-medium text-(--accent-500) hover:underline"
           onClick={() => {
             reachGoal(METRIKA_GOALS.EMAIL_CALC);
             openEmailCalc({
@@ -35,7 +35,7 @@ export function MaskedResultsBanner({ payload, source, onClear }: MaskedResultsB
         или{" "}
         <button
           type="button"
-          className="font-medium text-[var(--accent-500)] hover:underline"
+          className="font-medium text-(--accent-500) hover:underline"
           onClick={() => {
             reachGoal(METRIKA_GOALS.INFO_MODAL);
             openInfo();

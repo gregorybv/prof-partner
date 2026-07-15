@@ -35,10 +35,10 @@ export function CookieConsent() {
   if (stored === "ssr" || stored !== null || dismissed) return null;
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 z-[var(--z-sticky-cta)] mx-auto max-w-xl rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-4 shadow-[var(--shadow-lg)] md:bottom-6 md:left-6 md:right-auto">
-      <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+    <div className="fixed bottom-20 left-4 right-4 z-(--z-sticky-cta) mx-auto max-w-xl rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-4 shadow-(--shadow-lg) md:bottom-6 md:left-6 md:right-auto">
+      <p className="text-xs leading-relaxed text-(--text-secondary)">
         Сайт собирает cookies. Продолжая его использование, Вы принимаете{" "}
-        <a href={LEGAL_LINKS.privacy} className="text-[var(--accent-500)] hover:underline">
+        <a href={LEGAL_LINKS.privacy} className="text-(--accent-500) hover:underline">
           политику конфиденциальности
         </a>{" "}
         сайта.

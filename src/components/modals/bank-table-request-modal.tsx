@@ -4,18 +4,17 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { IMaskInput } from "react-imask";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { useModals } from "@/components/modals/modal-provider";
 import { LEGACY_API, legacyPost } from "@/lib/api";
 import {
   buildSendModalTablePayload,
 } from "@/lib/legacy-table";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
 
 const schema = z.object({
   phone: z
@@ -98,7 +97,7 @@ export function BankTableRequestModal() {
       className="max-w-lg"
     >
       {bankRequestData && (
-        <div className="mb-4 space-y-1 text-sm text-[var(--text-secondary)]">
+        <div className="mb-4 space-y-1 text-sm text-(--text-secondary)">
           <p>
             Закон/Вид гарантии: <span className="font-medium">{bankRequestData.context.fz}</span>
           </p>
@@ -115,34 +114,20 @@ export function BankTableRequestModal() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <div className="relative w-full">
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <IMaskInput
-                mask="+{7}(000)000-00-00"
-                value={field.value ?? ""}
-                onAccept={(value) => field.onChange(value)}
-                onChange={() => {}}
-                onBlur={field.onBlur}
-                inputRef={field.ref}
-                placeholder=" "
-                className={cn(
-                  "peer h-12 w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-0)] px-4 pt-5 pb-1 text-sm",
-                  "focus:border-[var(--accent-500)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-500)]/20",
-                  errors.phone && "border-[var(--error)]",
-                )}
-              />
-            )}
-          />
-          <label className="pointer-events-none absolute left-4 top-3 text-xs text-[var(--text-muted)]">
-            Телефон
-          </label>
-          {errors.phone && (
-            <p className="mt-1 text-xs text-[var(--error)]">{errors.phone.message}</p>
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <PhoneInput
+              label="Телефон"
+              value={field.value ?? ""}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              error={errors.phone?.message}
+            />
           )}
-        </div>
+        />
 
         <Input label="Удобное время для звонка" error={errors.time?.message} {...register("time")} />
 
@@ -150,7 +135,7 @@ export function BankTableRequestModal() {
           label={
             <>
               Оставляя отметку, я даю{" "}
-              <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+              <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
                 согласие
               </a>{" "}
               на обработку персональных данных.
@@ -159,10 +144,10 @@ export function BankTableRequestModal() {
           {...register("consent")}
         />
         {errors.consent && (
-          <p className="text-xs text-[var(--error)]">{errors.consent.message}</p>
+          <p className="text-xs text-(--error)">{errors.consent.message}</p>
         )}
 
-        {error && <p className="text-sm text-[var(--error)]">{error}</p>}
+        {error && <p className="text-sm text-(--error)">{error}</p>}
 
         <Button type="submit" loading={isSubmitting}>
           Отправить

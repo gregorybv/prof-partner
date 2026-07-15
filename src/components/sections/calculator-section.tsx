@@ -6,7 +6,7 @@ import { SectionShell } from "@/components/ui/section-shell";
 export function CalculatorSection() {
   return (
     <SectionShell id="kalkulyator">
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Онлайн-калькулятор Независимой Банковской Гарантии"

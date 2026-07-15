@@ -13,14 +13,17 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, id, checked, defaultChecked, onChange, ...props }, ref) => {
     const generatedId = React.useId();
     const checkboxId = id ?? generatedId;
-    const [isChecked, setIsChecked] = React.useState(defaultChecked ?? false);
-    const resolvedChecked = checked ?? isChecked;
+    const isControlled = checked !== undefined;
+    const [uncontrolledChecked, setUncontrolledChecked] = React.useState(
+      () => defaultChecked ?? false,
+    );
+    const resolvedChecked = isControlled ? !!checked : uncontrolledChecked;
 
     return (
       <label
         htmlFor={checkboxId}
         className={cn(
-          "flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-[var(--text-secondary)]",
+          "flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-(--text-secondary)",
           className,
         )}
       >
@@ -28,8 +31,8 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           className={cn(
             "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
             resolvedChecked
-              ? "border-[var(--cta-700)] bg-cta-gradient shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
-              : "border-[var(--border-strong)] bg-[var(--surface-0)]",
+              ? "border-(--cta-700) bg-cta-gradient shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
+              : "border-(--border-strong) bg-(--surface-0)",
           )}
         >
           {resolvedChecked && <Check className="h-3 w-3 text-white" />}
@@ -39,11 +42,14 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           id={checkboxId}
           ref={ref}
           className="sr-only"
-          checked={checked}
-          defaultChecked={defaultChecked}
           {...props}
+          {...(isControlled
+            ? { checked: resolvedChecked }
+            : { defaultChecked: defaultChecked ?? false })}
           onChange={(e) => {
-            setIsChecked(e.target.checked);
+            if (!isControlled) {
+              setUncontrolledChecked(e.target.checked);
+            }
             onChange?.(e);
           }}
         />

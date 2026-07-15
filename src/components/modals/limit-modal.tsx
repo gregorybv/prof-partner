@@ -9,7 +9,7 @@ export function LimitModal() {
 
   return (
     <Dialog open={limitOpen} onClose={closeLimit} title="ВНИМАНИЕ!">
-      <p className="text-sm text-[var(--text-secondary)]">
+      <p className="text-sm text-(--text-secondary)">
         Лимит расчётов исчерпан.
       </p>
       <Button type="button" className="mt-4" onClick={closeLimit}>

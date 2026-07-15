@@ -20,7 +20,7 @@ export function CalculatorProgress({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] px-6 py-5 shadow-[var(--shadow-xs)]",
+        "rounded-2xl border border-(--border-subtle) bg-(--surface-0) px-6 py-5 shadow-(--shadow-xs)",
         className,
       )}
       aria-live="polite"
@@ -36,17 +36,17 @@ export function CalculatorProgress({
               key={label}
               className={cn(
                 "relative flex-1 text-center text-xs font-medium uppercase tracking-wide",
-                isDone && "text-[var(--success)]",
-                isActive && "text-[var(--cta-700)]",
-                !isDone && !isActive && "text-[var(--text-muted)]",
+                isDone && "text-(--success)",
+                isActive && "text-(--cta-700)",
+                !isDone && !isActive && "text-(--text-muted)",
               )}
             >
               <span
                 className={cn(
                   "mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full border text-sm font-bold",
-                  isDone && "border-[var(--success)] bg-[var(--success)] text-white",
+                  isDone && "border-(--success) bg-(--success) text-white",
                   isActive && "cta-surface-static border-transparent",
-                  !isDone && !isActive && "border-[var(--border-default)] bg-[var(--surface-2)]",
+                  !isDone && !isActive && "border-(--border-default) bg-(--surface-2)",
                 )}
               >
                 {stepNumber}

@@ -219,7 +219,7 @@ function ProcessMobileCards() {
 
         return (
           <Reveal key={step.step} delay={index * 0.05}>
-            <article className="flex items-stretch overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] shadow-[var(--shadow-xs)]">
+            <article className="flex items-stretch overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-0) shadow-(--shadow-xs)">
               <div
                 className="flex w-24 shrink-0 flex-col items-center justify-center px-2 py-4 font-display text-white"
                 style={{ backgroundColor: style.bg, color: style.color }}
@@ -244,7 +244,7 @@ function ProcessMobileCards() {
                     aria-hidden
                   />
                 </div>
-                <p className="text-sm font-bold leading-snug text-[var(--text-primary)]">
+                <p className="text-sm font-bold leading-snug text-(--text-primary)">
                   {step.titleLines.map((line, lineIndex) => (
                     <span key={line}>
                       {line}
@@ -265,8 +265,8 @@ export function ProcessSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <SectionShell id="shema" className="bg-[var(--surface-0)]">
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+    <SectionShell id="shema" className="bg-(--surface-0)">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Схема работы"
@@ -275,7 +275,7 @@ export function ProcessSection() {
         </Reveal>
 
         <div className="hidden xl:block">
-          <div className="-mx-[var(--space-container-x)] px-[var(--space-container-x)] pb-2">
+          <div className="-mx-(--space-container-x) px-(--space-container-x) pb-2">
             <div className="overflow-visible">
               <ProcessTimeline animated={!prefersReducedMotion} />
             </div>
@@ -287,14 +287,14 @@ export function ProcessSection() {
         </div>
 
         <Reveal>
-          <p className="mx-auto max-w-4xl text-center text-sm leading-relaxed text-[var(--text-muted)]">
+          <p className="mx-auto max-w-4xl text-center text-sm leading-relaxed text-(--text-muted)">
             {PROCESS_FOOTNOTE}
           </p>
         </Reveal>
 
         <Reveal delay={0.1}>
           <motion.div
-            className="relative mx-auto w-fit max-w-full overflow-hidden rounded-3xl border border-[var(--warning)]/30 bg-gradient-to-r from-[var(--warning)]/10 via-[var(--warning)]/6 to-transparent p-[1px] shadow-[var(--shadow-sm)]"
+            className="relative mx-auto w-fit max-w-full overflow-hidden rounded-3xl border border-(--warning)/30 bg-linear-to-r from-(--warning)/10 via-(--warning)/6 to-transparent p-px shadow-(--shadow-sm)"
             initial={!prefersReducedMotion ? { opacity: 0, y: 12 } : false}
             whileInView={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, amount: 0.5 }}
@@ -302,16 +302,16 @@ export function ProcessSection() {
           >
             {!prefersReducedMotion ? (
               <motion.div
-                className="pointer-events-none absolute inset-y-0 left-[-35%] w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-xl"
+                className="pointer-events-none absolute inset-y-0 left-[-35%] w-1/3 bg-linear-to-r from-transparent via-white/50 to-transparent blur-xl"
                 animate={{ x: ["0%", "320%"] }}
                 transition={{ duration: 5.2, ease: "linear", repeat: Infinity, repeatDelay: 1.5 }}
                 aria-hidden
               />
             ) : null}
 
-            <div className="relative inline-flex max-w-full items-center justify-center gap-3 rounded-[calc(var(--radius-2xl)-2px)] bg-[var(--surface-0)] px-4 py-4 sm:px-5">
+            <div className="relative inline-flex max-w-full items-center justify-center gap-3 rounded-[calc(var(--radius-2xl)-2px)] bg-(--surface-0) px-4 py-4 sm:px-5">
               <motion.div
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--warning)]/35 bg-[var(--warning)]/12 shadow-[var(--shadow-xs)]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-(--warning)/35 bg-(--warning)/12 shadow-(--shadow-xs)"
                 animate={!prefersReducedMotion ? { y: [0, -2, 0], scale: [1, 1.03, 1] } : undefined}
                 transition={{ duration: 2.6, ease: "easeInOut", repeat: Infinity }}
                 aria-hidden
@@ -325,9 +325,9 @@ export function ProcessSection() {
                 />
               </motion.div>
 
-              <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[15px]">
+              <p className="text-sm leading-relaxed text-(--text-secondary) sm:text-[15px]">
                 Выдадим гарантию за{" "}
-                <strong className="font-semibold text-[var(--text-primary)]">45 минут</strong>
+                <strong className="font-semibold text-(--text-primary)">45 минут</strong>
                 {" "}при соблюдении всех условий и требований.
               </p>
             </div>

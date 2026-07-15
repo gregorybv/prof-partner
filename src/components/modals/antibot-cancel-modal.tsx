@@ -35,14 +35,14 @@ export function AntibotCancelModal() {
       title="ВНИМАНИЕ!"
       className="max-w-md"
     >
-      <p className="text-center text-sm text-[var(--text-secondary)]">
+      <p className="text-center text-sm text-(--text-secondary)">
         Вы уверены, что не хотите проходить проверку?
       </p>
-      <p className="mt-3 text-center text-sm font-bold text-[var(--error)]">
+      <p className="mt-3 text-center text-sm font-bold text-(--error)">
         После закрытия формы, без прохождения проверки, таблица со всеми тарифами банков будет
         удалена!
       </p>
-      <p className="mt-3 text-center text-sm text-[var(--success)]">
+      <p className="mt-3 text-center text-sm text-(--success)">
         ВЫ МОЖЕТЕ ТАКЖЕ ПОЛУЧИТЬ ТЕКУЩИЙ РАСЧЁТ НА СВОЮ ЭЛЕКТРОННУЮ ПОЧТУ БЕЗ КАКИХ-ЛИБО
         ПРОВЕРОК НА РОБОТА
       </p>

@@ -54,7 +54,7 @@ export function CertificatesSection() {
         position: "bottom",
       }}
     >
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Сертификаты и Дипломы"

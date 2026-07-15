@@ -1,58 +1,58 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useForm, useWatch, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import Image from "next/image";
-import { Reveal } from "@/components/animations/reveal";
-import { LegacyResultsTable } from "@/components/forms/legacy-results-table";
-import { MaskedResultsBanner } from "@/components/forms/masked-results-banner";
-import { useModals } from "@/components/modals/modal-provider";
-import { Button } from "@/components/ui/button";
-import { CalculatorProgress } from "@/components/ui/calculator-progress";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { SegmentedControl } from "@/components/ui/segmented-control";
-import { LEGACY_API, legacyPost } from "@/lib/api";
-import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
-import { hasActiveAntibotToken } from "@/lib/cookies";
-import { base85XDecode } from "@/lib/legacy-decode";
+import { useEffect, useState } from 'react';
+import { useForm, useWatch, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import Image from 'next/image';
+import { Reveal } from '@/components/animations/reveal';
+import { LegacyResultsTable } from '@/components/forms/legacy-results-table';
+import { MaskedResultsBanner } from '@/components/forms/masked-results-banner';
+import { useModals } from '@/components/modals/modal-provider';
+import { Button } from '@/components/ui/button';
+import { CalculatorProgress } from '@/components/ui/calculator-progress';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { LEGACY_API, legacyPost } from '@/lib/api';
+import { METRIKA_GOALS, reachGoal } from '@/lib/analytics';
+import { hasActiveAntibotToken } from '@/lib/cookies';
+import { base85XDecode } from '@/lib/legacy-decode';
 import {
   maskLegacyTableHtml,
   unmaskLegacyTableHtml,
   type CalcResultContext,
-} from "@/lib/legacy-table";
+} from '@/lib/legacy-table';
 
 const FZ_OPTIONS = [
-  { value: "44", label: "44-ФЗ" },
-  { value: "223", label: "223-ФЗ" },
-  { value: "185", label: "185-ФЗ" },
-  { value: "Commercial", label: "Коммерческий" },
+  { value: '44', label: '44-ФЗ' },
+  { value: '223', label: '223-ФЗ' },
+  { value: '185', label: '185-ФЗ' },
+  { value: 'Commercial', label: 'Коммерческий' },
 ] as const;
 
 const TYPE_OPTIONS = [
-  { value: "participation", label: "Участие" },
-  { value: "execution", label: "Исполнение" },
-  { value: "warrantyObligations", label: "Гарантийные обязательства" },
-  { value: "avansReturn", label: "Возврат аванса" },
+  { value: 'participation', label: 'Участие' },
+  { value: 'execution', label: 'Исполнение' },
+  { value: 'warrantyObligations', label: 'Гарантийные обязательства' },
+  { value: 'avansReturn', label: 'Возврат аванса' },
 ] as const;
 
 const DURATION_UNIT_OPTIONS = [
-  { value: "1", label: "Недель" },
-  { value: "2", label: "Месяцев" },
-  { value: "3", label: "Лет" },
+  { value: '1', label: 'Недель' },
+  { value: '2', label: 'Месяцев' },
+  { value: '3', label: 'Лет' },
 ] as const;
 
 const calculatorSchema = z
   .object({
-    Fz: z.enum(["44", "223", "185", "Commercial"]),
-    TypeBg: z.enum(["participation", "execution", "warrantyObligations", "avansReturn"]),
-    Summ: z.string().min(1, "Укажите сумму обеспечения"),
+    Fz: z.enum(['44', '223', '185', 'Commercial']),
+    TypeBg: z.enum(['participation', 'execution', 'warrantyObligations', 'avansReturn']),
+    Summ: z.string().min(1, 'Укажите сумму обеспечения'),
     StartDate: z.string().optional(),
     EndDate: z.string().optional(),
     duration: z.string().optional(),
-    specific: z.enum(["1", "2", "3"]),
+    specific: z.enum(['1', '2', '3']),
     unknownDates: z.boolean(),
     hasAvans: z.boolean(),
     ThisIsNothinTo: z.boolean(),
@@ -69,13 +69,13 @@ const calculatorSchema = z
   .superRefine((data, ctx) => {
     if (!data.unknownDates) {
       if (!data.StartDate) {
-        ctx.addIssue({ code: "custom", message: "Укажите дату начала", path: ["StartDate"] });
+        ctx.addIssue({ code: 'custom', message: 'Укажите дату начала', path: ['StartDate'] });
       }
       if (!data.EndDate) {
-        ctx.addIssue({ code: "custom", message: "Укажите дату окончания", path: ["EndDate"] });
+        ctx.addIssue({ code: 'custom', message: 'Укажите дату окончания', path: ['EndDate'] });
       }
     } else if (!data.duration) {
-      ctx.addIssue({ code: "custom", message: "Укажите срок гарантии", path: ["duration"] });
+      ctx.addIssue({ code: 'custom', message: 'Укажите срок гарантии', path: ['duration'] });
     }
   });
 
@@ -84,35 +84,35 @@ type CalcResponse = { result?: string };
 
 function buildPayload(values: CalculatorValues): URLSearchParams {
   const params = new URLSearchParams();
-  const summ = values.Summ.replace(/\s/g, "");
+  const summ = values.Summ.replace(/\s/g, '');
 
-  params.set("Fz", values.Fz);
-  params.set("TypeBg", values.TypeBg);
-  params.set("Summ", summ);
-  params.set("specific", values.specific);
+  params.set('Fz', values.Fz);
+  params.set('TypeBg', values.TypeBg);
+  params.set('Summ', summ);
+  params.set('specific', values.specific);
 
   if (values.unknownDates) {
-    if (values.duration) params.set("duration", values.duration);
+    if (values.duration) params.set('duration', values.duration);
   } else {
-    if (values.StartDate) params.set("StartDate", values.StartDate);
-    if (values.EndDate) params.set("EndDate", values.EndDate);
+    if (values.StartDate) params.set('StartDate', values.StartDate);
+    if (values.EndDate) params.set('EndDate', values.EndDate);
   }
 
   const flags: Array<[keyof CalculatorValues, string]> = [
-    ["ThisIsNothinTo", "ThisIsNothinTo"],
-    ["ThisIsNothin", "ThisIsNothin"],
-    ["customerFormTableModal", "customerFormTableModal"],
-    ["InstallmentPay", "InstallmentPay"],
-    ["NetLossLastYear", "NetLossLastYear"],
-    ["noExperienceTableModal", "noExperienceTableModal"],
-    ["BlockBankAccount", "BlockBankAccount"],
-    ["ClosedTender", "ClosedTender"],
-    ["CourierDelivery", "CourierDelivery"],
-    ["Arbitration", "Arbitration"],
+    ['ThisIsNothinTo', 'ThisIsNothinTo'],
+    ['ThisIsNothin', 'ThisIsNothin'],
+    ['customerFormTableModal', 'customerFormTableModal'],
+    ['InstallmentPay', 'InstallmentPay'],
+    ['NetLossLastYear', 'NetLossLastYear'],
+    ['noExperienceTableModal', 'noExperienceTableModal'],
+    ['BlockBankAccount', 'BlockBankAccount'],
+    ['ClosedTender', 'ClosedTender'],
+    ['CourierDelivery', 'CourierDelivery'],
+    ['Arbitration', 'Arbitration'],
   ];
 
   flags.forEach(([key, name]) => {
-    if (values[key]) params.set(name, "on");
+    if (values[key]) params.set(name, 'on');
   });
 
   return params;
@@ -134,11 +134,11 @@ function buildCalcContext(values: CalculatorValues): CalcResultContext {
   return {
     fz: fzLabel,
     typeBg: typeLabel,
-    summ: values.Summ.replace(/\s/g, ""),
-    startDate: values.StartDate ?? "",
-    endDate: values.EndDate ?? "",
-    inn: "",
-    regnum: "",
+    summ: values.Summ.replace(/\s/g, ''),
+    startDate: values.StartDate ?? '',
+    endDate: values.EndDate ?? '',
+    inn: '',
+    regnum: '',
     flags: {
       hasAvans: values.hasAvans,
       netLossLastYear: values.NetLossLastYear,
@@ -178,9 +178,9 @@ export function CalculatorForm() {
   } = useForm<CalculatorValues>({
     resolver: zodResolver(calculatorSchema),
     defaultValues: {
-      Fz: "44",
-      TypeBg: "execution",
-      specific: "2",
+      Fz: '44',
+      TypeBg: 'execution',
+      specific: '2',
       unknownDates: false,
       hasAvans: false,
       ThisIsNothinTo: false,
@@ -196,7 +196,7 @@ export function CalculatorForm() {
     },
   });
 
-  const unknownDates = useWatch({ control, name: "unknownDates" });
+  const unknownDates = useWatch({ control, name: 'unknownDates' });
 
   useEffect(() => {
     if (!isLoading) return;
@@ -230,7 +230,7 @@ export function CalculatorForm() {
     if (needsAntibot) {
       reachGoal(METRIKA_GOALS.ANTIBOT);
       openAntibot({
-        context: "calculator",
+        context: 'calculator',
         payload: payloadRecord,
         onVerified: unmaskResults,
         onCancel: () => {
@@ -256,7 +256,7 @@ export function CalculatorForm() {
       try {
         result = JSON.parse(resultText) as CalcResponse;
       } catch {
-        setError("Некорректный ответ сервера.");
+        setError('Некорректный ответ сервера.');
         return;
       }
 
@@ -272,15 +272,15 @@ export function CalculatorForm() {
             law: values.Fz,
             type: values.TypeBg,
             summ: values.Summ,
-            startdate: values.StartDate ?? "",
-            endtdate: values.EndDate ?? "",
+            startdate: values.StartDate ?? '',
+            endtdate: values.EndDate ?? '',
           },
         });
       } else {
-        setError("Для отображения данных заполните поля калькулятора.");
+        setError('Для отображения данных заполните поля калькулятора.');
       }
     } catch {
-      setError("Ошибка соединения с сервером.");
+      setError('Ошибка соединения с сервером.');
     } finally {
       setIsLoading(false);
     }
@@ -290,7 +290,7 @@ export function CalculatorForm() {
     <div className="flex flex-col gap-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6 shadow-[var(--shadow-card)] md:p-8"
+        className="rounded-3xl border border-(--border-subtle) bg-(--surface-0) p-6 shadow-(--shadow-card) md:p-8"
       >
         <Controller
           name="Fz"
@@ -301,7 +301,7 @@ export function CalculatorForm() {
               value={field.value}
               onChange={(v) => {
                 field.onChange(v);
-                if (v === "185") setValue("TypeBg", "execution");
+                if (v === '185') setValue('TypeBg', 'execution');
               }}
               className="mb-6 w-full flex-wrap"
             />
@@ -326,7 +326,7 @@ export function CalculatorForm() {
             label="Сумма обеспечения"
             inputMode="numeric"
             error={errors.Summ?.message}
-            {...register("Summ")}
+            {...register('Summ')}
           />
 
           {!unknownDates ? (
@@ -335,13 +335,13 @@ export function CalculatorForm() {
                 label="Начало"
                 placeholder="ДД.ММ.ГГГГ"
                 error={errors.StartDate?.message}
-                {...register("StartDate")}
+                {...register('StartDate')}
               />
               <Input
                 label="Окончание"
                 placeholder="ДД.ММ.ГГГГ"
                 error={errors.EndDate?.message}
-                {...register("EndDate")}
+                {...register('EndDate')}
               />
             </>
           ) : (
@@ -349,14 +349,14 @@ export function CalculatorForm() {
               <Input
                 label="Срок гарантии"
                 error={errors.duration?.message}
-                {...register("duration")}
+                {...register('duration')}
               />
               <Controller
                 name="specific"
                 control={control}
                 render={({ field }) => (
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs text-[var(--text-muted)]">Единица срока</label>
+                    <label className="text-xs text-(--text-muted)">Единица срока</label>
                     <SegmentedControl
                       options={[...DURATION_UNIT_OPTIONS]}
                       value={field.value}
@@ -372,28 +372,28 @@ export function CalculatorForm() {
         <div className="mt-4 flex flex-wrap gap-4">
           <Checkbox
             label="Неизвестный даты действия гарантии, указать срок"
-            {...register("unknownDates")}
+            {...register('unknownDates')}
           />
-          <Checkbox label="Наличие аванса" {...register("hasAvans")} />
+          <Checkbox label="Наличие аванса" {...register('hasAvans')} />
         </div>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <Checkbox label="Без открытия р/с" {...register("ThisIsNothinTo")} />
-          <Checkbox label="Без залога" {...register("ThisIsNothin")} />
-          <Checkbox label="Форма гарантии от заказчика" {...register("customerFormTableModal")} />
-          <Checkbox label="Рассрочка по оплате" {...register("InstallmentPay")} />
+          <Checkbox label="Без открытия р/с" {...register('ThisIsNothinTo')} />
+          <Checkbox label="Без залога" {...register('ThisIsNothin')} />
+          <Checkbox label="Форма гарантии от заказчика" {...register('customerFormTableModal')} />
+          <Checkbox label="Рассрочка по оплате" {...register('InstallmentPay')} />
         </div>
 
-        <p className="mt-6 text-sm font-bold text-[var(--text-primary)]">
+        <p className="mt-6 text-sm font-bold text-(--text-primary)">
           Дополнительные параметры:
         </p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <Checkbox label="Убыточная деятельность" {...register("NetLossLastYear")} />
-          <Checkbox label="Отсутствие опыта" {...register("noExperienceTableModal")} />
-          <Checkbox label="Блокировка расчётного счёта" {...register("BlockBankAccount")} />
-          <Checkbox label="Закрытый аукцион" {...register("ClosedTender")} />
-          <Checkbox label="Доставка курьером" {...register("CourierDelivery")} />
-          <Checkbox label="Наличие судебных дел" {...register("Arbitration")} />
+          <Checkbox label="Убыточная деятельность" {...register('NetLossLastYear')} />
+          <Checkbox label="Отсутствие опыта" {...register('noExperienceTableModal')} />
+          <Checkbox label="Блокировка расчётного счёта" {...register('BlockBankAccount')} />
+          <Checkbox label="Закрытый аукцион" {...register('ClosedTender')} />
+          <Checkbox label="Доставка курьером" {...register('CourierDelivery')} />
+          <Checkbox label="Наличие судебных дел" {...register('Arbitration')} />
         </div>
 
         <Button type="submit" loading={isLoading} className="mt-8">
@@ -404,16 +404,16 @@ export function CalculatorForm() {
       <CalculatorProgress active={isLoading} step={progressStep} />
 
       <Reveal>
-        <p className="text-center text-sm text-[var(--text-secondary)]">
-          Согласуем для Вас <strong>нашу цену</strong> в любом из этих банков. Оплата{" "}
-          <strong>напрямую</strong> в банк. <strong>Наша комиссия 0%</strong>. Вы нам ничего{" "}
+        <p className="text-center text-sm text-(--text-secondary)">
+          Согласуем для Вас <strong>нашу цену</strong> в любом из этих банков. Оплата{' '}
+          <strong>напрямую</strong> в банк. <strong>Наша комиссия 0%</strong>. Вы нам ничего{' '}
           <strong>не платите</strong>.
         </p>
       </Reveal>
 
       {error && !isLoading && (
         <p
-          className="rounded-xl border border-[var(--error)]/20 bg-[var(--error)]/5 px-4 py-3 text-sm text-[var(--error)]"
+          className="rounded-xl border border-(--error)/20 bg-(--error)/5 px-4 py-3 text-sm text-(--error)"
           role="alert"
         >
           {error}
@@ -421,7 +421,7 @@ export function CalculatorForm() {
       )}
 
       {showPlaceholder && !tableHtml && !isLoading && !error && (
-        <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)]">
+        <div className="overflow-hidden rounded-2xl border border-(--border-subtle)">
           <Image
             src="/prof-p/table-example.png"
             alt="Для отображения данных заполните поля калькулятора"
@@ -429,7 +429,7 @@ export function CalculatorForm() {
             height={333}
             className="h-auto w-full"
           />
-          <p className="px-4 py-3 text-center text-sm text-[var(--text-muted)]">
+          <p className="px-4 py-3 text-center text-sm text-(--text-muted)">
             Для отображения данных заполните поля калькулятора.
           </p>
         </div>

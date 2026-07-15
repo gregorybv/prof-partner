@@ -138,7 +138,7 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
 
   return (
     <Dialog open={commerceOpen} onClose={onClose} title="Онлайн-автоподбор банка" className="max-w-lg">
-      <p className="mb-4 text-sm text-[var(--text-secondary)]">
+      <p className="mb-4 text-sm text-(--text-secondary)">
         Заполните пожалуйста поля для запуска подбора.
       </p>
 
@@ -181,7 +181,7 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
           label={
             <>
               Оставляя отметку, я даю{" "}
-              <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+              <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
                 согласие
               </a>{" "}
               на обработку персональных данных.
@@ -190,10 +190,10 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
           {...register("consent")}
         />
         {errors.consent && (
-          <p className="text-xs text-[var(--error)]">{errors.consent.message}</p>
+          <p className="text-xs text-(--error)">{errors.consent.message}</p>
         )}
 
-        {error && <p className="text-sm text-[var(--error)]">{error}</p>}
+        {error && <p className="text-sm text-(--error)">{error}</p>}
 
         <Button type="submit" loading={isLoading}>
           ПОДОБРАТЬ БАНК

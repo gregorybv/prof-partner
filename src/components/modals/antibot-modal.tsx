@@ -4,17 +4,16 @@ import { useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { IMaskInput } from "react-imask";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { useModals } from "@/components/modals/modal-provider";
 import { LEGACY_API, legacyPost } from "@/lib/api";
 import { endDayCookieMaxAge, setCookie } from "@/lib/cookies";
 import { sendQEmailAntibot, resolveEmailVariant } from "@/lib/email-calc";
 import { METRIKA_GOALS, reachGoal, setMetrikaParams } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
 
 const schema = z.object({
   phone: z
@@ -224,7 +223,7 @@ export function AntibotModal() {
 
   return (
     <Dialog open={antibotOpen} onClose={onClose} title="АНТИ-БОТ ЗАЩИТА" className="max-w-md">
-      <p className="mb-4 text-sm text-[var(--text-secondary)]">
+      <p className="mb-4 text-sm text-(--text-secondary)">
         Если Вы не робот, введите проверочное слово.{" "}
         <strong>Проверочное слово можно получить по СМС.</strong>
       </p>
@@ -233,35 +232,21 @@ export function AntibotModal() {
         onSubmit={handleSubmit(step === "phone" ? onRequestCode : onVerifyCode)}
         className="flex flex-col gap-4"
       >
-        <div className="relative w-full">
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <IMaskInput
-                mask="+{7}(000)000-00-00"
-                value={field.value ?? ""}
-                onAccept={(value) => field.onChange(value)}
-                onChange={() => {}}
-                onBlur={field.onBlur}
-                inputRef={field.ref}
-                disabled={step === "code"}
-                placeholder=" "
-                className={cn(
-                  "peer h-12 w-full rounded-xl border border-[var(--border-default)] bg-[var(--surface-0)] px-4 pt-5 pb-1 text-sm",
-                  "focus:border-[var(--accent-500)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-500)]/20",
-                  errors.phone && "border-[var(--error)]",
-                )}
-              />
-            )}
-          />
-          <label className="pointer-events-none absolute left-4 top-3 text-xs text-[var(--text-muted)]">
-            Номер телефона для получения СМС
-          </label>
-          {errors.phone && (
-            <p className="mt-1 text-xs text-[var(--error)]">{errors.phone.message}</p>
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <PhoneInput
+              label="Номер телефона для получения СМС"
+              value={field.value ?? ""}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              disabled={step === "code"}
+              error={errors.phone?.message}
+            />
           )}
-        </div>
+        />
 
         {step === "phone" && (
           <>
@@ -269,7 +254,7 @@ export function AntibotModal() {
               label={
                 <>
                   Оставляя отметку, я даю{" "}
-                  <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+                  <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
                     согласие
                   </a>{" "}
                   на обработку персональных данных.
@@ -278,7 +263,7 @@ export function AntibotModal() {
               {...register("consent")}
             />
             {errors.consent && (
-              <p className="text-xs text-[var(--error)]">{errors.consent.message}</p>
+              <p className="text-xs text-(--error)">{errors.consent.message}</p>
             )}
             <Button type="submit" loading={isSending}>
               ОТПРАВИТЬ ПРОВЕРОЧНОЕ СЛОВО
@@ -295,8 +280,8 @@ export function AntibotModal() {
               error={errors.code?.message}
               {...register("code")}
             />
-            <p className="text-xs text-[var(--text-muted)]">{codeHint}</p>
-            <p className="text-xs text-[var(--text-muted)]">
+            <p className="text-xs text-(--text-muted)">{codeHint}</p>
+            <p className="text-xs text-(--text-muted)">
               Осталось ввести символов: {Math.max(0, 4 - code.length)} шт.
             </p>
             <Button type="submit" loading={isVerifying} disabled={code.length !== 4}>
@@ -305,16 +290,16 @@ export function AntibotModal() {
           </>
         )}
 
-        {attention && <p className="text-sm text-[var(--warning)]">{attention}</p>}
-        {error && <p className="text-sm text-[var(--error)]">{error}</p>}
+        {attention && <p className="text-sm text-(--warning)">{attention}</p>}
+        {error && <p className="text-sm text-(--error)">{error}</p>}
       </form>
 
-      <div className="mt-6 border-t border-[var(--border-subtle)] pt-6">
-        <p className="mb-3 text-center text-sm text-[var(--text-secondary)]">
+      <div className="mt-6 border-t border-(--border-subtle) pt-6">
+        <p className="mb-3 text-center text-sm text-(--text-secondary)">
           Результаты расчёта без проверки можно{" "}
           <button
             type="button"
-            className="font-medium text-[var(--accent-500)] hover:underline"
+            className="font-medium text-(--accent-500) hover:underline"
             onClick={openFullEmailModal}
           >
             получить по электронной почте
@@ -335,7 +320,7 @@ export function AntibotModal() {
             label={
               <>
                 Оставляя отметку, я даю{" "}
-                <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-500)] hover:underline">
+                <a href="/soglasie.pdf" target="_blank" rel="noopener noreferrer" className="text-(--accent-500) hover:underline">
                   согласие
                 </a>{" "}
                 на обработку персональных данных.
@@ -344,7 +329,7 @@ export function AntibotModal() {
             {...emailForm.register("emailConsent")}
           />
           {emailForm.formState.errors.emailConsent && (
-            <p className="text-xs text-[var(--error)]">
+            <p className="text-xs text-(--error)">
               {emailForm.formState.errors.emailConsent.message}
             </p>
           )}

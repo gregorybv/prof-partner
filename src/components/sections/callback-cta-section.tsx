@@ -21,7 +21,7 @@ export function CallbackCtaSection({
       }}
     >
       <Reveal>
-        <div className="relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-white/20 p-8 text-white shadow-[var(--shadow-lg)] md:p-10">
+        <div className="relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-white/20 p-8 text-white shadow-(--shadow-lg) md:p-10">
           <SectionBackground
             src="/prof-p/callback-cta-bg.jpg"
             overlay="brand"
@@ -32,10 +32,10 @@ export function CallbackCtaSection({
             <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide md:text-3xl">
               Нет времени Разбираться?
             </h3>
-            <p className="mt-2 text-sm font-bold uppercase tracking-[var(--tracking-wide)] text-[var(--cta-300)]">
+            <p className="mt-2 text-sm font-bold uppercase tracking-wide text-(--cta-300)">
               ОБЪЯСНИМ, СОГЛАСУЕМ СКИДКУ И БЫСТРО ОФОРМИМ
             </p>
-            <div className="mt-6 rounded-2xl bg-[var(--surface-0)] p-6 text-[var(--text-primary)]">
+            <div className="mt-6 rounded-2xl bg-(--surface-0) p-6 text-(--text-primary)">
               <CallbackLeadForm formName={formName} />
             </div>
           </div>

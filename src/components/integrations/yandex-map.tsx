@@ -58,7 +58,7 @@ export function YandexMap() {
       />
       <div
         ref={mapRef}
-        className="h-64 w-full overflow-hidden rounded-2xl border border-[var(--border-subtle)] md:h-80"
+        className="h-64 w-full overflow-hidden rounded-2xl border border-(--border-subtle) md:h-80"
         aria-label="Карта офиса на Яндекс.Картах"
       />
     </>

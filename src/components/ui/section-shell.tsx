@@ -27,8 +27,8 @@ export function SectionShell({
     <section
       id={id}
       className={cn(
-        "relative py-[var(--space-section-y)]",
-        muted && !background && "bg-[var(--surface-2)]",
+        "relative py-(--space-section-y)",
+        muted && !background && "bg-(--surface-2)",
         className,
       )}
       {...props}

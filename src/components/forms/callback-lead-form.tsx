@@ -4,15 +4,13 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { IMaskInput } from "react-imask";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { LEGACY_API, legacyPost } from "@/lib/api";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-
-const PHONE_MASK = "+{7}(000)000-00-00";
 
 const callbackSchema = z.object({
   phone: z
@@ -138,38 +136,14 @@ export function CallbackLeadForm({
           name="phone"
           control={control}
           render={({ field }) => (
-            <div className="w-full">
-              <div className="relative">
-                <IMaskInput
-                  mask={PHONE_MASK}
-                  value={field.value ?? ""}
-                  onAccept={(value: string) => field.onChange(value)}
-                  onChange={() => {}}
-                  onBlur={field.onBlur}
-                  inputRef={field.ref}
-                  placeholder=" "
-                  className={cn(
-                    "peer h-12 w-full rounded-xl border border-(--border-default) bg-(--surface-0) px-4 pt-5 pb-1 text-sm text-(--text-primary) transition-colors",
-                    "placeholder-transparent focus:border-(--accent-500) focus:outline-none focus:ring-2 focus:ring-(--accent-500)/20",
-                    errors.phone && "border-(--error) focus:border-(--error) focus:ring-(--error)/20",
-                  )}
-                />
-                <label
-                  className={cn(
-                    "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-(--text-muted) transition-all",
-                    "peer-focus:top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-(--accent-500)",
-                    "peer-not-placeholder-shown:top-3 peer-not-placeholder-shown:translate-y-0 peer-not-placeholder-shown:text-xs",
-                  )}
-                >
-                  Телефон
-                </label>
-              </div>
-              {errors.phone && (
-                <p className="mt-1 text-xs text-(--error)" role="alert">
-                  {errors.phone.message}
-                </p>
-              )}
-            </div>
+            <PhoneInput
+              label="Телефон"
+              value={field.value ?? ""}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              error={errors.phone?.message}
+            />
           )}
         />
 

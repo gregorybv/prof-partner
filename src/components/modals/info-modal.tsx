@@ -15,7 +15,7 @@ export function InfoModal() {
 
   return (
     <Dialog open={infoOpen} onClose={onClose} title="ВНИМАНИЕ!">
-      <div className="space-y-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+      <div className="space-y-4 text-sm leading-relaxed text-(--text-secondary)">
         <p>
           Более низкая цена / ставка за гарантию, при оформлении в банке с нашей помощью не будет
           доступна при прямом обращении в банк, так как Вы не являетесь агентом.{" "}
@@ -31,7 +31,7 @@ export function InfoModal() {
           <strong>свыше 380 000 гарантий</strong> по всей России для более{" "}
           <strong>52 000 клиентов</strong>.
         </p>
-        <p className="text-[var(--success)]">
+        <p className="text-(--success)">
           СОГЛАСУЕМ И ОФОРМИМ ДЛЯ ВАС ГАРАНТИЮ ПОЛНОСТЬЮ ДИСТАНЦИОННО, БЕЗ ВАШЕГО ПОСЕЩЕНИЯ БАНКА И
           НАШЕГО ОФИСА. ОРИГИНАЛ ГАРАНТИИ ВЫШЛЕМ ЭКСПРЕСС-КУРЬЕРОМ В ЛЮБОЙ РЕГИОН.
         </p>

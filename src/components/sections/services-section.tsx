@@ -56,7 +56,7 @@ export function ServicesSection() {
         overlay: "medium",
       }}
     >
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Основные направления нашей деятельности"
@@ -76,15 +76,15 @@ export function ServicesSection() {
             >
               <article
                 data-service-card
-                className="group flex h-full flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6 transition-all duration-[var(--duration-base)] hover:-translate-y-1 hover:shadow-[var(--shadow-card)]"
+                className="group flex h-full flex-col rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-6 transition-all duration-(--duration-base) hover:-translate-y-1 hover:shadow-(--shadow-card)"
               >
-                <h3 className="font-display text-xl text-[var(--brand-600)]">
+                <h3 className="font-display text-xl text-(--brand-600)">
                   {service.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-(--text-secondary)">
                   {service.description}
                 </p>
-                <div className="mt-4 h-0.5 w-12 rounded-full bg-[var(--accent-500)] transition-all duration-[var(--duration-base)] group-hover:w-full" />
+                <div className="mt-4 h-0.5 w-12 rounded-full bg-(--accent-500) transition-all duration-(--duration-base) group-hover:w-full" />
               </article>
             </Reveal>
           ))}

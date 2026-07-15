@@ -23,7 +23,7 @@ export function ScrollProgress() {
       aria-hidden
     >
       <div
-        className="h-full origin-left bg-gradient-to-r from-[var(--cta-700)] via-[var(--cta-300)] to-[var(--cta-500)] transition-transform duration-150 ease-out"
+        className="h-full origin-left bg-linear-to-r from-(--cta-700) via-(--cta-300) to-(--cta-500) transition-transform duration-150 ease-out"
         style={{ transform: `scaleX(${progress})` }}
       />
     </div>

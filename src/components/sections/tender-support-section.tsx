@@ -9,7 +9,7 @@ import { TENDER_PLATFORMS, TENDER_SUPPORT } from "@/lib/site-content";
 export function TenderSupportSection() {
   return (
     <SectionShell>
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title={TENDER_SUPPORT.title}
@@ -19,7 +19,7 @@ export function TenderSupportSection() {
 
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <Reveal direction="right">
-            <div className="flex flex-col gap-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+            <div className="flex flex-col gap-4 text-sm leading-relaxed text-(--text-secondary)">
               <p>{TENDER_SUPPORT.description}</p>
               <p>{TENDER_SUPPORT.description2}</p>
               <div className="relative mt-2 overflow-hidden rounded-2xl">
@@ -31,14 +31,14 @@ export function TenderSupportSection() {
                   className="h-auto w-full"
                 />
               </div>
-              <p className="whitespace-pre-line font-medium text-[var(--text-primary)]">
+              <p className="whitespace-pre-line font-medium text-(--text-primary)">
                 {TENDER_SUPPORT.cta}
               </p>
             </div>
           </Reveal>
 
           <Reveal direction="left" delay={0.1}>
-            <div className="overflow-hidden rounded-3xl border border-[var(--border-subtle)] shadow-[var(--shadow-card)]">
+            <div className="overflow-hidden rounded-3xl border border-(--border-subtle) shadow-(--shadow-card)">
               <Image
                 src="/prof-p/block_tender.png"
                 alt="Изображение"
@@ -51,7 +51,7 @@ export function TenderSupportSection() {
         </div>
 
         <Reveal delay={0.2}>
-          <div className="flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] p-6">
+          <div className="flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-6">
             {TENDER_PLATFORMS.map((platform) => (
               <div
                 key={platform.name}

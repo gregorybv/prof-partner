@@ -27,7 +27,7 @@ export function GuaranteeTypesSection() {
 
   return (
     <SectionShell>
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Виды гарантий"
@@ -38,14 +38,14 @@ export function GuaranteeTypesSection() {
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {GUARANTEE_TYPES.map((type, index) => (
             <Reveal key={type.id} delay={index * 0.08}>
-              <article className="group relative flex min-h-[396px] flex-col bg-[length:100%_100%] bg-[position:center] bg-no-repeat px-[30px] pb-6 pt-10 transition-transform duration-[var(--duration-base)] hover:-translate-y-1 [background-image:url('/prof-p/background-type.png')]">
-                <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-[var(--brand-900)]">
+              <article className="group relative flex min-h-99 flex-col bg-size-[100%_100%] bg-center bg-no-repeat px-7.5 pb-6 pt-10 transition-transform duration-(--duration-base) hover:-translate-y-1 bg-[url('/prof-p/background-type.png')]">
+                <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-(--brand-900)">
                   {type.title}
                 </h3>
-                <p className="mt-3 text-sm text-[var(--text-primary)]">
+                <p className="mt-3 text-sm text-(--text-primary)">
                   Гарантии на обеспечение:
                 </p>
-                <ul className="mt-5 flex flex-1 flex-col gap-2.5 pb-24 text-sm text-[var(--text-primary)]">
+                <ul className="mt-5 flex flex-1 flex-col gap-2.5 pb-24 text-sm text-(--text-primary)">
                   {type.items.map((item) => {
                     const Icon = GUARANTEE_ITEM_ICONS[item];
                     return (
@@ -58,7 +58,7 @@ export function GuaranteeTypesSection() {
                     );
                   })}
                 </ul>
-                <div className="absolute bottom-[29px] left-[30px] right-[30px] flex items-end justify-between gap-4">
+                <div className="absolute bottom-7.25 left-7.5 right-7.5 flex items-end justify-between gap-4">
                   <Button
                     className="z-10 shrink px-4"
                     size="sm"
@@ -77,7 +77,7 @@ export function GuaranteeTypesSection() {
                     alt=""
                     width={70}
                     height={70}
-                    className="pointer-events-none z-0 h-[60px] w-[60px] shrink-0 object-contain sm:h-[70px] sm:w-[70px]"
+                    className="pointer-events-none z-0 h-15 w-15 shrink-0 object-contain sm:h-17.5 sm:w-17.5"
                     aria-hidden
                   />
                 </div>

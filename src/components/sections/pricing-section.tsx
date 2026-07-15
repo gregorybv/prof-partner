@@ -14,12 +14,12 @@ function PriceCell({ value }: { value: string }) {
         part === "БЕСПЛАТНО" ? (
           <strong
             key={index}
-            className="font-extrabold uppercase tracking-wide text-[var(--cta-700)]"
+            className="font-extrabold uppercase tracking-wide text-(--cta-700)"
           >
             {part}
           </strong>
         ) : (
-          <span key={index} className="font-semibold text-[var(--text-primary)]">
+          <span key={index} className="font-semibold text-(--text-primary)">
             {part}
           </span>
         ),
@@ -31,7 +31,7 @@ function PriceCell({ value }: { value: string }) {
 export function PricingSection() {
   return (
     <SectionShell>
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="Стоимость наших услуг"
@@ -40,15 +40,15 @@ export function PricingSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-0)] shadow-[var(--shadow-sm)]">
+          <div className="overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-0) shadow-(--shadow-sm)">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-sm">
+              <table className="w-full min-w-160 text-left text-sm">
                 <thead>
-                  <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-2)]">
-                    <th className="px-5 py-4 font-semibold text-[var(--text-primary)]">
+                  <tr className="border-b border-(--border-subtle) bg-(--surface-2)">
+                    <th className="px-5 py-4 font-semibold text-(--text-primary)">
                       Перечень услуг по банковским гарантиям
                     </th>
-                    <th className="px-5 py-4 font-semibold text-[var(--text-primary)]">
+                    <th className="px-5 py-4 font-semibold text-(--text-primary)">
                       Стоимость услуг
                     </th>
                   </tr>
@@ -57,9 +57,9 @@ export function PricingSection() {
                   {PRICING_TABLE.map((row, index) => (
                     <tr
                       key={index}
-                      className="border-b border-[var(--border-subtle)] transition-colors last:border-0 hover:bg-[var(--surface-2)]/50"
+                      className="border-b border-(--border-subtle) transition-colors last:border-0 hover:bg-(--surface-2)/50"
                     >
-                      <td className="px-5 py-4 leading-relaxed text-[var(--text-secondary)]">
+                      <td className="px-5 py-4 leading-relaxed text-(--text-secondary)">
                         {row.service}
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap">

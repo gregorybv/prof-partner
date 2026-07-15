@@ -19,7 +19,7 @@ export function TeamSection() {
 
   return (
     <SectionShell id="ourTeam">
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading title="Наша команда" subtitle="лучшие специалисты" />
         </Reveal>
@@ -55,14 +55,14 @@ export function TeamSection() {
               </div>
             </div>
 
-            <div className="relative -mt-4 overflow-hidden rounded-[2rem] border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(135deg,rgba(244,248,252,0.98)_0%,rgba(250,252,255,0.99)_42%,rgba(238,246,252,0.98)_100%)] p-5 shadow-[0_24px_60px_rgba(9,34,53,0.12)] md:p-6 lg:px-7">
+            <div className="relative -mt-4 overflow-hidden rounded-4xl border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(135deg,rgba(244,248,252,0.98)_0%,rgba(250,252,255,0.99)_42%,rgba(238,246,252,0.98)_100%)] p-5 shadow-[0_24px_60px_rgba(9,34,53,0.12)] md:p-6 lg:px-7">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(10,107,156,0.14),transparent_42%),radial-gradient(circle_at_right,rgba(59,111,212,0.08),transparent_32%)]" />
               <div className="relative mb-5">
                 <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand-800)]">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-(--brand-800)">
                     Ключевые специалисты
                   </p>
-                  <p className="mt-2 max-w-[560px] text-sm text-[var(--text-secondary)] md:text-base">
+                  <p className="mt-2 max-w-140 text-sm text-(--text-secondary) md:text-base">
                   Наша команда работает так, чтобы вы получили лучшие условия финансирования без лишних сложностей. От первого обращения до одобрения и оформления сделки — мы сопровождаем каждый этап.</p>
                 </div>
               </div>
@@ -73,9 +73,9 @@ export function TeamSection() {
                     <div
                       key={`${member.name}-${index}`}
                       aria-hidden={index >= rest.length}
-                      className="group flex min-h-[16.5rem] w-[78vw] shrink-0 flex-col rounded-[1.75rem] border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,253,0.98))] p-5 shadow-[0_14px_24px_rgba(9,34,53,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_32px_rgba(9,34,53,0.1)] sm:w-[46vw] sm:max-w-[26rem] lg:w-[32vw] lg:max-w-[24rem]"
+                      className="group flex min-h-66 w-[78vw] shrink-0 flex-col rounded-[1.75rem] border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,253,0.98))] p-5 shadow-[0_14px_24px_rgba(9,34,53,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_32px_rgba(9,34,53,0.1)] sm:w-[46vw] sm:max-w-104 lg:w-[32vw] lg:max-w-[24rem]"
                     >
-                      <div className="relative mx-auto h-32 w-32 shrink-0 overflow-hidden rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(14,86,134,0.14),rgba(255,255,255,0.98))] ring-1 ring-[rgba(12,56,89,0.1)] transition-transform duration-300 group-hover:scale-[1.04]">
+                      <div className="relative mx-auto h-32 w-32 shrink-0 overflow-hidden rounded-3xl bg-[linear-gradient(180deg,rgba(14,86,134,0.14),rgba(255,255,255,0.98))] ring-1 ring-[rgba(12,56,89,0.1)] transition-transform duration-300 group-hover:scale-[1.04]">
                         <Image
                           src={member.image}
                           alt={member.name}
@@ -84,10 +84,10 @@ export function TeamSection() {
                           sizes="128px"
                         />
                       </div>
-                      <p className="mt-4 text-center font-semibold text-[var(--text-primary)]">
+                      <p className="mt-4 text-center font-semibold text-(--text-primary)">
                         {member.name}
                       </p>
-                      <p className="mt-2 text-center text-xs leading-snug text-[var(--text-secondary)]">
+                      <p className="mt-2 text-center text-xs leading-snug text-(--text-secondary)">
                         {member.role}
                       </p>
                     </div>
@@ -101,7 +101,7 @@ export function TeamSection() {
         <Reveal delay={0.2}>
           <div
             ref={statsRef}
-            className="grid grid-cols-3 gap-4 rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-r from-[var(--brand-600)] to-[var(--brand-700)] p-6 text-white md:p-8"
+            className="grid grid-cols-3 gap-4 rounded-3xl border border-(--border-subtle) bg-linear-to-r from-(--brand-600) to-(--brand-700) p-6 text-white md:p-8"
           >
             {TEAM_STATS.map((stat, i) => (
               <div key={stat.label} className="text-center">

@@ -6,7 +6,7 @@ import { SectionShell } from "@/components/ui/section-shell";
 export function AutoSelectionSection() {
   return (
     <SectionShell id="avto-podbor" muted>
-      <div className="flex flex-col gap-[var(--space-section-gap)]">
+      <div className="flex flex-col gap-(--space-section-gap)">
         <Reveal>
           <SectionHeading
             title="ОНЛАЙН-АВТОПОДБОР БАНКА"

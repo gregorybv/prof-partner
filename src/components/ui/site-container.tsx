@@ -12,8 +12,8 @@ export function SiteContainer({
   return (
     <div
       className={cn(
-        "mx-auto w-full px-[var(--space-container-x)]",
-        wide ? "max-w-[var(--container-wide)]" : "max-w-[var(--container-max)]",
+        "mx-auto w-full px-(--space-container-x)",
+        wide ? "max-w-(--container-wide)" : "max-w-(--container-max)",
         className,
       )}
       {...props}

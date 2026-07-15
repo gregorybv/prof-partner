@@ -31,7 +31,7 @@ export function Dialog({ open, onClose, title, ariaLabel, children, className }:
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-(--z-modal) flex items-center justify-center p-4">
           <motion.button
             type="button"
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -48,7 +48,7 @@ export function Dialog({ open, onClose, title, ariaLabel, children, className }:
             aria-label={!title ? ariaLabel : undefined}
             data-lenis-prevent
             className={cn(
-              "relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-[var(--surface-0)] p-6 shadow-[var(--shadow-lg)]",
+              "relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-(--surface-0) p-6 shadow-(--shadow-lg)",
               className,
             )}
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -63,14 +63,14 @@ export function Dialog({ open, onClose, title, ariaLabel, children, className }:
               )}
             >
               {title && (
-                <h2 id="dialog-title" className="font-display text-xl text-[var(--text-primary)]">
+                <h2 id="dialog-title" className="font-display text-xl text-(--text-primary)">
                   {title}
                 </h2>
               )}
               <button
                 type="button"
                 onClick={onClose}
-                className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-[var(--surface-2)]"
+                className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-(--surface-2)"
                 aria-label="Закрыть"
               >
                 <X className="h-4 w-4" />
