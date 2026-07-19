@@ -417,6 +417,46 @@ body {
   }
 }
 
+/* ─── Why free ─── */
+.why-free-hero-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.1) 48%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  animation: why-free-sheen 8.5s ease-in-out infinite;
+}
+
+@keyframes why-free-sheen {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+.why-free-mark {
+  animation: why-free-float 5.5s ease-in-out infinite;
+}
+
+.why-free-mark-delayed {
+  animation-delay: -2.4s;
+}
+
+@keyframes why-free-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .tender-platforms {
   --tender-platforms-gap: 2.5rem;
   mask-image: linear-gradient(
@@ -565,19 +605,27 @@ body {
 }
 
 .process-scheme--animated:not(.process-scheme--in-view) .process-scheme__time-block::after {
-  height: 0;
+  transform: scaleY(0);
 }
 
 .process-scheme--animated:not(.process-scheme--in-view) .process-scheme__time-block::before {
   opacity: 0;
 }
 
+.process-scheme__time-block--up::after {
+  transform-origin: bottom center;
+}
+
+.process-scheme__time-block--down::after {
+  transform-origin: top center;
+}
+
 .process-scheme--animated.process-scheme--in-view .process-scheme__time-block--up::after {
-  animation: process-line-up 0.45s ease forwards;
+  animation: process-line-grow 0.45s ease forwards;
 }
 
 .process-scheme--animated.process-scheme--in-view .process-scheme__time-block--down::after {
-  animation: process-line-down 0.45s ease forwards;
+  animation: process-line-grow 0.45s ease forwards;
 }
 
 .process-scheme--animated.process-scheme--in-view .process-scheme__time-block::before {
@@ -623,21 +671,12 @@ body {
 .process-scheme--animated.process-scheme--in-view .process-scheme__time-block:nth-child(6)::before { animation-delay: 0.9s; }
 .process-scheme--animated.process-scheme--in-view .process-scheme__time-block:nth-child(7)::before { animation-delay: 1s; }
 
-@keyframes process-line-up {
+@keyframes process-line-grow {
   from {
-    height: 0;
+    transform: scaleY(0);
   }
   to {
-    height: var(--process-connector-height);
-  }
-}
-
-@keyframes process-line-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--process-connector-height);
+    transform: scaleY(1);
   }
 }
 
@@ -806,7 +845,9 @@ body {
   }
 
   .pricing-banner-sheen,
-  .pricing-free-badge {
+  .pricing-free-badge,
+  .why-free-hero-sheen,
+  .why-free-mark {
     animation: none;
   }
 

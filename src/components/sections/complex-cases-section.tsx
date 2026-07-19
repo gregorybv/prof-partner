@@ -23,14 +23,22 @@ export function ComplexCasesSection() {
         </Reveal>
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {COMPLEX_CASES.map((item, index) => (
-            <Reveal key={item} delay={index * 0.04}>
-              <div className="flex items-start gap-3 rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-4 transition-colors hover:border-(--cta-500)/30">
-                <CheckCircle2 className="text-cta mt-0.5 h-5 w-5 shrink-0" />
-                <p className="text-sm text-(--text-secondary)">{item}</p>
-              </div>
-            </Reveal>
-          ))}
+          {COMPLEX_CASES.map((item, index) => {
+            const isLast = index === COMPLEX_CASES.length - 1;
+
+            return (
+              <Reveal
+                key={item}
+                delay={index * 0.04}
+                className={isLast ? "lg:col-start-2" : undefined}
+              >
+                <div className="flex items-start gap-3 rounded-2xl border border-(--border-subtle) bg-(--surface-0) p-4 transition-colors hover:border-(--cta-500)/30">
+                  <CheckCircle2 className="text-cta mt-0.5 h-5 w-5 shrink-0" />
+                  <p className="text-sm text-(--text-secondary)">{item}</p>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </SectionShell>
