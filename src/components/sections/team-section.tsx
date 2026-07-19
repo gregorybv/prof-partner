@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { Hourglass, Landmark, Users } from "lucide-react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Reveal } from "@/components/animations/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SectionShell } from "@/components/ui/section-shell";
 import { TEAM_MEMBERS, TEAM_STATS } from "@/lib/site-content";
+
+const STAT_ICONS = [Users, Hourglass, Landmark] as const;
 
 export function TeamSection() {
   const { ref: statsRef, inView: statsInView } = useInView({
@@ -26,7 +29,8 @@ export function TeamSection() {
 
         <Reveal delay={0.1}>
           <div className="relative flex flex-col gap-8">
-            <div className="relative overflow-hidden rounded-[2.25rem] border border-[rgba(186,145,62,0.28)] bg-[linear-gradient(135deg,rgba(4,22,37,0.98),rgba(9,53,84,0.95)_52%,rgba(250,252,255,0.98)_160%)] px-6 pb-10 pt-8 shadow-[0_30px_80px_rgba(4,22,37,0.26)] md:px-8 lg:px-10 lg:pb-12">
+            <Reveal delay={0.15}>
+              <div className="relative overflow-hidden rounded-[2.25rem] border border-[rgba(186,145,62,0.28)] bg-[linear-gradient(135deg,rgba(4,22,37,0.98),rgba(9,53,84,0.95)_52%,rgba(250,252,255,0.98)_160%)] px-6 pb-10 pt-8 shadow-[0_30px_80px_rgba(4,22,37,0.26)] md:px-8 lg:px-10 lg:pb-12">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_18%_24%,rgba(212,175,86,0.18),transparent_26%),radial-gradient(circle_at_82%_18%,rgba(48,159,222,0.18),transparent_28%)]" />
               <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
                 <span className="inline-flex rounded-full border border-[rgba(255,255,255,0.22)] bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/88 backdrop-blur">
@@ -53,7 +57,8 @@ export function TeamSection() {
                   Возглавляет команду специалистов, которые сопровождают клиента на всех этапах оформления банковских гарантий и помогают быстро доводить сделки до результата.
                 </p>
               </div>
-            </div>
+              </div>
+            </Reveal>
 
             <div className="relative -mt-4 overflow-hidden rounded-4xl border border-[rgba(12,56,89,0.08)] bg-[linear-gradient(135deg,rgba(244,248,252,0.98)_0%,rgba(250,252,255,0.99)_42%,rgba(238,246,252,0.98)_100%)] p-5 shadow-[0_24px_60px_rgba(9,34,53,0.12)] md:p-6 lg:px-7">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(10,107,156,0.14),transparent_42%),radial-gradient(circle_at_right,rgba(59,111,212,0.08),transparent_32%)]" />
@@ -101,23 +106,71 @@ export function TeamSection() {
         <Reveal delay={0.2}>
           <div
             ref={statsRef}
-            className="grid grid-cols-3 gap-4 rounded-3xl border border-(--border-subtle) bg-linear-to-r from-(--brand-600) to-(--brand-700) p-6 text-white md:p-8"
+            className="relative overflow-hidden rounded-[1.75rem] border border-[rgba(186,145,62,0.32)] bg-[linear-gradient(135deg,rgba(4,22,37,0.98)_0%,rgba(9,53,84,0.96)_48%,rgba(18,72,110,0.94)_100%)] px-4 py-5 text-white shadow-[0_20px_50px_rgba(4,22,37,0.24)] md:rounded-[2rem] md:px-5 md:py-6"
           >
-            {TEAM_STATS.map((stat, i) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-xs uppercase tracking-wide text-white/70">
-                  {stat.prefix}
-                </p>
-                <p className="font-display mt-1 text-3xl md:text-4xl">
-                  {statsInView ? (
-                    <CountUp end={stat.value} duration={2} delay={i * 0.15} />
-                  ) : (
-                    "0"
-                  )}
-                </p>
-                <p className="mt-1 text-sm text-white/80">{stat.label}</p>
-              </div>
-            ))}
+            <div
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(212,175,86,0.22),transparent_28%),radial-gradient(circle_at_88%_18%,rgba(48,159,222,0.2),transparent_30%),radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.1),transparent_42%)]"
+              aria-hidden
+            />
+            <div
+              className="team-stats-sheen pointer-events-none absolute inset-0 opacity-60"
+              aria-hidden
+            />
+
+            <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-0">
+              {TEAM_STATS.map((stat, i) => {
+                const Icon = STAT_ICONS[i] ?? Users;
+
+                return (
+                  <Reveal key={stat.label} delay={i * 0.12}>
+                    <div
+                      className={`group relative flex flex-col items-center px-3 text-center sm:px-4 ${
+                        i < TEAM_STATS.length - 1
+                          ? "sm:border-r sm:border-white/12"
+                          : ""
+                      }`}
+                    >
+                      <div className="relative mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl border border-[rgba(212,175,86,0.35)] bg-[linear-gradient(160deg,rgba(255,255,255,0.16),rgba(255,255,255,0.04))] shadow-[0_8px_20px_rgba(0,0,0,0.2)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105">
+                        <div
+                          className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.28),transparent_55%)]"
+                          aria-hidden
+                        />
+                        <Icon
+                          className="relative h-4 w-4 text-[#e4c878] transition-colors duration-300 group-hover:text-[#f0d78a]"
+                          strokeWidth={1.75}
+                          aria-hidden
+                        />
+                      </div>
+
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/65">
+                        {stat.prefix}
+                      </p>
+
+                      <p className="font-display mt-1 text-[2.15rem] leading-none tracking-wide text-white md:text-[2.5rem]">
+                        {statsInView ? (
+                          <CountUp
+                            end={stat.value}
+                            duration={2.2}
+                            delay={i * 0.18}
+                          />
+                        ) : (
+                          "0"
+                        )}
+                        <span className="ml-0.5 text-[1.35rem] text-[#e4c878] md:text-[1.5rem]">
+                          +
+                        </span>
+                      </p>
+
+                      <div className="mx-auto mt-2 h-px w-8 bg-[linear-gradient(90deg,transparent,rgba(212,175,86,0.7),transparent)] transition-all duration-300 group-hover:w-12" />
+
+                      <p className="mt-2 max-w-36 text-xs leading-snug text-white/78 md:text-sm">
+                        {stat.label}
+                      </p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
           </div>
         </Reveal>
       </div>

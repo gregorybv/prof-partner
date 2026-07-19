@@ -285,6 +285,168 @@ body {
   }
 }
 
+.team-stats-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.08) 48%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  animation: team-stats-sheen 7s ease-in-out infinite;
+}
+
+@keyframes team-stats-sheen {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+.services-featured-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.12) 48%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  animation: services-featured-sheen 8s ease-in-out infinite;
+}
+
+@keyframes services-featured-sheen {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+/* ─── Tender support ─── */
+.tender-panel-sheen,
+.tender-cta-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.14) 48%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  animation: tender-sheen 8.5s ease-in-out infinite;
+}
+
+.tender-cta-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 48%,
+    transparent 62%
+  );
+  animation-duration: 7s;
+}
+
+@keyframes tender-sheen {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+.tender-signpost {
+  animation: tender-float 6.5s ease-in-out infinite;
+}
+
+.tender-book {
+  animation: tender-float 7.5s ease-in-out infinite;
+  animation-delay: -2.2s;
+}
+
+@keyframes tender-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ─── Pricing ─── */
+.pricing-banner-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.12) 48%,
+    transparent 64%
+  );
+  background-size: 220% 100%;
+  animation: pricing-sheen 8s ease-in-out infinite;
+}
+
+@keyframes pricing-sheen {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+.pricing-free-badge {
+  animation: pricing-free-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes pricing-free-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 18px rgba(94, 131, 27, 0.12);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 10px 22px rgba(94, 131, 27, 0.2);
+  }
+}
+
+.tender-platforms {
+  --tender-platforms-gap: 2.5rem;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.tender-platforms-track {
+  gap: var(--tender-platforms-gap);
+  animation: tender-platforms-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.tender-platforms:hover .tender-platforms-track {
+  animation-play-state: paused;
+}
+
+@keyframes tender-platforms-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - (var(--tender-platforms-gap) / 2)));
+  }
+}
+
 /* ─── Process scheme timeline ─── */
 .process-scheme {
   --process-step-width: 181px;
@@ -624,6 +786,27 @@ body {
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .team-marquee-track {
+    animation: none;
+  }
+
+  .team-stats-sheen {
+    animation: none;
+  }
+
+  .services-featured-sheen {
+    animation: none;
+  }
+
+  .tender-panel-sheen,
+  .tender-cta-sheen,
+  .tender-signpost,
+  .tender-book,
+  .tender-platforms-track {
+    animation: none;
+  }
+
+  .pricing-banner-sheen,
+  .pricing-free-badge {
     animation: none;
   }
 

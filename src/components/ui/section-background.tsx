@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-export type SectionBackgroundOverlay = "none" | "light" | "blue" | "medium" | "brand";
+export type SectionBackgroundOverlay =
+  | "none"
+  | "light"
+  | "blue"
+  | "medium"
+  | "brand"
+  | "navy";
 
 export type SectionBackgroundProps = {
   src: string;
@@ -20,6 +26,7 @@ const OVERLAY_CLASSES: Record<Exclude<SectionBackgroundOverlay, "none">, string>
   medium: "bg-white/65",
   brand:
     "bg-gradient-to-br from-[var(--brand-700)]/90 via-[var(--brand-800)]/85 to-[var(--brand-900)]/92",
+  navy: "bg-[linear-gradient(160deg,rgba(4,42,98,0.78)_0%,rgba(3,58,157,0.68)_48%,rgba(4,28,64,0.82)_100%)]",
 };
 
 export function SectionBackground({
