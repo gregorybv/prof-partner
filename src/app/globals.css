@@ -822,6 +822,92 @@ body {
   }
 }
 
+/* ─── Advantages solar ─── */
+.advantages-solar-ring {
+  border: 1px solid rgba(49, 83, 121, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.advantages-solar-ring--outer {
+  animation: advantages-ring-pulse 7s ease-in-out infinite;
+}
+
+.advantages-solar-ring--mid {
+  border-style: dashed;
+  border-color: rgba(59, 111, 212, 0.16);
+  animation: advantages-ring-spin 48s linear infinite;
+}
+
+.advantages-solar-ring--inner {
+  border-color: rgba(165, 215, 70, 0.18);
+  animation: advantages-ring-pulse 5.5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.advantages-orbit-node {
+  --orbit-radius: min(168px, 34vw);
+  transform: translate(-50%, -50%) rotate(var(--orbit-angle))
+    translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-angle) * -1));
+}
+
+.advantages-orbit-float {
+  animation: advantages-node-float 4.8s ease-in-out infinite;
+  animation-delay: var(--orbit-delay, 0s);
+}
+
+.advantages-solar-sheen {
+  background: radial-gradient(
+    circle,
+    rgba(59, 111, 212, 0.14) 0%,
+    rgba(165, 215, 70, 0.08) 38%,
+    transparent 68%
+  );
+  animation: advantages-sheen-breathe 6.5s ease-in-out infinite;
+}
+
+@keyframes advantages-ring-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+@keyframes advantages-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes advantages-node-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes advantages-sheen-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .team-marquee-track {
@@ -848,6 +934,14 @@ body {
   .pricing-free-badge,
   .why-free-hero-sheen,
   .why-free-mark {
+    animation: none;
+  }
+
+  .advantages-solar-ring--outer,
+  .advantages-solar-ring--mid,
+  .advantages-solar-ring--inner,
+  .advantages-orbit-float,
+  .advantages-solar-sheen {
     animation: none;
   }
 
