@@ -1,21 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useCookieConsent } from "@/components/integrations/cookie-consent-provider";
 import { Button } from "@/components/ui/button";
 import { LEGAL_LINKS } from "@/lib/site-content";
 
 export function CookieConsent() {
   const { preferences, acceptAll, acceptNecessaryOnly, openSettings } = useCookieConsent();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (preferences === null) {
-      setVisible(true);
-      return;
-    }
-    setVisible(false);
-  }, [preferences]);
+  const visible = preferences === null;
 
   if (!visible) return null;
 

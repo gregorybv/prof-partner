@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { COMPANY, SITE_URL } from "./site-content";
 
-const APPLE_TOUCH_ICONS = [] as const;
-
 export const SITE_METADATA: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Профессиональный Партнёр: независимая банковская гарантия",

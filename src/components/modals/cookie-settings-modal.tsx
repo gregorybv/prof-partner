@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCookieConsent } from "@/components/integrations/cookie-consent-provider";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,7 +11,6 @@ import {
   type CookieCategory,
   type CookiePreferences,
 } from "@/lib/cookie-preferences";
-import { LEGAL_LINKS } from "@/lib/site-content";
 
 export function CookieSettingsModal() {
   const {
@@ -22,21 +21,45 @@ export function CookieSettingsModal() {
     acceptNecessaryOnly,
     savePreferences,
   } = useCookieConsent();
-  const [draft, setDraft] = useState<CookiePreferences>(DEFAULT_COOKIE_PREFERENCES);
+  const [draftOverride, setDraftOverride] = useState<CookiePreferences | null>(null);
+  const baselinePreferences = preferences ?? DEFAULT_COOKIE_PREFERENCES;
+  const draft = draftOverride ?? baselinePreferences;
 
-  useEffect(() => {
-    if (!settingsOpen) return;
-    setDraft(preferences ?? DEFAULT_COOKIE_PREFERENCES);
-  }, [settingsOpen, preferences]);
+  const resetDraft = () => {
+    setDraftOverride(null);
+  };
+
+  const handleCloseSettings = () => {
+    resetDraft();
+    closeSettings();
+  };
+
+  const handleAcceptAll = () => {
+    resetDraft();
+    acceptAll();
+  };
+
+  const handleAcceptNecessaryOnly = () => {
+    resetDraft();
+    acceptNecessaryOnly();
+  };
+
+  const handleSavePreferences = () => {
+    savePreferences(draft);
+    resetDraft();
+  };
 
   const toggleCategory = (category: CookieCategory, checked: boolean) => {
-    setDraft((current) => ({ ...current, [category]: checked }));
+    setDraftOverride((current) => ({
+      ...(current ?? baselinePreferences),
+      [category]: checked,
+    }));
   };
 
   return (
     <Dialog
       open={settingsOpen}
-      onClose={closeSettings}
+      onClose={handleCloseSettings}
       title="Настройки cookie"
       className="max-w-2xl"
     >
@@ -84,14 +107,14 @@ export function CookieSettingsModal() {
       </div>
 
       <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-        <Button type="button" className="sm:flex-1" onClick={acceptAll}>
+        <Button type="button" className="sm:flex-1" onClick={handleAcceptAll}>
           Принять все
         </Button>
         <Button
           type="button"
           variant="secondary"
           className="sm:flex-1"
-          onClick={acceptNecessaryOnly}
+          onClick={handleAcceptNecessaryOnly}
         >
           Только обязательные
         </Button>
@@ -99,7 +122,7 @@ export function CookieSettingsModal() {
           type="button"
           variant="outline"
           className="sm:flex-1"
-          onClick={() => savePreferences(draft)}
+          onClick={handleSavePreferences}
         >
           Сохранить выбор
         </Button>

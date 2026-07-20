@@ -4,12 +4,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
 import {
   ALL_COOKIE_PREFERENCES,
+  COOKIE_CONSENT_STORAGE_KEY,
   DEFAULT_COOKIE_PREFERENCES,
   loadCookiePreferences,
   saveCookiePreferences,
@@ -28,21 +29,32 @@ type CookieConsentContextValue = {
 };
 
 const CookieConsentContext = createContext<CookieConsentContextValue | null>(null);
+let lastRawSnapshot: string | null | undefined;
+let lastPreferencesSnapshot: CookiePreferences | null = null;
+
+function getCookiePreferencesSnapshot(): CookiePreferences | null {
+  if (typeof window === "undefined") return null;
+
+  const raw = window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
+  if (lastRawSnapshot !== undefined && raw === lastRawSnapshot) {
+    return lastPreferencesSnapshot;
+  }
+
+  lastRawSnapshot = raw;
+  lastPreferencesSnapshot = loadCookiePreferences();
+  return lastPreferencesSnapshot;
+}
 
 export function CookieConsentProvider({ children }: { children: React.ReactNode }) {
-  const [preferences, setPreferences] = useState<CookiePreferences | null>(null);
+  const preferences = useSyncExternalStore(
+    (onStoreChange) => subscribeCookiePreferences(() => onStoreChange()),
+    getCookiePreferencesSnapshot,
+    () => null,
+  );
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setPreferences(loadCookiePreferences());
-    setHydrated(true);
-    return subscribeCookiePreferences(setPreferences);
-  }, []);
 
   const persist = useCallback((next: CookiePreferences) => {
     saveCookiePreferences(next);
-    setPreferences(next);
     setSettingsOpen(false);
   }, []);
 
@@ -60,7 +72,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
 
   const value = useMemo(
     () => ({
-      preferences: hydrated ? preferences : null,
+      preferences,
       settingsOpen,
       openSettings,
       closeSettings,
@@ -69,7 +81,6 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       savePreferences,
     }),
     [
-      hydrated,
       preferences,
       settingsOpen,
       openSettings,
