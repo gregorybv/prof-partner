@@ -279,10 +279,11 @@ export function AutoSelectionForm({
             </div>
           </div>
 
-          <Checkbox label={consentLabel} {...register('consent')} />
-          {errors.consent && (
-            <p className="text-xs text-(--error)">{errors.consent.message}</p>
-          )}
+          <Checkbox
+            label={consentLabel}
+            error={errors.consent?.message}
+            {...register('consent')}
+          />
         </div>
       </form>
 

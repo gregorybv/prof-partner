@@ -126,10 +126,11 @@ export function CallbackLeadForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)} name={formName}>
-      <Checkbox label={consentLabel} {...register("consent")} />
-      {errors.consent && (
-        <p className="text-xs text-(--error)">{errors.consent.message}</p>
-      )}
+      <Checkbox
+        label={consentLabel}
+        error={errors.consent?.message}
+        {...register("consent")}
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Controller

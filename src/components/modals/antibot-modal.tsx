@@ -260,11 +260,9 @@ export function AntibotModal() {
                   на обработку персональных данных.
                 </>
               }
+              error={errors.consent?.message}
               {...register("consent")}
             />
-            {errors.consent && (
-              <p className="text-xs text-(--error)">{errors.consent.message}</p>
-            )}
             <Button type="submit" loading={isSending}>
               ОТПРАВИТЬ ПРОВЕРОЧНОЕ СЛОВО
             </Button>
@@ -326,13 +324,9 @@ export function AntibotModal() {
                 на обработку персональных данных.
               </>
             }
+            error={emailForm.formState.errors.emailConsent?.message}
             {...emailForm.register("emailConsent")}
           />
-          {emailForm.formState.errors.emailConsent && (
-            <p className="text-xs text-(--error)">
-              {emailForm.formState.errors.emailConsent.message}
-            </p>
-          )}
           <Button type="submit" loading={isEmailSending} variant="secondary">
             Получить расчёт
           </Button>

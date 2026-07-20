@@ -205,12 +205,11 @@ export function EmailCalcModal() {
             {...requestForm.register("emailQEmail")}
           />
 
-          <Checkbox label={consentLabel} {...requestForm.register("consent")} />
-          {requestForm.formState.errors.consent && (
-            <p className="text-xs text-(--error)">
-              {requestForm.formState.errors.consent.message}
-            </p>
-          )}
+          <Checkbox
+            label={consentLabel}
+            error={requestForm.formState.errors.consent?.message}
+            {...requestForm.register("consent")}
+          />
 
           <Button type="submit" loading={requestForm.formState.isSubmitting}>
             Получить расчёт

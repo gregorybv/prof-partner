@@ -187,11 +187,9 @@ export function CommerceAutoModal({ onResult }: CommerceAutoModalProps) {
               на обработку персональных данных.
             </>
           }
+          error={errors.consent?.message}
           {...register("consent")}
         />
-        {errors.consent && (
-          <p className="text-xs text-(--error)">{errors.consent.message}</p>
-        )}
 
         {error && <p className="text-sm text-(--error)">{error}</p>}
 

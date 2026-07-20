@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useIMask } from "react-imask";
+import { FormErrorHint } from "@/components/ui/form-error-hint";
 import { cn } from "@/lib/utils";
 
 export const PHONE_MASK = "+{7}(000)000-00-00";
@@ -89,12 +90,8 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               {label}
             </label>
           )}
+          <FormErrorHint id={`${inputId}-error`} message={error} />
         </div>
-        {error && (
-          <p id={`${inputId}-error`} className="mt-1 text-xs text-(--error)" role="alert">
-            {error}
-          </p>
-        )}
       </div>
     );
   },

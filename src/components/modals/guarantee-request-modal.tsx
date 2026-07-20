@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { FormErrorHint } from "@/components/ui/form-error-hint";
 import { useModals } from "@/components/modals/modal-provider";
 import { LEGACY_API, legacyPost } from "@/lib/api";
 
@@ -135,34 +136,32 @@ export function GuaranteeRequestModal() {
               <p className="mb-1 pr-10 font-display text-lg leading-tight text-(--text-primary)">
                 Укажите вид/виды требуемого обеспечения:
               </p>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {GUARANTEE_PURPOSE_VALUES.map((purpose) => {
-                  const checked = selectedPurposes.includes(purpose);
-                  return (
-                    <Checkbox
-                      key={purpose}
-                      checked={checked}
-                      onChange={(event) => {
-                        const isChecked = event.target.checked;
-                        const current = selectedPurposes;
-                        setValue(
-                          "guaranteePurposes",
-                          isChecked
-                            ? [...current, purpose]
-                            : current.filter((item) => item !== purpose),
-                          { shouldValidate: true },
-                        );
-                      }}
-                      label={<span className="text-sm text-(--text-primary)">{purpose}</span>}
-                    />
-                  );
-                })}
+              <div className="relative">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {GUARANTEE_PURPOSE_VALUES.map((purpose) => {
+                    const checked = selectedPurposes.includes(purpose);
+                    return (
+                      <Checkbox
+                        key={purpose}
+                        checked={checked}
+                        onChange={(event) => {
+                          const isChecked = event.target.checked;
+                          const current = selectedPurposes;
+                          setValue(
+                            "guaranteePurposes",
+                            isChecked
+                              ? [...current, purpose]
+                              : current.filter((item) => item !== purpose),
+                            { shouldValidate: true },
+                          );
+                        }}
+                        label={<span className="text-sm text-(--text-primary)">{purpose}</span>}
+                      />
+                    );
+                  })}
+                </div>
+                <FormErrorHint message={errors.guaranteePurposes?.message} />
               </div>
-              {errors.guaranteePurposes && (
-                <p className="mt-1 text-xs leading-tight text-(--error)">
-                  {errors.guaranteePurposes.message}
-                </p>
-              )}
             </div>
 
             <div>
@@ -222,6 +221,7 @@ export function GuaranteeRequestModal() {
             </div>
 
             <Checkbox
+              error={errors.consent?.message}
               label={
                 <>
                   Оставляя отметку, я даю{" "}
@@ -237,9 +237,6 @@ export function GuaranteeRequestModal() {
               }
               {...register("consent")}
             />
-            {errors.consent && (
-              <p className="text-xs text-(--error)">{errors.consent.message}</p>
-            )}
 
             <div className="-mx-4 sticky bottom-0 z-10 border-t border-(--border-default) bg-(--surface-0)/95 px-4 pb-1 pt-2 backdrop-blur-sm">
               {error && <p className="mb-2 text-sm text-(--error)">{error}</p>}

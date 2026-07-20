@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FormErrorHint } from "@/components/ui/form-error-hint";
 import { cn } from "@/lib/utils";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -41,12 +42,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               {label}
             </label>
           )}
+          <FormErrorHint id={`${inputId}-error`} message={error} />
         </div>
-        {error && (
-          <p id={`${inputId}-error`} className="mt-1 text-xs text-[var(--error)]" role="alert">
-            {error}
-          </p>
-        )}
       </div>
     );
   },
