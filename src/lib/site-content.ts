@@ -361,7 +361,21 @@ export const LEGAL_LINKS = {
 
 export const YANDEX_MAP = {
   apiKey: "52c58a1c-d593-4777-8cd6-faa4ca7ad4fd",
-  coords: [55.7417, 37.6234] as [number, number],
+} as const;
+
+export const YANDEX_MAP_CITIES = {
+  tver: {
+    label: "Тверь",
+    // пр-т. Чайковского, 6к1 (координаты используются только для отображения офиса на карте)
+    coords: [56.849994, 35.907575] as [number, number],
+    zoom: 16,
+  },
+  moscow: {
+    label: "Москва",
+    // Москва, Малая Ордынка 12 стр. 3 (юридический адрес)
+    coords: [55.7417, 37.6234] as [number, number],
+    zoom: 16,
+  },
 } as const;
 
 export const CERTIFICATES = [
