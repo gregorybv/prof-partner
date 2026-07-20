@@ -116,6 +116,7 @@
   --z-modal: 70;
   --z-chat: 40;
   --z-sticky-cta: 45;
+  --z-cookie-consent: 55;
 
   /* shadcn compat */
   --background: var(--surface-0);

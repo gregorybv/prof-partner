@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCookieConsent } from "@/components/integrations/cookie-consent-provider";
 import { Reveal } from "@/components/animations/reveal";
 import { YandexMap } from "@/components/integrations/yandex-map";
 import { SectionShell } from "@/components/ui/section-shell";
@@ -11,9 +12,10 @@ import { formatPhoneHref } from "@/lib/utils";
 export function ContactsFooterSection() {
   type YandexMapCityKey = keyof typeof YANDEX_MAP_CITIES;
   const [activeCity, setActiveCity] = useState<YandexMapCityKey>("tver");
+  const { openSettings } = useCookieConsent();
 
   return (
-    <SectionShell id="footer" muted className="border-t border-(--border-subtle) pb-24 md:pb-(--space-section-y)">
+    <SectionShell id="footer" muted className="border-t border-(--border-subtle) pb-24 md:pb-8">
       <Reveal>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.25fr] lg:items-start">
           <div>
@@ -114,7 +116,7 @@ export function ContactsFooterSection() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-(--border-subtle) pt-6 text-xs leading-relaxed text-(--text-muted)">
+        <div className="mt-8 border-t border-(--border-subtle) pt-5 text-xs leading-relaxed text-(--text-muted)">
           <p>
             {COMPANY.copyright} Сайт кредитно-брокерского агентства «{COMPANY.name}».
           </p>
@@ -127,6 +129,14 @@ export function ContactsFooterSection() {
             <a href={LEGAL_LINKS.consent} className="hover:text-(--accent-500)">
               Согласие на обработку персональных данных
             </a>
+            <span>|</span>
+            <button
+              type="button"
+              onClick={openSettings}
+              className="hover:text-(--accent-500)"
+            >
+              Настройки cookie
+            </button>
           </p>
         </div>
       </Reveal>

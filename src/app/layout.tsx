@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Roboto } from "next/font/google";
 import { ScrollProgress } from "@/components/animations/scroll-progress";
 import { SmoothScrollProvider } from "@/components/animations/smooth-scroll-provider";
-import { CallTouch } from "@/components/integrations/calltouch";
+import { ConditionalIntegrations } from "@/components/integrations/conditional-integrations";
 import { CookieConsent } from "@/components/integrations/cookie-consent";
-import { JivoChat } from "@/components/integrations/jivo-chat";
+import { CookieConsentProvider } from "@/components/integrations/cookie-consent-provider";
 import { SeoJsonLd } from "@/components/integrations/seo-json-ld";
-import { YandexMetrika } from "@/components/integrations/yandex-metrika";
 import { AntibotCancelModal } from "@/components/modals/antibot-cancel-modal";
 import { AntibotModal } from "@/components/modals/antibot-modal";
 import { BankTableRequestModal } from "@/components/modals/bank-table-request-modal";
+import { CookieSettingsModal } from "@/components/modals/cookie-settings-modal";
 import { EmailCalcModal } from "@/components/modals/email-calc-modal";
 import { GuaranteeRequestModal } from "@/components/modals/guarantee-request-modal";
 import { InfoModal } from "@/components/modals/info-modal";
@@ -47,23 +47,24 @@ export default function RootLayout({
         <SeoJsonLd />
       </head>
       <body className="min-h-full flex flex-col antialiased">
-        <ModalProvider>
-          <ScrollProgress />
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
-          <GuaranteeRequestModal />
-          <LimitModal />
-          <AntibotModal />
-          <AntibotCancelModal />
-          <InfoModal />
-          <EmailCalcModal />
-          <BankTableRequestModal />
-          <SuccessModal />
-          <MobileStickyCta />
-        </ModalProvider>
-        <CookieConsent />
-        <YandexMetrika />
-        <CallTouch />
-        <JivoChat />
+        <CookieConsentProvider>
+          <ModalProvider>
+            <ScrollProgress />
+            <SmoothScrollProvider>{children}</SmoothScrollProvider>
+            <GuaranteeRequestModal />
+            <LimitModal />
+            <AntibotModal />
+            <AntibotCancelModal />
+            <InfoModal />
+            <EmailCalcModal />
+            <BankTableRequestModal />
+            <SuccessModal />
+            <MobileStickyCta />
+          </ModalProvider>
+          <CookieConsent />
+          <CookieSettingsModal />
+          <ConditionalIntegrations />
+        </CookieConsentProvider>
       </body>
     </html>
   );
