@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useModals } from "@/components/modals/modal-provider";
 import { Button } from "@/components/ui/button";
 import { SiteContainer } from "@/components/ui/site-container";
@@ -12,35 +12,10 @@ import { COMPANY, NAV_ITEMS } from "@/lib/site-content";
 import { METRIKA_GOALS, reachGoal } from "@/lib/analytics";
 import { cn, formatPhoneHref } from "@/lib/utils";
 
-const SCROLL_ENTER = 80;
-const SCROLL_LEAVE = 20;
-
 export function SiteHeader() {
   const { openGuarantee } = useModals();
-  const prefersReducedMotion = useReducedMotion();
-  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("#header");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const scrolledRef = useRef(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      let next = scrolledRef.current;
-
-      if (!next && y > SCROLL_ENTER) next = true;
-      else if (next && y < SCROLL_LEAVE) next = false;
-
-      if (next !== scrolledRef.current) {
-        scrolledRef.current = next;
-        setScrolled(next);
-      }
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const elements = NAV_ITEMS.map((item) =>
@@ -68,8 +43,8 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="hidden border-b border-(--border-subtle) bg-(--surface-0)/80 lg:block">
-        <SiteContainer className="flex items-center justify-between gap-6 py-2 text-xs text-(--text-secondary)">
+      <div className="header-top-strip hidden lg:block">
+        <SiteContainer className="flex items-center justify-between gap-6 py-2.5 text-xs text-(--text-secondary)">
           <p className="max-w-xs leading-snug">
             Нашей компании 20 лет!
             <br />
@@ -79,7 +54,7 @@ export function SiteHeader() {
             <a
               href={`mailto:${COMPANY.email}`}
               onClick={() => reachGoal(METRIKA_GOALS.EMAIL_PANEL)}
-              className="hover:text-(--accent-500) transition-colors"
+              className="header-top-link"
             >
               <span className="text-(--text-muted)">Электронная почта: </span>
               {COMPANY.email}
@@ -87,7 +62,7 @@ export function SiteHeader() {
             <a
               href={formatPhoneHref(COMPANY.phoneTollFree)}
               onClick={() => reachGoal(METRIKA_GOALS.PHONE_TOLL_FREE)}
-              className="hover:text-(--accent-500) transition-colors"
+              className="header-top-link"
             >
               <span className="text-(--text-muted)">
                 Номер для бесплатных звонков:{" "}
@@ -96,6 +71,7 @@ export function SiteHeader() {
             </a>
             <Button
               size="sm"
+              className="min-w-[12.75rem] tracking-wide"
               type="button"
               onClick={() =>
                 openGuarantee({
@@ -112,19 +88,11 @@ export function SiteHeader() {
 
       <header
         id="header"
-        className={cn(
-          "sticky top-0 z-(--z-header) border-b transition-[background-color,box-shadow,backdrop-filter,border-color] duration-(--duration-slow) ease-(--ease-premium)",
-          scrolled
-            ? "border-(--surface-glass-border) bg-(--surface-glass) shadow-(--shadow-sm) backdrop-blur-[20px] backdrop-saturate-180"
-            : "border-transparent bg-(--surface-0)",
-        )}
+        className="sticky top-0 z-(--z-header) border-b border-(--surface-glass-border) bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,252,0.96)_100%)] shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
       >
         <SiteContainer>
           <div
-            className={cn(
-              "flex items-center justify-between gap-4 transition-[padding] duration-(--duration-slow) ease-(--ease-premium)",
-              scrolled ? "py-2.5" : "py-4",
-            )}
+            className="flex items-center justify-between gap-4 py-3.5"
           >
             <Link href="#header" className="group flex shrink-0 items-center gap-3">
               <Image
@@ -135,39 +103,34 @@ export function SiteHeader() {
                 priority
                 className={cn(
                   "w-auto transition-[height,transform] duration-(--duration-slow) ease-(--ease-premium) group-hover:scale-[1.03]",
-                  scrolled ? "h-8.5" : "h-10",
+                  "h-10",
                 )}
               />
-              <span className="hidden font-medium text-sm leading-tight sm:block max-w-35">
+              <span className="hidden max-w-35 text-sm leading-tight font-medium tracking-[0.01em] sm:block">
                 {COMPANY.name}
               </span>
             </Link>
 
             <nav
-              className="hidden min-w-0 flex-1 items-center justify-center gap-2 lg:flex"
+              className="header-nav-shell hidden min-w-0 flex-1 items-center justify-center gap-1.5 lg:flex"
               aria-label="Основная навигация"
             >
               {NAV_ITEMS.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
+                  data-active={activeSection === item.href}
                   className={cn(
-                    "group relative shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow] duration-(--duration-base)",
+                    "header-nav-link group relative shrink-0 whitespace-nowrap rounded-full px-3.5 py-2 text-[11px] font-semibold uppercase transition-[color,background-color,box-shadow,transform] duration-(--duration-base)",
                     activeSection === item.href
                       ? "text-white"
-                      : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--surface-2)",
+                      : "text-(--text-secondary) hover:text-(--text-primary)",
                   )}
                 >
                   <span className="relative z-10">{item.label}</span>
                   {activeSection === item.href && (
-                    <motion.span
-                      layoutId="active-navigation"
+                    <span
                       className="cta-surface-static absolute inset-0 z-0 rounded-full"
-                      transition={
-                        prefersReducedMotion
-                          ? { duration: 0 }
-                          : { type: "spring", stiffness: 360, damping: 32 }
-                      }
                       aria-hidden
                     />
                   )}
@@ -177,7 +140,7 @@ export function SiteHeader() {
 
             <button
               type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-(--border-default) lg:hidden"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-(--border-default) bg-(--surface-0)/90 text-(--text-primary) shadow-[0_2px_8px_rgba(15,23,42,0.08)] transition-[border-color,box-shadow,background-color] duration-(--duration-base) hover:border-(--border-strong) hover:bg-(--surface-0) hover:shadow-[0_6px_16px_rgba(15,23,42,0.1)] lg:hidden"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
             >
@@ -190,7 +153,7 @@ export function SiteHeader() {
           <motion.nav
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden border-t border-(--border-subtle) bg-(--surface-0) px-4 py-4"
+            className="lg:hidden border-t border-(--border-subtle) bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(250,251,252,0.96)_100%)] px-4 py-4 shadow-[0_14px_30px_rgba(15,23,42,0.08)] backdrop-blur-[14px]"
             aria-label="Мобильная навигация"
           >
             <div className="flex flex-col gap-1">
