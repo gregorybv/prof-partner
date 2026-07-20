@@ -11,6 +11,7 @@ type SectionShellProps = React.ComponentProps<"section"> & {
   wide?: boolean;
   muted?: boolean;
   background?: SectionBackgroundProps;
+  atmosphere?: "none" | "calm" | "tech" | "warm";
 };
 
 export function SectionShell({
@@ -20,6 +21,7 @@ export function SectionShell({
   wide,
   muted,
   background,
+  atmosphere = "none",
   children,
   ...props
 }: SectionShellProps) {
@@ -34,6 +36,16 @@ export function SectionShell({
       {...props}
     >
       {background && <SectionBackground {...background} />}
+      {atmosphere !== "none" && (
+        <div
+          className={`section-atmosphere section-atmosphere--${atmosphere}`}
+          aria-hidden
+        >
+          <span className="section-atmosphere__orb section-atmosphere__orb--primary" />
+          <span className="section-atmosphere__orb section-atmosphere__orb--secondary" />
+          <span className="section-atmosphere__grid" />
+        </div>
+      )}
       <SiteContainer wide={wide} className={cn("relative", containerClassName)}>
         {children}
       </SiteContainer>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Hourglass, Landmark, Users } from "lucide-react";
+import { useReducedMotion } from "motion/react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Reveal } from "@/components/animations/reveal";
@@ -12,6 +13,7 @@ import { TEAM_MEMBERS, TEAM_STATS } from "@/lib/site-content";
 const STAT_ICONS = [Users, Hourglass, Landmark] as const;
 
 export function TeamSection() {
+  const prefersReducedMotion = useReducedMotion();
   const { ref: statsRef, inView: statsInView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -147,7 +149,9 @@ export function TeamSection() {
                       </p>
 
                       <p className="font-display mt-1 text-[2.15rem] leading-none tracking-wide text-white md:text-[2.5rem]">
-                        {statsInView ? (
+                        {prefersReducedMotion ? (
+                          stat.value
+                        ) : statsInView ? (
                           <CountUp
                             end={stat.value}
                             duration={2.2}

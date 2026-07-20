@@ -28,21 +28,23 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         <label
           htmlFor={checkboxId}
           className={cn(
-            "flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-(--text-secondary)",
+            "group flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-(--text-secondary)",
             className,
           )}
         >
           <span
             className={cn(
-              "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
+              "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-[transform,background-color,border-color,box-shadow] duration-(--duration-base) ease-(--ease-premium)",
               resolvedChecked
-                ? "border-(--cta-700) bg-cta-gradient shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
+                ? "scale-105 border-(--cta-700) bg-cta-gradient shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_0_0_3px_rgba(120,163,37,0.1)]"
                 : error
                   ? "border-(--error) bg-(--surface-0)"
-                  : "border-(--border-strong) bg-(--surface-0)",
+                  : "border-(--border-strong) bg-(--surface-0) group-hover:border-(--cta-700)",
             )}
           >
-            {resolvedChecked && <Check className="h-3 w-3 text-white" />}
+            {resolvedChecked && (
+              <Check className="h-3 w-3 animate-[checkbox-check-in_220ms_var(--ease-premium)_both] text-white" />
+            )}
           </span>
           <input
             type="checkbox"

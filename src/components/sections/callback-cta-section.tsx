@@ -20,8 +20,8 @@ export function CallbackCtaSection({
         overlay: "medium",
       }}
     >
-      <Reveal>
-        <div className="relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-white/20 p-8 text-white shadow-(--shadow-lg) md:p-10">
+      <Reveal variant="tilt">
+        <div className="callback-cta-card group relative mx-auto max-w-2xl overflow-hidden rounded-3xl border border-white/20 p-8 text-white shadow-(--shadow-lg) transition-[transform,box-shadow] duration-(--duration-slow) ease-(--ease-premium) hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(15,23,42,0.22)] md:p-10">
           <SectionBackground
             src="/prof-p/callback-cta-bg.jpg"
             overlay="brand"

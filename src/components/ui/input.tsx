@@ -19,8 +19,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             id={inputId}
             className={cn(
-              "peer h-12 w-full rounded-xl border border-(--border-default) bg-(--surface-0) px-4 pt-5 pb-1 text-sm text-(--text-primary) transition-colors",
-              "placeholder-transparent focus:border-(--accent-500) focus:outline-none focus:ring-2 focus:ring-(--accent-500)/20",
+              "peer h-12 w-full rounded-xl border border-(--border-default) bg-(--surface-0) px-4 pt-5 pb-1 text-sm text-(--text-primary) shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] transition-[border-color,box-shadow,background-color] duration-(--duration-base)",
+              "placeholder-transparent hover:border-(--border-strong) focus:border-(--accent-500) focus:bg-white focus:outline-none focus:ring-2 focus:ring-(--accent-500)/20 focus:shadow-[0_8px_24px_rgba(59,111,212,0.08)]",
               error && "border-(--error) focus:border-(--error) focus:ring-(--error)/20",
               className,
             )}

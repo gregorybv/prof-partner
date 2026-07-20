@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import { useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Reveal } from "@/components/animations/reveal";
 import { Lightbox } from "@/components/ui/lightbox";
@@ -33,9 +34,12 @@ const COLLAGE_LAYOUT = [
 ] as const;
 
 export function TestimonialsSection() {
+  const prefersReducedMotion = useReducedMotion();
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { align: "start", loop: true, dragFree: true },
-    [Autoplay({ delay: 4000, stopOnInteraction: true })],
+    prefersReducedMotion
+      ? []
+      : [Autoplay({ delay: 4000, stopOnInteraction: true })],
   );
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [lightbox, setLightbox] = useState<{
@@ -169,17 +173,16 @@ export function TestimonialsSection() {
                       left: layout.x,
                       width: layout.width,
                       zIndex: isHovered ? 30 : 1,
-                      transform: `translate(-50%, -50%) translateY(${hoverShiftY}) rotate(${layout.rotate}) scale(${isHovered ? 2.1 : 1})`,
+                      transform: `translate(-50%, -50%) translateY(${hoverShiftY}) rotate(${layout.rotate}) scale(${isHovered ? 1.55 : 1})`,
                     }}
                   >
                     <div className="relative aspect-210/297 w-full">
                       <Image
-                        src={item.full}
+                        src={item.thumb}
                         alt={item.alt}
                         fill
                         className="object-contain"
                         sizes="(max-width: 768px) 70vw, (max-width: 1280px) 38vw, 32vw"
-                        quality={100}
                       />
                     </div>
                   </button>

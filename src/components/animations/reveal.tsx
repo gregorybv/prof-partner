@@ -10,6 +10,8 @@ type RevealProps = {
   direction?: "up" | "down" | "left" | "right" | "none";
   blur?: boolean;
   scale?: boolean;
+  variant?: "fade" | "blur" | "scale" | "mask" | "tilt";
+  amount?: number;
 };
 
 const directionOffset = {
@@ -27,6 +29,8 @@ export function Reveal({
   direction = "up",
   blur = false,
   scale = false,
+  variant = "fade",
+  amount = 0.15,
 }: RevealProps) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -42,16 +46,28 @@ export function Reveal({
     opacity: 1,
     x: 0,
     y: 0,
+    rotate: 0,
+    scale: 1,
+    clipPath: "inset(0% 0% 0% 0% round 0px)",
   };
 
-  if (blur) {
+  if (blur || variant === "blur") {
     hidden.filter = "blur(8px)";
     visible.filter = "blur(0px)";
   }
 
-  if (scale) {
-    hidden.scale = 0.98;
-    visible.scale = 1;
+  if (scale || variant === "scale") {
+    hidden.scale = 0.965;
+  }
+
+  if (variant === "mask") {
+    hidden.clipPath = "inset(0% 0% 100% 0% round 16px)";
+    hidden.y = 24;
+  }
+
+  if (variant === "tilt") {
+    hidden.rotate = direction === "left" ? 1.5 : -1.5;
+    hidden.scale = 0.975;
   }
 
   return (
@@ -59,9 +75,9 @@ export function Reveal({
       className={cn(className)}
       initial={hidden}
       whileInView={visible}
-      viewport={{ once: true, amount: 0.15, margin: "0px 0px 12% 0px" }}
+      viewport={{ once: true, amount, margin: "0px 0px 10% 0px" }}
       transition={{
-        duration: 0.55,
+        duration: variant === "mask" ? 0.8 : 0.6,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}

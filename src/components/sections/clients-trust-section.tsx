@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "motion/react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Reveal } from "@/components/animations/reveal";
@@ -14,6 +15,7 @@ type StatBlockProps = {
   inView: boolean;
   delay?: number;
   align: "left" | "right";
+  reduceMotion: boolean;
 };
 
 function YearLabel({ year }: { year: number }) {
@@ -32,7 +34,7 @@ function YearLabel({ year }: { year: number }) {
   );
 }
 
-function StatBlock({ year, count, inView, delay = 0, align }: StatBlockProps) {
+function StatBlock({ year, count, inView, delay = 0, align, reduceMotion }: StatBlockProps) {
   return (
     <div
       className={
@@ -43,7 +45,9 @@ function StatBlock({ year, count, inView, delay = 0, align }: StatBlockProps) {
     >
       <YearLabel year={year} />
       <p className="clients-trust-stat mt-4 text-center">
-        {inView ? (
+        {reduceMotion ? (
+          formatNumber(count)
+        ) : inView ? (
           <CountUp
             end={count}
             duration={2}
@@ -63,6 +67,7 @@ function StatBlock({ year, count, inView, delay = 0, align }: StatBlockProps) {
 }
 
 export function ClientsTrustSection() {
+  const prefersReducedMotion = useReducedMotion();
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
   const latest = YEARLY_STATS[YEARLY_STATS.length - 1];
   const previous = YEARLY_STATS[YEARLY_STATS.length - 2];
@@ -95,6 +100,7 @@ export function ClientsTrustSection() {
                 count={previous.count}
                 inView={inView}
                 align="left"
+                reduceMotion={!!prefersReducedMotion}
               />
             </div>
             <StatBlock
@@ -103,6 +109,7 @@ export function ClientsTrustSection() {
               inView={inView}
               delay={0.2}
               align="right"
+              reduceMotion={!!prefersReducedMotion}
             />
           </div>
         </Reveal>
@@ -118,7 +125,9 @@ export function ClientsTrustSection() {
                   за {stat.year} год
                 </p>
                 <p className="font-display text-[clamp(1.2rem,2.2vw,1.75rem)] font-bold tracking-tight text-[#294773]">
-                  {inView ? (
+                  {prefersReducedMotion ? (
+                    formatNumber(stat.count)
+                  ) : inView ? (
                     <CountUp
                       end={stat.count}
                       duration={1.5}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useModals } from "@/components/modals/modal-provider";
 import { Button } from "@/components/ui/button";
 import { SiteContainer } from "@/components/ui/site-container";
@@ -17,6 +17,7 @@ const SCROLL_LEAVE = 20;
 
 export function SiteHeader() {
   const { openGuarantee } = useModals();
+  const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("#header");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -112,22 +113,30 @@ export function SiteHeader() {
       <header
         id="header"
         className={cn(
-          "sticky top-0 z-(--z-header) border-b transition-[background-color,box-shadow,backdrop-filter] duration-(--duration-slow) ease-out",
+          "sticky top-0 z-(--z-header) border-b transition-[background-color,box-shadow,backdrop-filter,border-color] duration-(--duration-slow) ease-(--ease-premium)",
           scrolled
             ? "border-(--surface-glass-border) bg-(--surface-glass) shadow-(--shadow-sm) backdrop-blur-[20px] backdrop-saturate-180"
             : "border-transparent bg-(--surface-0)",
         )}
       >
         <SiteContainer>
-          <div className="flex items-center justify-between gap-4 py-4">
-            <Link href="#header" className="flex shrink-0 items-center gap-3">
+          <div
+            className={cn(
+              "flex items-center justify-between gap-4 transition-[padding] duration-(--duration-slow) ease-(--ease-premium)",
+              scrolled ? "py-2.5" : "py-4",
+            )}
+          >
+            <Link href="#header" className="group flex shrink-0 items-center gap-3">
               <Image
                 src="/prof-p/logo.png"
                 alt="logo"
                 width={45}
                 height={40}
                 priority
-                className="h-10 w-auto"
+                className={cn(
+                  "w-auto transition-[height,transform] duration-(--duration-slow) ease-(--ease-premium) group-hover:scale-[1.03]",
+                  scrolled ? "h-8.5" : "h-10",
+                )}
               />
               <span className="hidden font-medium text-sm leading-tight sm:block max-w-35">
                 {COMPANY.name}
@@ -143,13 +152,25 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wide transition-colors",
+                    "group relative shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wide transition-[color,background-color,box-shadow] duration-(--duration-base)",
                     activeSection === item.href
-                      ? "cta-surface-static"
+                      ? "text-white"
                       : "text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--surface-2)",
                   )}
                 >
-                  {item.label}
+                  <span className="relative z-10">{item.label}</span>
+                  {activeSection === item.href && (
+                    <motion.span
+                      layoutId="active-navigation"
+                      className="cta-surface-static absolute inset-0 z-0 rounded-full"
+                      transition={
+                        prefersReducedMotion
+                          ? { duration: 0 }
+                          : { type: "spring", stiffness: 360, damping: 32 }
+                      }
+                      aria-hidden
+                    />
+                  )}
                 </a>
               ))}
             </nav>

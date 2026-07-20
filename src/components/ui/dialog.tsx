@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,8 @@ type DialogProps = {
 };
 
 export function Dialog({ open, onClose, title, ariaLabel, children, className }: DialogProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -51,9 +53,13 @@ export function Dialog({ open, onClose, title, ariaLabel, children, className }:
               "relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-(--surface-0) p-6 shadow-(--shadow-lg)",
               className,
             )}
-            initial={{ opacity: 0, scale: 0.96, y: 8 }}
+            initial={
+              prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 8 }
+            }
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+            exit={
+              prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 8 }
+            }
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
             <div

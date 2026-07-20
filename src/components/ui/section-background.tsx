@@ -18,6 +18,7 @@ export type SectionBackgroundProps = {
   className?: string;
   imageClassName?: string;
   priority?: boolean;
+  motion?: boolean;
 };
 
 const OVERLAY_CLASSES: Record<Exclude<SectionBackgroundOverlay, "none">, string> = {
@@ -38,6 +39,7 @@ export function SectionBackground({
   className,
   imageClassName,
   priority,
+  motion = false,
 }: SectionBackgroundProps) {
   return (
     <div
@@ -51,6 +53,7 @@ export function SectionBackground({
         priority={priority}
         sizes={sizes}
         className={cn(
+          motion && "section-background__image",
           size === "cover" ? "object-cover" : "object-contain",
           position === "bottom" ? "object-bottom" : "object-center",
           imageClassName,

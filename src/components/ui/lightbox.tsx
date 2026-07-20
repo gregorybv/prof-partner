@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { X, ZoomIn } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +27,7 @@ type LightboxProps = {
 };
 
 export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
+  const prefersReducedMotion = useReducedMotion();
   const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
   const imageLoaded = open && loadedSrc === src;
 
@@ -63,9 +64,9 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
           />
           <motion.div
             className="relative z-10 w-fit max-w-[min(90vw,100%)] overflow-hidden rounded-2xl bg-(--surface-0) p-2 shadow-(--shadow-lg)"
-            initial={{ scale: 0.95, opacity: 0 }}
+            initial={prefersReducedMotion ? { opacity: 0 } : { scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
             <button
@@ -115,7 +116,6 @@ export function Lightbox({ open, onClose, src, alt, caption }: LightboxProps) {
 type CertificateCardProps = {
   bank: string;
   thumb: string;
-  full: string;
   onOpen: () => void;
   loading?: boolean;
   className?: string;
@@ -135,8 +135,8 @@ export function CertificateCard({
       disabled={loading}
       aria-busy={loading}
       className={cn(
-        "group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-0) text-left shadow-(--shadow-xs) transition-all duration-(--duration-base)",
-        "hover:-translate-y-1 hover:border-(--accent-500)/30 hover:shadow-(--shadow-card)",
+        "premium-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-(--border-subtle) bg-(--surface-0) text-left shadow-(--shadow-xs) transition-[transform,box-shadow,border-color] duration-(--duration-slow) ease-(--ease-premium)",
+        "hover:-translate-y-1.5 hover:border-(--accent-500)/30 hover:shadow-(--shadow-lg)",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-90",
         className,
@@ -148,7 +148,7 @@ export function CertificateCard({
             src={thumb}
             alt={bank}
             fill
-            className="object-contain"
+            className="object-contain transition-transform duration-700 ease-(--ease-premium) group-hover:scale-[1.045]"
             sizes="(max-width: 768px) 50vw, 200px"
           />
         </div>
@@ -157,8 +157,8 @@ export function CertificateCard({
             <LoadingSpinner className="h-8 w-8" />
           </div>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/20 group-hover:opacity-100">
-            <ZoomIn className="h-8 w-8 text-white drop-shadow" />
+          <div className="certificate-sweep absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-[opacity,background-color] duration-(--duration-slow) group-hover:bg-black/14 group-hover:opacity-100">
+            <ZoomIn className="h-8 w-8 scale-75 text-white drop-shadow transition-transform duration-(--duration-slow) group-hover:scale-100" />
           </div>
         )}
       </div>

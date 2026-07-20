@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
+import { useReducedMotion } from "motion/react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { Reveal } from "@/components/animations/reveal";
@@ -25,6 +26,7 @@ const REGION_LAYOUT = [
 const MAX_COUNT = Math.max(...REGIONS.map((r) => r.count));
 
 export function RegionsSection() {
+  const prefersReducedMotion = useReducedMotion();
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.15,
@@ -104,7 +106,9 @@ export function RegionsSection() {
                         </div>
                         <div className="text-right">
                           <p className="font-display text-[1.75rem] leading-none tracking-wide text-(--brand-700) transition-transform duration-300 group-hover:scale-[1.04]">
-                            {inView ? (
+                            {prefersReducedMotion ? (
+                              formatNumber(region.count)
+                            ) : inView ? (
                               <CountUp
                                 end={region.count}
                                 duration={1.8}
@@ -214,7 +218,9 @@ export function RegionsSection() {
                         active && "text-(--accent-600)",
                       )}
                     >
-                      {inView ? (
+                      {prefersReducedMotion ? (
+                        formatNumber(region.count)
+                      ) : inView ? (
                         <CountUp
                           end={region.count}
                           duration={2}

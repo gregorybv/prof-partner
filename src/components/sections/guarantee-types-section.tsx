@@ -28,17 +28,15 @@ export function GuaranteeTypesSection() {
   return (
     <SectionShell>
       <div className="flex flex-col gap-(--space-section-gap)">
-        <Reveal>
-          <SectionHeading
-            title="Виды гарантий"
-            subtitle="Поможем согласовать и получить гарантии по всем типам обеспечения"
-          />
-        </Reveal>
+        <SectionHeading
+          title="Виды гарантий"
+          subtitle="Поможем согласовать и получить гарантии по всем типам обеспечения"
+        />
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {GUARANTEE_TYPES.map((type, index) => (
-            <Reveal key={type.id} delay={index * 0.08}>
-              <article className="group relative flex min-h-99 flex-col bg-size-[100%_100%] bg-center bg-no-repeat px-7.5 pb-6 pt-10 transition-transform duration-(--duration-base) hover:-translate-y-1 bg-[url('/prof-p/background-type.png')]">
+            <Reveal key={type.id} delay={index * 0.08} variant={index % 2 ? "tilt" : "scale"}>
+              <article className="premium-card group relative flex min-h-99 flex-col bg-size-[100%_100%] bg-center bg-no-repeat px-7.5 pb-6 pt-10 transition-[transform,filter] duration-(--duration-slow) ease-(--ease-premium) hover:-translate-y-1.5 hover:drop-shadow-[0_18px_28px_rgba(49,83,121,0.14)] bg-[url('/prof-p/background-type.png')]">
                 <h3 className="font-display text-2xl font-extrabold uppercase tracking-wide text-(--brand-900)">
                   {type.title}
                 </h3>
@@ -77,7 +75,7 @@ export function GuaranteeTypesSection() {
                     alt=""
                     width={70}
                     height={70}
-                    className="pointer-events-none z-0 h-15 w-15 shrink-0 object-contain sm:h-17.5 sm:w-17.5"
+                    className="pointer-events-none z-0 h-15 w-15 shrink-0 object-contain transition-transform duration-(--duration-slow) ease-(--ease-premium) group-hover:-rotate-3 group-hover:scale-105 sm:h-17.5 sm:w-17.5"
                     aria-hidden
                   />
                 </div>

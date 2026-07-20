@@ -237,9 +237,10 @@ export function AutoSelectionForm({
     <div className={cn('flex flex-col gap-8', className)}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-3xl border border-(--border-subtle) bg-(--surface-0) p-6 shadow-(--shadow-card) md:p-10"
+        className="premium-form relative overflow-hidden rounded-3xl border border-(--border-subtle) bg-(--surface-0)/95 p-6 shadow-(--shadow-card) backdrop-blur-sm transition-[box-shadow,border-color] duration-(--duration-slow) focus-within:border-(--accent-500)/20 focus-within:shadow-[0_24px_70px_rgba(49,83,121,0.14)] md:p-10"
         data-id={formId}
       >
+        <div className="premium-form__light pointer-events-none absolute inset-x-0 top-0 h-px" aria-hidden />
         <h3 className="text-lg font-semibold uppercase tracking-wide text-(--text-primary)">
           ФОРМА ДЛЯ ЗАПУСКА РАСЧЁТА
         </h3>

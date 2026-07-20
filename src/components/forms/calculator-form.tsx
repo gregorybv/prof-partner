@@ -5,6 +5,7 @@ import { useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Image from 'next/image';
+import { Clock3, Landmark, ShieldCheck, Sparkles, Zap } from 'lucide-react';
 import { Reveal } from '@/components/animations/reveal';
 import { LegacyResultsTable } from '@/components/forms/legacy-results-table';
 import { MaskedResultsBanner } from '@/components/forms/masked-results-banner';
@@ -42,6 +43,17 @@ const DURATION_UNIT_OPTIONS = [
   { value: '1', label: 'Недель' },
   { value: '2', label: 'Месяцев' },
   { value: '3', label: 'Лет' },
+] as const;
+
+const CALCULATOR_HIGHLIGHTS = [
+  { icon: Landmark, text: '54 банка в выдаче' },
+  { icon: ShieldCheck, text: 'Комиссия 0% для клиента' },
+  { icon: Sparkles, text: 'Премиальная подборка условий' },
+] as const;
+
+const CALCULATOR_STATS = [
+  { value: '20 лет', label: 'опыт сопровождения' },
+  { value: '24/7', label: 'онлайн оформление' },
 ] as const;
 
 const calculatorSchema = z
@@ -287,41 +299,87 @@ export function CalculatorForm() {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-3xl border border-(--border-subtle) bg-(--surface-0) p-6 shadow-(--shadow-card) md:p-8"
+        className="premium-form relative overflow-hidden rounded-3xl border border-(--border-subtle) border-t-0 border-r-0 bg-(--surface-0)/95 p-5 shadow-(--shadow-card) backdrop-blur-sm transition-[box-shadow] duration-(--duration-slow) focus-within:shadow-[0_24px_70px_rgba(49,83,121,0.14)] md:p-6"
       >
-        <Controller
-          name="Fz"
-          control={control}
-          render={({ field }) => (
-            <SegmentedControl
-              options={[...FZ_OPTIONS]}
-              value={field.value}
-              onChange={(v) => {
-                field.onChange(v);
-                if (v === '185') setValue('TypeBg', 'execution');
-              }}
-              className="mb-6 w-full flex-wrap"
-            />
-          )}
-        />
+        <div className="premium-form__light pointer-events-none absolute inset-x-0 top-0 h-px" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+          <span className="absolute -top-16 left-[8%] h-40 w-40 rounded-full bg-(--accent-500)/12 blur-3xl" />
+          <span className="absolute top-1/3 right-[-4.5rem] h-44 w-44 rounded-full bg-(--cta-500)/14 blur-3xl" />
+        </div>
 
-        <Controller
-          name="TypeBg"
-          control={control}
-          render={({ field }) => (
-            <SegmentedControl
-              options={[...TYPE_OPTIONS]}
-              value={field.value}
-              onChange={field.onChange}
-              className="mb-6 w-full flex-wrap"
-            />
-          )}
-        />
+        <div className="calculator-showcase mb-4 rounded-2xl border border-(--accent-500)/16 bg-linear-to-r from-(--surface-2) via-(--surface-0) to-(--surface-2)/90 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <p className="text-xs font-semibold tracking-[0.2em] text-(--accent-600)">
+              БЫСТРЫЙ ПОДБОР БАНКОВСКОЙ ГАРАНТИИ
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {CALCULATOR_STATS.map((item) => (
+                <span
+                  key={item.label}
+                  className="rounded-xl border border-(--border-default) bg-(--surface-0)/95 px-2.5 py-1 text-[11px] leading-tight text-(--text-secondary)"
+                >
+                  <strong className="mr-1 font-semibold text-(--text-primary)">{item.value}</strong>
+                  {item.label}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2.5">
+            {CALCULATOR_HIGHLIGHTS.map(({ icon: Icon, text }) => (
+              <span
+                key={text}
+                className="calculator-chip inline-flex items-center gap-1.5 rounded-full border border-(--border-default) bg-(--surface-0)/90 px-3 py-1.5 text-[11px] font-semibold text-(--text-secondary)"
+              >
+                <Icon className="h-3.5 w-3.5 text-(--accent-500)" aria-hidden />
+                {text}
+              </span>
+            ))}
+          </div>
+        </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="calculator-group-card mb-3 rounded-2xl border border-(--border-subtle) bg-(--surface-2)/85 p-2.5">
+          <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-(--text-muted)">
+            Тип закупки
+          </p>
+          <Controller
+            name="Fz"
+            control={control}
+            render={({ field }) => (
+              <SegmentedControl
+                options={[...FZ_OPTIONS]}
+                value={field.value}
+                onChange={(v) => {
+                  field.onChange(v);
+                  if (v === '185') setValue('TypeBg', 'execution');
+                }}
+                className="w-full flex-wrap"
+              />
+            )}
+          />
+        </div>
+
+        <div className="calculator-group-card mb-4 rounded-2xl border border-(--border-subtle) bg-(--surface-2)/85 p-2.5">
+          <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-(--text-muted)">
+            Вид гарантии
+          </p>
+          <Controller
+            name="TypeBg"
+            control={control}
+            render={({ field }) => (
+              <SegmentedControl
+                options={[...TYPE_OPTIONS]}
+                value={field.value}
+                onChange={field.onChange}
+                className="w-full flex-wrap"
+              />
+            )}
+          />
+        </div>
+
+        <div className="calculator-group-card grid gap-3 rounded-2xl border border-(--border-subtle) bg-(--surface-1)/75 p-3 md:grid-cols-2 lg:grid-cols-3">
           <Input
             label="Сумма обеспечения"
             inputMode="numeric"
@@ -355,12 +413,16 @@ export function CalculatorForm() {
                 name="specific"
                 control={control}
                 render={({ field }) => (
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs text-(--text-muted)">Единица срока</label>
+                  <div className="relative w-full">
+                    <span className="pointer-events-none absolute top-1.5 left-4 z-10 text-[11px] leading-none text-(--text-muted)">
+                      Единица срока
+                    </span>
                     <SegmentedControl
                       options={[...DURATION_UNIT_OPTIONS]}
                       value={field.value}
                       onChange={field.onChange}
+                      name="calculator-duration-unit"
+                      className="min-h-12 w-full pt-4"
                     />
                   </div>
                 )}
@@ -369,36 +431,55 @@ export function CalculatorForm() {
           )}
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-4">
+        <div className="calculator-group-card mt-3 flex flex-wrap gap-3 rounded-2xl border border-(--border-subtle) bg-(--surface-0)/90 p-3">
           <Checkbox
-            label="Неизвестный даты действия гарантии, указать срок"
+            label="Неизвестны даты действия гарантии, указать срок"
             {...register('unknownDates')}
           />
           <Checkbox label="Наличие аванса" {...register('hasAvans')} />
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <Checkbox label="Без открытия р/с" {...register('ThisIsNothinTo')} />
-          <Checkbox label="Без залога" {...register('ThisIsNothin')} />
-          <Checkbox label="Форма гарантии от заказчика" {...register('customerFormTableModal')} />
-          <Checkbox label="Рассрочка по оплате" {...register('InstallmentPay')} />
+        <div className="calculator-group-card mt-4 rounded-2xl border border-(--border-subtle) bg-(--surface-1)/70 p-3">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-(--text-muted)">
+            Базовые условия сделки
+          </p>
+          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+            <Checkbox label="Без открытия р/с" {...register('ThisIsNothinTo')} />
+            <Checkbox label="Без залога" {...register('ThisIsNothin')} />
+            <Checkbox label="Форма гарантии от заказчика" {...register('customerFormTableModal')} />
+            <Checkbox label="Рассрочка по оплате" {...register('InstallmentPay')} />
+          </div>
         </div>
 
-        <p className="mt-6 text-sm font-bold text-(--text-primary)">
-          Дополнительные параметры:
-        </p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <Checkbox label="Убыточная деятельность" {...register('NetLossLastYear')} />
-          <Checkbox label="Отсутствие опыта" {...register('noExperienceTableModal')} />
-          <Checkbox label="Блокировка расчётного счёта" {...register('BlockBankAccount')} />
-          <Checkbox label="Закрытый аукцион" {...register('ClosedTender')} />
-          <Checkbox label="Доставка курьером" {...register('CourierDelivery')} />
-          <Checkbox label="Наличие судебных дел" {...register('Arbitration')} />
+        <div className="calculator-group-card mt-3 rounded-2xl border border-(--accent-500)/12 bg-(--surface-0)/95 p-3">
+          <p className="text-sm font-bold text-(--text-primary)">Дополнительные параметры:</p>
+          <div className="mt-2.5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            <Checkbox label="Убыточная деятельность" {...register('NetLossLastYear')} />
+            <Checkbox label="Отсутствие опыта" {...register('noExperienceTableModal')} />
+            <Checkbox label="Блокировка расчётного счёта" {...register('BlockBankAccount')} />
+            <Checkbox label="Закрытый аукцион" {...register('ClosedTender')} />
+            <Checkbox label="Доставка курьером" {...register('CourierDelivery')} />
+            <Checkbox label="Наличие судебных дел" {...register('Arbitration')} />
+          </div>
         </div>
 
-        <Button type="submit" loading={isLoading} className="mt-8">
-          Рассчитать
-        </Button>
+        <div className="calculator-cta-wrap mt-5 rounded-2xl border border-(--cta-500)/18 bg-linear-to-r from-(--surface-2) via-(--surface-0) to-(--surface-2) p-3">
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+            <div className="flex items-center gap-2 text-xs text-(--text-secondary)">
+              <Clock3 className="h-4 w-4 text-(--accent-500)" aria-hidden />
+              <span>Расчет занимает до 20 секунд</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-(--text-secondary)">
+              <Zap className="h-4 w-4 text-(--cta-500)" aria-hidden />
+              <span>Покажем ставки и банки в одной таблице</span>
+            </div>
+          </div>
+          <div className="mt-3 flex justify-center">
+            <Button type="submit" loading={isLoading} size="lg" className="w-full sm:w-auto sm:min-w-64">
+              Рассчитать
+            </Button>
+          </div>
+        </div>
       </form>
 
       <CalculatorProgress active={isLoading} step={progressStep} />

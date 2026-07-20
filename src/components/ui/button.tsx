@@ -3,14 +3,14 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 overflow-hidden",
+  "relative inline-flex translate-z-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-[transform,box-shadow,background-color,border-color,color] duration-[var(--duration-base)] ease-[var(--ease-premium)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 overflow-hidden",
   {
     variants: {
       variant: {
         default:
           "cta-surface hover:scale-[1.02] active:scale-[0.98]",
         secondary:
-          "bg-[var(--surface-2)] text-[var(--text-primary)] border border-[var(--border-default)] hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)]",
+          "bg-[var(--surface-2)] text-[var(--text-primary)] border border-[var(--border-default)] shadow-[0_1px_0_rgba(255,255,255,0.8)_inset] hover:-translate-y-0.5 hover:bg-[var(--surface-3)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] active:translate-y-0 active:scale-[0.98]",
         outline:
           "border border-[var(--border-default)] bg-transparent hover:bg-[var(--surface-2)]",
         ghost: "hover:bg-[var(--surface-2)]",
