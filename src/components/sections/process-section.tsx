@@ -266,7 +266,7 @@ export function ProcessSection() {
 
   return (
     <SectionShell id="shema" className="bg-(--surface-0)">
-      <div className="flex flex-col gap-(--space-section-gap)">
+      <div className="flex flex-col">
         <Reveal>
           <SectionHeading
             title="Схема работы"

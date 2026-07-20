@@ -255,17 +255,6 @@ export function HeroSection() {
         </Reveal>
       </SiteContainer>
       </motion.div>
-
-      <a
-        href="#avto-podbor"
-        className="group absolute bottom-5 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-(--brand-700)/70 lg:flex"
-        aria-label="Прокрутить к автоподбору банка"
-      >
-        <span className="transition-colors group-hover:text-(--brand-900)">Листайте</span>
-        <span className="relative h-9 w-px overflow-hidden bg-(--brand-700)/20">
-          <span className="hero-scroll-indicator absolute inset-x-0 top-0 h-1/2 bg-(--brand-700)" />
-        </span>
-      </a>
     </section>
   );
 }

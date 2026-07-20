@@ -48,7 +48,6 @@ export function Reveal({
     y: 0,
     rotate: 0,
     scale: 1,
-    clipPath: "inset(0% 0% 0% 0% round 0px)",
   };
 
   if (blur || variant === "blur") {
@@ -63,6 +62,7 @@ export function Reveal({
   if (variant === "mask") {
     hidden.clipPath = "inset(0% 0% 100% 0% round 16px)";
     hidden.y = 24;
+    visible.clipPath = "inset(0% 0% 0% 0% round 0px)";
   }
 
   if (variant === "tilt") {
